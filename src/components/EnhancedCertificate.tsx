@@ -147,7 +147,7 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl h-[90vh] p-0 overflow-hidden">
+      <DialogContent className="max-w-6xl h-[85vh] max-h-[600px] sm:h-[90vh] sm:max-h-[700px] p-0 overflow-hidden">
         <DialogHeader className="p-6 border-b bg-gradient-to-r from-primary/10 to-accent/10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">

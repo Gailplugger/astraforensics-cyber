@@ -273,7 +273,7 @@ export function OfflineLearning({ isOpen, onClose, userData }: OfflineLearningPr
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
-        className="w-full max-w-5xl h-[90vh] bg-background rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+        className="w-full max-w-5xl h-[85vh] max-h-[600px] sm:h-[90vh] sm:max-h-[700px] bg-background rounded-2xl shadow-2xl overflow-hidden flex flex-col"
       >
         {/* Header */}
         <div className="p-6 border-b bg-gradient-to-r from-primary/10 to-accent/10">

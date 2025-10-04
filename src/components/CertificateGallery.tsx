@@ -143,7 +143,7 @@ function CertificateModal({ certificate, isOpen, onClose }: CertificateModalProp
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="bg-card rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-auto"
+            className="bg-card rounded-xl shadow-2xl max-w-2xl w-full h-[85vh] max-h-[600px] sm:h-[90vh] sm:max-h-[700px] overflow-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-6">

@@ -6,6 +6,7 @@ import { Input } from './ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import { Badge } from './ui/badge'
 import { ScrollArea } from './ui/scroll-area'
+import { formatTime } from '@/lib/utils'
 import { 
   PaperPlaneTilt, 
   Robot, 
@@ -25,7 +26,7 @@ interface Message {
   id: string
   type: 'user' | 'ai'
   content: string
-  timestamp: Date
+  timestamp: Date | string
   category?: 'general' | 'learning' | 'career' | 'technical'
   suggestions?: string[]
 }
@@ -186,7 +187,7 @@ Always maintain an encouraging, expert tone that motivates learning.`
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
           onClick={e => e.stopPropagation()}
-          className="w-full max-w-4xl h-[80vh] bg-background/95 backdrop-blur-xl rounded-2xl border shadow-2xl flex flex-col overflow-hidden"
+          className="w-full max-w-4xl h-[85vh] max-h-[600px] sm:h-[80vh] sm:max-h-[700px] bg-background/95 backdrop-blur-xl rounded-2xl border shadow-2xl flex flex-col overflow-hidden"
         >
           {/* Header */}
           <CardHeader className="border-b bg-gradient-to-r from-primary/10 to-accent/10">
@@ -338,7 +339,7 @@ Always maintain an encouraging, expert tone that motivates learning.`
                       )}
                       
                       <p className="text-xs text-muted-foreground mt-1">
-                        {message.timestamp.toLocaleTimeString()}
+                        {formatTime(message.timestamp)}
                       </p>
                     </div>
                     

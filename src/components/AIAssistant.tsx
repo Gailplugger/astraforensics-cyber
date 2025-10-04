@@ -152,7 +152,7 @@ export function AIAssistant({ isOpen, onClose, userData, currentModule, context 
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="w-full max-w-4xl h-[80vh] flex flex-col"
+            className="w-full max-w-4xl h-[85vh] max-h-[600px] sm:h-[80vh] sm:max-h-[700px] flex flex-col"
           >
             <Card className="flex-1 flex flex-col relative overflow-hidden">
               {/* Animated background */}

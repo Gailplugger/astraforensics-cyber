@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useKV } from '@github/spark/hooks'
+import { formatDate, formatTime } from '@/lib/utils'
 import { 
   Robot, 
   X, 
@@ -34,7 +35,7 @@ interface Message {
   id: string
   role: 'user' | 'assistant'
   content: string
-  timestamp: Date
+  timestamp: Date | string
   type?: 'text' | 'recommendation' | 'quiz' | 'progress'
 }
 
@@ -208,7 +209,7 @@ Please provide a helpful, accurate, and encouraging response about cybersecurity
           animate={{ scale: 1, y: 0 }}
           exit={{ scale: 0.9, y: 20 }}
           onClick={e => e.stopPropagation()}
-          className="w-full max-w-4xl max-h-[90vh] bg-card rounded-2xl shadow-2xl overflow-hidden"
+          className="w-full max-w-4xl h-[85vh] max-h-[600px] sm:h-[90vh] sm:max-h-[700px] bg-card rounded-2xl shadow-2xl overflow-hidden"
         >
           {/* Header */}
           <CardHeader className="border-b bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-4 md:p-6">
@@ -247,7 +248,7 @@ Please provide a helpful, accurate, and encouraging response about cybersecurity
             </div>
           </CardHeader>
 
-          <div className="flex flex-col lg:flex-row h-[60vh] lg:h-[70vh]">
+          <div className="flex flex-col lg:flex-row h-[50vh] sm:h-[60vh] lg:h-[65vh]">
             {/* AI Features Sidebar */}
             <div className="lg:w-1/3 border-b lg:border-b-0 lg:border-r p-4 lg:p-6 bg-muted/30">
               <h3 className="font-semibold text-foreground mb-3 flex items-center space-x-2">
@@ -284,7 +285,16 @@ Please provide a helpful, accurate, and encouraging response about cybersecurity
                   <div className="flex justify-between text-xs">
                     <span>Messages today:</span>
                     <Badge variant="secondary" className="text-xs">
-                      {(messages || []).filter(m => m.timestamp.toDateString() === new Date().toDateString()).length}
+                      {(() => {
+                        try {
+                          return (messages || []).filter(m => {
+                            return formatDate(m.timestamp) === formatDate(new Date())
+                          }).length
+                        } catch (error) {
+                          console.warn('Error filtering messages by date:', error)
+                          return 0
+                        }
+                      })()}
                     </Badge>
                   </div>
                   <div className="flex justify-between text-xs">
@@ -322,7 +332,7 @@ Please provide a helpful, accurate, and encouraging response about cybersecurity
                             message.role === 'user' ? 'text-primary-foreground/70' : 'text-muted-foreground'
                           }`}
                         >
-                          {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          {formatTime(message.timestamp)}
                         </div>
                       </div>
                     </motion.div>
