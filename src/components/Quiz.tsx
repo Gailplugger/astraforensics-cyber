@@ -25,6 +25,25 @@ interface QuizQuestion {
   correctAnswer: number
   explanation: string
   difficulty: 'easy' | 'medium' | 'hard'
+  category: string
+}
+
+interface QuizPerformanceData {
+  quizId: string
+  score: number
+  correctAnswers: number
+  totalQuestions: number
+  weakAreas: string[]
+  strongAreas: string[]
+  completedAt: string
+  timeTaken: number
+  questionPerformance: {
+    questionId: string
+    correct: boolean
+    difficulty: string
+    category: string
+    timeSpent: number
+  }[]
 }
 
 interface QuizProps {
@@ -38,7 +57,8 @@ const quizQuestions: QuizQuestion[] = [
     options: ['Cybersecurity', 'Confidentiality', 'Compliance', 'Control'],
     correctAnswer: 1,
     explanation: 'The "C" stands for Confidentiality, which ensures that information is accessible only to those authorized to access it.',
-    difficulty: 'easy'
+    difficulty: 'easy',
+    category: 'CIA Triad'
   },
   {
     id: 'q2',
@@ -46,7 +66,8 @@ const quizQuestions: QuizQuestion[] = [
     options: ['Virus', 'Worm', 'Firewall', 'Trojan'],
     correctAnswer: 2,
     explanation: 'A firewall is a security control that monitors and controls network traffic, not a type of malware.',
-    difficulty: 'easy'
+    difficulty: 'easy',
+    category: 'Malware'
   },
   {
     id: 'q3',
@@ -54,7 +75,8 @@ const quizQuestions: QuizQuestion[] = [
     options: ['Steal sensitive data', 'Overwhelm systems with traffic', 'Install malware', 'Gain unauthorized access'],
     correctAnswer: 1,
     explanation: 'DDoS (Distributed Denial of Service) attacks aim to overwhelm systems with traffic, making them unavailable to legitimate users.',
-    difficulty: 'medium'
+    difficulty: 'medium',
+    category: 'Network Attacks'
   },
   {
     id: 'q4',
@@ -62,7 +84,8 @@ const quizQuestions: QuizQuestion[] = [
     options: ['Preventive', 'Detective', 'Corrective', 'Administrative'],
     correctAnswer: 1,
     explanation: 'Detective controls identify and detect security incidents when they occur, such as intrusion detection systems.',
-    difficulty: 'medium'
+    difficulty: 'medium',
+    category: 'Security Controls'
   },
   {
     id: 'q5',
@@ -70,7 +93,8 @@ const quizQuestions: QuizQuestion[] = [
     options: ['A network protocol', 'Manipulating people to reveal information', 'A type of encryption', 'A security framework'],
     correctAnswer: 1,
     explanation: 'Social engineering involves manipulating people psychologically to reveal confidential information or perform actions that compromise security.',
-    difficulty: 'medium'
+    difficulty: 'medium',
+    category: 'Social Engineering'
   },
   {
     id: 'q6',
@@ -78,7 +102,8 @@ const quizQuestions: QuizQuestion[] = [
     options: ['Confidentiality', 'Integrity', 'Availability', 'Authentication'],
     correctAnswer: 1,
     explanation: 'Integrity ensures that data remains accurate, complete, and unaltered during storage, transmission, and processing.',
-    difficulty: 'easy'
+    difficulty: 'easy',
+    category: 'CIA Triad'
   },
   {
     id: 'q7',
@@ -86,7 +111,8 @@ const quizQuestions: QuizQuestion[] = [
     options: ['Delete all files', 'Monitor user activity', 'Encrypt files and demand payment', 'Steal login credentials'],
     correctAnswer: 2,
     explanation: 'Ransomware encrypts files on a victim\'s system and demands payment (ransom) for the decryption key.',
-    difficulty: 'medium'
+    difficulty: 'medium',
+    category: 'Malware'
   },
   {
     id: 'q8',
@@ -94,7 +120,8 @@ const quizQuestions: QuizQuestion[] = [
     options: ['Security audit', 'Intrusion detection system', 'Firewall', 'Incident response plan'],
     correctAnswer: 2,
     explanation: 'A firewall is a preventive control that blocks unauthorized network traffic before it can reach protected systems.',
-    difficulty: 'hard'
+    difficulty: 'hard',
+    category: 'Security Controls'
   },
   {
     id: 'q9',
@@ -102,7 +129,8 @@ const quizQuestions: QuizQuestion[] = [
     options: ['Data can be accessed by anyone', 'Systems are always online', 'Information is accessible when needed by authorized users', 'Data is stored in multiple locations'],
     correctAnswer: 2,
     explanation: 'Availability ensures that information and resources are accessible when needed by authorized users, maintaining system uptime and reliability.',
-    difficulty: 'medium'
+    difficulty: 'medium',
+    category: 'CIA Triad'
   },
   {
     id: 'q10',
@@ -110,7 +138,8 @@ const quizQuestions: QuizQuestion[] = [
     options: ['Phishing', 'SQL Injection', 'Man-in-the-Middle', 'Cross-site Scripting'],
     correctAnswer: 2,
     explanation: 'A Man-in-the-Middle (MitM) attack involves intercepting and potentially altering communications between two parties without their knowledge.',
-    difficulty: 'hard'
+    difficulty: 'hard',
+    category: 'Network Attacks'
   }
 ]
 
@@ -121,7 +150,10 @@ export function Quiz({ onBackToDashboard }: QuizProps) {
   const [showExplanation, setShowExplanation] = useState(false)
   const [score, setScore] = useState(0)
   const [quizScores, setQuizScores] = useKV<Record<string, number>>('quiz-scores', {})
+  const [quizPerformanceData, setQuizPerformanceData] = useKV<QuizPerformanceData[]>('quiz-performance', [])
   const [timeElapsed, setTimeElapsed] = useState(0)
+  const [questionStartTime, setQuestionStartTime] = useState(Date.now())
+  const [questionTimes, setQuestionTimes] = useState<Record<string, number>>({})
 
   const totalQuestions = quizQuestions.length
   const currentQ = quizQuestions[currentQuestion]
@@ -135,9 +167,17 @@ export function Quiz({ onBackToDashboard }: QuizProps) {
   }
 
   const handleNext = () => {
+    // Record time spent on current question
+    const timeSpent = Date.now() - questionStartTime
+    setQuestionTimes(prev => ({
+      ...prev,
+      [currentQ.id]: timeSpent
+    }))
+
     if (currentQuestion < totalQuestions - 1) {
       setCurrentQuestion(currentQuestion + 1)
       setShowExplanation(false)
+      setQuestionStartTime(Date.now())
     } else {
       finishQuiz()
     }
@@ -147,6 +187,7 @@ export function Quiz({ onBackToDashboard }: QuizProps) {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1)
       setShowExplanation(false)
+      setQuestionStartTime(Date.now())
     }
   }
 
@@ -162,6 +203,57 @@ export function Quiz({ onBackToDashboard }: QuizProps) {
     const finalScore = Math.round((correctAnswers / totalQuestions) * 100)
     setScore(finalScore)
     setQuizCompleted(true)
+    
+    // Analyze performance by category
+    const categoryPerformance: Record<string, { correct: number; total: number }> = {}
+    const weakAreas: string[] = []
+    const strongAreas: string[] = []
+    
+    quizQuestions.forEach(q => {
+      if (!categoryPerformance[q.category]) {
+        categoryPerformance[q.category] = { correct: 0, total: 0 }
+      }
+      categoryPerformance[q.category].total++
+      if (selectedAnswers[q.id] === q.correctAnswer) {
+        categoryPerformance[q.category].correct++
+      }
+    })
+    
+    // Identify weak and strong areas
+    Object.entries(categoryPerformance).forEach(([category, performance]) => {
+      const categoryScore = (performance.correct / performance.total) * 100
+      if (categoryScore < 60) {
+        weakAreas.push(category)
+      } else if (categoryScore >= 80) {
+        strongAreas.push(category)
+      }
+    })
+    
+    // Create detailed performance data for AI analysis
+    const performanceData: QuizPerformanceData = {
+      quizId: 'cybersecurity-basics',
+      score: finalScore,
+      correctAnswers,
+      totalQuestions,
+      weakAreas,
+      strongAreas,
+      completedAt: new Date().toISOString(),
+      timeTaken: Math.ceil(timeElapsed / 60), // Convert to minutes
+      questionPerformance: quizQuestions.map(q => ({
+        questionId: q.id,
+        correct: selectedAnswers[q.id] === q.correctAnswer,
+        difficulty: q.difficulty,
+        category: q.category,
+        timeSpent: questionTimes[q.id] || 0
+      }))
+    }
+    
+    // Save performance data
+    setQuizPerformanceData((current) => {
+      const existing = current || []
+      const filtered = existing.filter(p => p.quizId !== 'cybersecurity-basics')
+      return [...filtered, performanceData]
+    })
     
     // Save score
     setQuizScores((current) => ({
@@ -185,6 +277,8 @@ export function Quiz({ onBackToDashboard }: QuizProps) {
     setShowExplanation(false)
     setScore(0)
     setTimeElapsed(0)
+    setQuestionStartTime(Date.now())
+    setQuestionTimes({})
   }
 
   const getScoreColor = (score: number) => {

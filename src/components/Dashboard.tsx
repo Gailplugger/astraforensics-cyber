@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { useKV } from '@github/spark/hooks'
+import { LearningRecommendations } from './LearningRecommendations'
 import { 
   Shield, 
   BookOpen, 
@@ -13,7 +14,8 @@ import {
   Trophy,
   Clock,
   Users,
-  Target
+  Target,
+  Brain
 } from '@phosphor-icons/react'
 
 interface UserData {
@@ -41,6 +43,12 @@ interface DashboardProps {
 export function Dashboard({ userData, onStartLearning, onTakeQuiz }: DashboardProps) {
   const [moduleProgress] = useKV<ModuleProgress[]>('module-progress', [])
   const [quizScores] = useKV<Record<string, number>>('quiz-scores', {})
+  const [showRecommendations, setShowRecommendations] = useState(false)
+
+  const handleStartRecommendation = (recommendationId: string) => {
+    // Navigate to specific learning path based on recommendation
+    onStartLearning()
+  }
 
   const modules = [
     {
@@ -183,15 +191,27 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz }: DashboardPr
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className={`${quizScores && Object.keys(quizScores).length > 0 ? 'border-primary/50 bg-primary/5' : ''}`}>
             <CardContent className="p-6">
               <div className="flex items-center space-x-2">
-                <Target size={24} className="text-blue-600" />
+                <Brain size={24} className="text-primary" />
                 <div>
-                  <p className="text-2xl font-bold text-foreground">{modules.length}</p>
-                  <p className="text-sm text-muted-foreground">Total Modules</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {quizScores && Object.keys(quizScores).length > 0 ? 'Ready' : 'Pending'}
+                  </p>
+                  <p className="text-sm text-muted-foreground">AI Recommendations</p>
                 </div>
               </div>
+              {quizScores && Object.keys(quizScores).length > 0 && (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="mt-2 p-0 h-auto text-xs text-primary hover:text-primary"
+                  onClick={() => setShowRecommendations(true)}
+                >
+                  View personalized suggestions →
+                </Button>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -212,6 +232,28 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz }: DashboardPr
             </div>
           </CardContent>
         </Card>
+
+        {/* AI Recommendations Section */}
+        {(quizScores && Object.keys(quizScores).length > 0) && (
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-3">
+                <Brain size={24} className="text-primary" />
+                <h2 className="text-2xl font-bold text-foreground">AI Learning Recommendations</h2>
+              </div>
+              <Button
+                onClick={() => setShowRecommendations(!showRecommendations)}
+                variant="outline"
+              >
+                {showRecommendations ? 'Hide' : 'Show'} Recommendations
+              </Button>
+            </div>
+            
+            {showRecommendations && (
+              <LearningRecommendations onStartRecommendation={handleStartRecommendation} />
+            )}
+          </div>
+        )}
 
         {/* Learning Modules */}
         <div className="space-y-6">

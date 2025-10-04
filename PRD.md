@@ -26,19 +26,26 @@ A comprehensive cybersecurity education platform that provides interactive learn
 - **Progression**: Module selection → Content viewing → Progress tracking → Next module unlock
 - **Success criteria**: Content renders properly, progress saves automatically, modules unlock sequentially
 
+### AI-Powered Learning Recommendations
+- **Functionality**: Personalized learning suggestions based on quiz performance analysis using GPT-4
+- **Purpose**: Provide targeted learning paths to address individual knowledge gaps and accelerate learning
+- **Trigger**: Completion of quizzes or manual request for recommendations on dashboard
+- **Progression**: Quiz completion → Performance analysis → AI recommendation generation → Learning path suggestions
+- **Success criteria**: Recommendations are relevant to user performance, clearly explained, and actionable
+
 ### Interactive Quizzes
-- **Functionality**: Multiple-choice and scenario-based questions with immediate feedback
-- **Purpose**: Reinforce learning and assess comprehension of cybersecurity concepts
+- **Functionality**: Multiple-choice and scenario-based questions with immediate feedback and detailed performance tracking
+- **Purpose**: Reinforce learning, assess comprehension, and generate data for personalized recommendations
 - **Trigger**: Completion of learning modules or direct quiz access
-- **Progression**: Module completion → Quiz initiation → Question answering → Score calculation → Results display
-- **Success criteria**: Scores persist, feedback is educational, retakes are available
+- **Progression**: Module completion → Quiz initiation → Question answering → Score calculation → Results display → AI analysis
+- **Success criteria**: Scores persist, detailed performance data captured, feedback is educational, retakes are available
 
 ### Progress Dashboard
-- **Functionality**: Visual representation of learning progress, completed modules, and quiz scores
-- **Purpose**: Motivate continued learning and track educational achievements
+- **Functionality**: Visual representation of learning progress, completed modules, quiz scores, and AI-powered recommendations
+- **Purpose**: Motivate continued learning, track educational achievements, and surface personalized learning suggestions
 - **Trigger**: Login to platform or dashboard navigation
-- **Progression**: Login → Dashboard view → Progress visualization → Module recommendations
-- **Success criteria**: Accurate progress tracking, motivational visual elements, clear next steps
+- **Progression**: Login → Dashboard view → Progress visualization → AI recommendations → Module recommendations
+- **Success criteria**: Accurate progress tracking, motivational visual elements, clear next steps, relevant AI suggestions
 
 ## Edge Case Handling
 
@@ -47,6 +54,8 @@ A comprehensive cybersecurity education platform that provides interactive learn
 - **Quiz Retakes**: Allow multiple attempts with best score tracking
 - **Module Navigation**: Prevent access to locked content while providing clear unlock requirements
 - **Offline State**: Cache completed modules for offline review access
+- **AI Service Outages**: Provide fallback static recommendations when AI service is unavailable
+- **Performance Analysis**: Handle cases with insufficient quiz data for meaningful AI recommendations
 
 ## Design Direction
 
@@ -86,9 +95,9 @@ Subtle, purposeful animations that enhance the educational experience without di
 
 ## Component Selection
 
-- **Components**: Cards for modules, Progress bars for tracking, Forms for registration, Dialogs for quiz feedback, Tabs for content organization
-- **Customizations**: Custom progress rings for module completion, branded quiz result cards
-- **States**: Clear hover states on interactive elements, disabled states for locked content, active states for current module
-- **Icon Selection**: Shield icons for security topics, Book icons for learning, CheckCircle for completion, Lock for restricted content
+- **Components**: Cards for modules, Progress bars for tracking, Forms for registration, Dialogs for quiz feedback, Tabs for content organization, AI recommendation panels
+- **Customizations**: Custom progress rings for module completion, branded quiz result cards, AI-powered recommendation cards with priority indicators
+- **States**: Clear hover states on interactive elements, disabled states for locked content, active states for current module, loading states for AI generation
+- **Icon Selection**: Shield icons for security topics, Book icons for learning, CheckCircle for completion, Lock for restricted content, Brain icon for AI features
 - **Spacing**: Generous padding (p-6, p-8) for readability, consistent gaps (gap-6) between sections
-- **Mobile**: Responsive cards that stack vertically, collapsible navigation, touch-friendly quiz interfaces
+- **Mobile**: Responsive cards that stack vertically, collapsible navigation, touch-friendly quiz interfaces, simplified AI recommendations view
