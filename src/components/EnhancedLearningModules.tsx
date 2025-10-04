@@ -414,30 +414,63 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
     const certificateData = generateCertificate()
     if (certificateData) {
       return (
-        <div className="min-h-screen bg-background">
-          <div className="max-w-6xl mx-auto px-4 py-8">
-            <div className="text-center mb-8">
+        <div className="min-h-screen bg-background flex flex-col">
+          <div className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8 safe-area-top safe-area-bottom">
+            {/* Enhanced Certificate Success View */}
+            <div className="text-center mb-6 lg:mb-8">
               <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="mx-auto mb-4"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 200,
+                  damping: 15,
+                  duration: 0.8
+                }}
+                className="mx-auto mb-4 lg:mb-6"
               >
-                <Trophy size={64} className="text-yellow-600 mx-auto" />
+                <Trophy size={48} className="text-yellow-600 mx-auto sm:w-16 sm:h-16 lg:w-20 lg:h-20" />
               </motion.div>
-              <h1 className="text-4xl font-bold mb-2">🎉 Congratulations!</h1>
-              <p className="text-xl text-muted-foreground">
+              
+              <motion.h1 
+                className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 lg:mb-4"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                🎉 Congratulations!
+              </motion.h1>
+              
+              <motion.p 
+                className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
                 You've successfully completed the module and earned your certificate!
-              </p>
+              </motion.p>
             </div>
 
-            <ProfessionalCertificate 
-              certificateData={certificateData}
-              onDownload={() => toast.success('Certificate downloaded!')}
-              onShare={() => toast.success('Achievement shared!')}
-            />
+            {/* Enhanced Certificate Display */}
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+            >
+              <ProfessionalCertificate 
+                certificateData={certificateData}
+                onDownload={() => toast.success('Certificate downloaded!')}
+                onShare={() => toast.success('Achievement shared!')}
+              />
+            </motion.div>
 
-            <div className="flex justify-center space-x-4 mt-8">
+            {/* Enhanced Action Buttons */}
+            <motion.div 
+              className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-6 lg:mt-8"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
               <Button
                 onClick={() => {
                   setShowCertificate(false)
@@ -446,9 +479,14 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
                   setCompletedModuleId(null)
                 }}
                 variant="outline"
+                size="lg"
+                className="flex-1 sm:flex-none"
               >
-                Return to Modules
+                <BookOpen size={18} className="mr-2" />
+                <span className="hidden sm:inline">Return to Modules</span>
+                <span className="sm:hidden">Back to Modules</span>
               </Button>
+              
               <Button
                 onClick={() => {
                   // Start next module or go to quiz
@@ -457,10 +495,14 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
                   setCurrentModule(null)
                   setCompletedModuleId(null)
                 }}
+                size="lg"
+                className="flex-1 sm:flex-none bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
               >
-                Continue Learning
+                <Sparkle size={18} className="mr-2" />
+                <span className="hidden sm:inline">Continue Learning</span>
+                <span className="sm:hidden">Continue</span>
               </Button>
-            </div>
+            </motion.div>
           </div>
         </div>
       )
@@ -472,116 +514,214 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
     const progress = ((currentSectionIndex + 1) / currentModule.content.length) * 100
 
     return (
-      <div className="min-h-screen bg-background">
-        {/* Header */}
+      <div className="min-h-screen bg-background flex flex-col">
+        {/* Enhanced Responsive Study Header */}
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="border-b bg-card/50 backdrop-blur-sm"
+          className="border-b bg-card/80 backdrop-blur-lg sticky top-0 z-10 safe-area-top"
         >
-          <div className="max-w-6xl mx-auto px-4 py-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center space-x-3 min-w-0 flex-1">
                 <Button
                   variant="ghost"
                   onClick={() => setIsStudying(false)}
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-2 flex-shrink-0"
+                  size="sm"
                 >
-                  <ArrowLeft size={20} />
-                  <span>Back to Modules</span>
+                  <ArrowLeft size={16} />
+                  <span className="hidden sm:inline">Back to Modules</span>
+                  <span className="sm:hidden">Back</span>
                 </Button>
                 
-                <div className="flex items-center space-x-3">
-                  {currentModule.icon}
-                  <div>
-                    <h1 className="text-xl font-bold">{currentModule.title}</h1>
-                    <p className="text-sm text-muted-foreground">
+                <div className="flex items-center space-x-3 min-w-0">
+                  <div className="flex-shrink-0">{currentModule.icon}</div>
+                  <div className="min-w-0">
+                    <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground truncate">
+                      {currentModule.title}
+                    </h1>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
                       Section {currentSectionIndex + 1} of {currentModule.content.length}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
                 <Badge variant="outline" className={getDifficultyColor(currentModule.difficulty)}>
                   {currentModule.difficulty}
                 </Badge>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-xs sm:text-sm text-muted-foreground">
                   {Math.round(progress)}% Complete
                 </div>
               </div>
             </div>
 
+            {/* Enhanced Progress Bar */}
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               className="mt-4"
             >
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-xs font-medium">Progress</span>
+                <span className="text-xs text-muted-foreground">
+                  {currentSectionIndex + 1}/{currentModule.content.length}
+                </span>
+              </div>
               <Progress value={progress} className="h-2" />
             </motion.div>
           </div>
         </motion.div>
 
-        {/* Content */}
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        {/* Enhanced Content Area */}
+        <div className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8 safe-area-bottom">
           <motion.div
             key={currentSectionIndex}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3 }}
+            className="max-w-4xl mx-auto"
           >
             <Card className="relative overflow-hidden">
+              {/* Enhanced Background Animation */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5"
-                animate={{ x: [-100, 400] }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3"
+                animate={{ 
+                  background: [
+                    "linear-gradient(45deg, rgba(59, 130, 246, 0.03), transparent, rgba(139, 92, 246, 0.03))",
+                    "linear-gradient(135deg, rgba(139, 92, 246, 0.03), transparent, rgba(59, 130, 246, 0.03))",
+                    "linear-gradient(225deg, rgba(59, 130, 246, 0.03), transparent, rgba(139, 92, 246, 0.03))"
+                  ]
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               />
 
-              <CardHeader className="relative z-10">
-                <CardTitle className="text-2xl mb-2">{currentSection.title}</CardTitle>
-                <div className="flex items-center space-x-4">
-                  <Badge variant="secondary">
-                    <Clock size={14} className="mr-1" />
+              <CardHeader className="relative z-10 p-4 sm:p-6 lg:p-8">
+                <CardTitle className="text-xl sm:text-2xl lg:text-3xl mb-3 lg:mb-4">
+                  {currentSection.title}
+                </CardTitle>
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                  <Badge variant="secondary" className="text-xs sm:text-sm">
+                    <Clock size={12} className="mr-1" />
                     {currentSection.duration} min
                   </Badge>
-                  <Badge variant="outline">{currentSection.type}</Badge>
+                  <Badge variant="outline" className="text-xs sm:text-sm capitalize">
+                    {currentSection.type}
+                  </Badge>
+                  {currentSection.type === 'interactive' && (
+                    <Badge variant="secondary" className="bg-accent/10 text-accent text-xs sm:text-sm">
+                      ✨ Interactive
+                    </Badge>
+                  )}
                 </div>
               </CardHeader>
 
-              <CardContent className="relative z-10">
-                <div className="prose max-w-none mb-8">
-                  <p className="text-lg leading-relaxed">{currentSection.content}</p>
+              <CardContent className="relative z-10 p-4 sm:p-6 lg:p-8 pt-0">
+                {/* Enhanced Content Display */}
+                <div className="prose prose-sm sm:prose lg:prose-lg max-w-none mb-6 lg:mb-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <p className="text-base sm:text-lg leading-relaxed text-foreground">
+                      {currentSection.content}
+                    </p>
+                  </motion.div>
+                  
+                  {/* Additional interactive elements for certain content types */}
+                  {currentSection.type === 'interactive' && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.4 }}
+                      className="mt-6 p-4 sm:p-6 bg-muted/30 rounded-lg border border-border/50"
+                    >
+                      <h4 className="text-sm font-semibold mb-3 text-primary">Interactive Learning Activity</h4>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        This section includes hands-on exercises and practical applications.
+                      </p>
+                      <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+                        <Brain size={14} className="text-accent" />
+                        <span>AI-powered adaptive content</span>
+                      </div>
+                    </motion.div>
+                  )}
                 </div>
 
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Button
-                    onClick={handleCompleteSection}
-                    size="lg"
-                    className="w-full relative overflow-hidden group"
+                {/* Enhanced Navigation */}
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                  {/* Previous Section Button */}
+                  {currentSectionIndex > 0 && (
+                    <Button
+                      onClick={() => setCurrentSectionIndex(prev => prev - 1)}
+                      variant="outline"
+                      className="flex-1 sm:flex-none"
+                      size="sm"
+                    >
+                      <ArrowLeft size={16} className="mr-2" />
+                      <span className="hidden sm:inline">Previous Section</span>
+                      <span className="sm:hidden">Previous</span>
+                    </Button>
+                  )}
+
+                  {/* Main Action Button */}
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex-1"
                   >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent"
-                      animate={{ x: ['-100%', '100%'] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                    <span className="relative flex items-center justify-center">
-                      {currentSectionIndex >= currentModule.content.length - 1 ? (
-                        <>
-                          <Trophy size={20} className="mr-2" />
-                          Complete Module
-                        </>
-                      ) : (
-                        <>
-                          <CheckCircle size={20} className="mr-2" />
-                          Complete Section
-                        </>
-                      )}
-                    </span>
-                  </Button>
-                </motion.div>
+                    <Button
+                      onClick={handleCompleteSection}
+                      size="lg"
+                      className="w-full relative overflow-hidden group bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+                    >
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
+                        animate={{ x: ['-100%', '100%'] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      <span className="relative flex items-center justify-center text-sm sm:text-base">
+                        {currentSectionIndex >= currentModule.content.length - 1 ? (
+                          <>
+                            <Trophy size={18} className="mr-2" />
+                            <span className="hidden sm:inline">Complete Module & Get Certificate</span>
+                            <span className="sm:hidden">Complete Module</span>
+                          </>
+                        ) : (
+                          <>
+                            <CheckCircle size={18} className="mr-2" />
+                            <span className="hidden sm:inline">Complete Section & Continue</span>
+                            <span className="sm:hidden">Complete Section</span>
+                          </>
+                        )}
+                      </span>
+                    </Button>
+                  </motion.div>
+                </div>
+
+                {/* Progress Indicator */}
+                <div className="mt-4 sm:mt-6 text-center">
+                  <div className="flex justify-center space-x-1 sm:space-x-2">
+                    {currentModule.content.map((_, idx) => (
+                      <motion.div
+                        key={idx}
+                        className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${
+                          idx <= currentSectionIndex ? 'bg-primary' : 'bg-muted'
+                        }`}
+                        animate={{
+                          scale: idx === currentSectionIndex ? [1, 1.2, 1] : 1
+                        }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Section Progress
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </motion.div>
@@ -591,41 +731,53 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Enhanced Responsive Header */}
       <motion.div
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="border-b bg-card/50 backdrop-blur-sm"
+        className="border-b bg-card/80 backdrop-blur-lg sticky top-0 z-10 safe-area-top"
       >
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center space-x-3 min-w-0 flex-1">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="flex-shrink-0"
               >
-                <BookOpen size={32} className="text-primary" />
+                <BookOpen size={28} className="text-primary lg:w-8 lg:h-8" />
               </motion.div>
-              <div>
-                <h1 className="text-2xl font-bold">Enhanced Learning Modules</h1>
-                <p className="text-muted-foreground">Master cybersecurity with our comprehensive curriculum</p>
+              <div className="min-w-0">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground truncate">
+                  Enhanced Learning Modules
+                </h1>
+                <p className="text-sm sm:text-base text-muted-foreground truncate">
+                  Master cybersecurity with our comprehensive curriculum
+                </p>
               </div>
             </div>
             
             {onBack && (
-              <Button variant="outline" onClick={onBack}>
-                <ArrowLeft size={20} className="mr-2" />
-                Back to Dashboard
+              <Button 
+                variant="outline" 
+                onClick={onBack}
+                className="flex items-center space-x-2 flex-shrink-0"
+                size="sm"
+              >
+                <ArrowLeft size={16} />
+                <span className="hidden sm:inline">Back to Dashboard</span>
+                <span className="sm:hidden">Back</span>
               </Button>
             )}
           </div>
         </div>
       </motion.div>
 
-      {/* Modules Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+      {/* Enhanced Modules Grid with Better Responsive Layout */}
+      <div className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8 safe-area-bottom">
+        {/* Improved Grid System */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {modules.map((module, index) => {
             const progress = getModuleProgress(module.id)
             const isUnlocked = isModuleUnlocked(module)
@@ -635,95 +787,111 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
                 key={module.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="group"
+                transition={{ delay: index * 0.08 }}
+                whileHover={{ y: -4, scale: 1.02 }}
+                className="group h-full"
               >
-                <Card className={`card-hover relative overflow-hidden h-full ${
+                <Card className={`card-hover relative overflow-hidden h-full flex flex-col ${
                   !isUnlocked ? 'opacity-75' : ''
                 } ${
-                  progress?.completed ? 'border-green-300 bg-gradient-to-br from-green-50 to-emerald-50' : ''
+                  progress?.completed ? 'border-green-300 bg-gradient-to-br from-green-50/50 to-emerald-50/50' : ''
                 }`}>
-                  {/* Animated background */}
+                  {/* Enhanced Visual Effects */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent"
-                    animate={{ x: [-300, 400] }}
+                    className="absolute inset-0 bg-gradient-to-br from-transparent via-primary/3 to-transparent"
+                    animate={{ rotate: [0, 360] }}
                     transition={{ 
-                      duration: 8 + index * 0.5, 
+                      duration: 20 + index * 2, 
                       repeat: Infinity, 
-                      ease: "linear",
-                      delay: index * 0.2
+                      ease: "linear"
                     }}
                   />
 
-                  {progress?.completed && (
-                    <motion.div
-                      className="absolute top-4 right-4"
-                      animate={{ rotate: 360, scale: [1, 1.2, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
-                      <CheckCircle size={24} className="text-green-600" weight="fill" />
-                    </motion.div>
-                  )}
+                  {/* Status Indicators */}
+                  <div className="absolute top-3 right-3 z-10 flex space-x-2">
+                    {progress?.completed && (
+                      <motion.div
+                        animate={{ 
+                          rotate: 360, 
+                          scale: [1, 1.2, 1] 
+                        }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        <CheckCircle size={20} className="text-green-600" weight="fill" />
+                      </motion.div>
+                    )}
 
-                  {module.certification && (
-                    <motion.div
-                      className="absolute top-4 left-4"
-                      animate={{ rotate: [0, 10, -10, 0] }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                    >
-                      <CertificateIcon size={20} className="text-yellow-600" weight="fill" />
-                    </motion.div>
-                  )}
+                    {module.certification && (
+                      <motion.div
+                        animate={{ rotate: [0, 10, -10, 0] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                      >
+                        <CertificateIcon size={18} className="text-yellow-600" weight="fill" />
+                      </motion.div>
+                    )}
+                  </div>
 
-                  <CardHeader className="relative z-10">
-                    <div className="flex items-center space-x-3 mb-3">
+                  <CardHeader className="relative z-10 p-4 lg:p-6 flex-shrink-0">
+                    {/* Module Icon and Title */}
+                    <div className="flex items-start space-x-3 mb-3">
                       <motion.div
                         whileHover={{ scale: 1.2, rotate: 15 }}
                         transition={{ type: "spring", stiffness: 300 }}
+                        className="flex-shrink-0 mt-1"
                       >
                         {isUnlocked ? module.icon : <Lock size={24} className="text-muted-foreground" />}
                       </motion.div>
-                      <div className="flex-1">
-                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                      <div className="min-w-0 flex-1">
+                        <CardTitle className="text-base sm:text-lg group-hover:text-primary transition-colors line-clamp-2">
                           {module.title}
                         </CardTitle>
-                        <div className="flex items-center space-x-2 mt-1">
-                          <Badge variant="secondary" className={getDifficultyColor(module.difficulty)}>
+                        <div className="flex flex-wrap items-center gap-2 mt-2">
+                          <Badge 
+                            variant="secondary" 
+                            className={`${getDifficultyColor(module.difficulty)} text-xs`}
+                          >
                             {module.difficulty}
                           </Badge>
                           <Badge variant="outline" className="text-xs">
-                            <Clock size={12} className="mr-1" />
+                            <Clock size={10} className="mr-1" />
                             {module.estimatedTime}
                           </Badge>
                         </div>
                       </div>
                     </div>
 
-                    <p className="text-sm text-muted-foreground mb-4">{module.description}</p>
+                    <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+                      {module.description}
+                    </p>
 
-                    {/* Learning Objectives */}
+                    {/* Condensed Learning Objectives */}
                     <div className="space-y-2">
-                      <h4 className="text-sm font-semibold">Learning Objectives:</h4>
-                      <ul className="text-xs text-muted-foreground space-y-1">
+                      <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                        Key Skills
+                      </h4>
+                      <div className="grid grid-cols-1 gap-1">
                         {module.learningObjectives.slice(0, 2).map((objective, idx) => (
-                          <li key={idx} className="flex items-start space-x-2">
-                            <Star size={12} className="text-yellow-500 mt-0.5 flex-shrink-0" />
-                            <span>{objective}</span>
-                          </li>
+                          <div key={idx} className="flex items-start space-x-2">
+                            <Star size={10} className="text-yellow-500 mt-1 flex-shrink-0" />
+                            <span className="text-xs text-muted-foreground line-clamp-1">
+                              {objective}
+                            </span>
+                          </div>
                         ))}
                         {module.learningObjectives.length > 2 && (
-                          <li className="text-primary">+{module.learningObjectives.length - 2} more objectives</li>
+                          <span className="text-xs text-primary">
+                            +{module.learningObjectives.length - 2} more skills
+                          </span>
                         )}
-                      </ul>
+                      </div>
                     </div>
                   </CardHeader>
 
-                  <CardContent className="relative z-10">
-                    {/* Topics */}
+                  <CardContent className="relative z-10 p-4 lg:p-6 pt-0 flex-1 flex flex-col">
+                    {/* Compact Topics Display */}
                     <div className="mb-4">
                       <div className="flex flex-wrap gap-1">
-                        {module.topics.map((topic, idx) => (
+                        {module.topics.slice(0, 4).map((topic, idx) => (
                           <motion.div
                             key={idx}
                             whileHover={{ scale: 1.05 }}
@@ -734,13 +902,18 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
                             </Badge>
                           </motion.div>
                         ))}
+                        {module.topics.length > 4 && (
+                          <Badge variant="outline" className="text-xs opacity-60">
+                            +{module.topics.length - 4}
+                          </Badge>
+                        )}
                       </div>
                     </div>
 
-                    {/* Prerequisites */}
+                    {/* Compact Prerequisites */}
                     {module.prerequisites.length > 0 && (
                       <div className="mb-4">
-                        <p className="text-xs text-muted-foreground mb-2">Prerequisites:</p>
+                        <p className="text-xs text-muted-foreground mb-1">Prerequisites:</p>
                         <div className="flex flex-wrap gap-1">
                           {module.prerequisites.map((prereqId, idx) => {
                             const prereqModule = modules.find(m => m.id === prereqId)
@@ -759,7 +932,7 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
                       </div>
                     )}
 
-                    {/* Progress */}
+                    {/* Progress Bar */}
                     {progress && (
                       <motion.div 
                         className="mb-4"
@@ -767,55 +940,62 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.5 }}
                       >
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium">Progress</span>
-                          <span className="text-sm text-muted-foreground">{progress.progress}%</span>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs font-medium">Progress</span>
+                          <span className="text-xs text-muted-foreground">{progress.progress}%</span>
                         </div>
-                        <Progress value={progress.progress} className="h-2" />
+                        <Progress value={progress.progress} className="h-1.5" />
                       </motion.div>
                     )}
 
-                    {/* Action Button */}
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <Button 
-                        onClick={() => handleStartModule(module)}
-                        disabled={!isUnlocked}
-                        className="w-full relative overflow-hidden group"
-                        variant={progress?.completed ? "outline" : "default"}
+                    {/* Action Button - Always at bottom */}
+                    <div className="mt-auto">
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                       >
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent"
-                          animate={{ x: ['-100%', '100%'] }}
-                          transition={{ duration: 3, repeat: Infinity }}
-                        />
-                        <span className="relative flex items-center justify-center">
-                          {!isUnlocked ? (
-                            <>
-                              <Lock size={18} className="mr-2" />
-                              Locked
-                            </>
-                          ) : progress?.completed ? (
-                            <>
-                              <CheckCircle size={18} className="mr-2" />
-                              Review Module
-                            </>
-                          ) : progress?.progress ? (
-                            <>
-                              <Play size={18} className="mr-2" />
-                              Continue Learning
-                            </>
-                          ) : (
-                            <>
-                              <BookOpen size={18} className="mr-2" />
-                              Start Module
-                            </>
-                          )}
-                        </span>
-                      </Button>
-                    </motion.div>
+                        <Button 
+                          onClick={() => handleStartModule(module)}
+                          disabled={!isUnlocked}
+                          className="w-full relative overflow-hidden group text-sm"
+                          variant={progress?.completed ? "outline" : "default"}
+                          size="sm"
+                        >
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent"
+                            animate={{ x: ['-100%', '100%'] }}
+                            transition={{ duration: 3, repeat: Infinity }}
+                          />
+                          <span className="relative flex items-center justify-center">
+                            {!isUnlocked ? (
+                              <>
+                                <Lock size={14} className="mr-2" />
+                                <span className="hidden sm:inline">Locked</span>
+                                <span className="sm:hidden">🔒</span>
+                              </>
+                            ) : progress?.completed ? (
+                              <>
+                                <CheckCircle size={14} className="mr-2" />
+                                <span className="hidden sm:inline">Review Module</span>
+                                <span className="sm:hidden">Review</span>
+                              </>
+                            ) : progress?.progress ? (
+                              <>
+                                <Play size={14} className="mr-2" />
+                                <span className="hidden sm:inline">Continue Learning</span>
+                                <span className="sm:hidden">Continue</span>
+                              </>
+                            ) : (
+                              <>
+                                <BookOpen size={14} className="mr-2" />
+                                <span className="hidden sm:inline">Start Module</span>
+                                <span className="sm:hidden">Start</span>
+                              </>
+                            )}
+                          </span>
+                        </Button>
+                      </motion.div>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>

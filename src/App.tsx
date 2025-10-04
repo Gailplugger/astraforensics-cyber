@@ -18,6 +18,21 @@ import { Button } from './components/ui/button'
 import { Robot, Download, Trophy, TrendUp } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 
+// Enhanced viewport height handling for mobile devices
+const setViewportHeight = () => {
+  const vh = window.innerHeight * 0.01
+  document.documentElement.style.setProperty('--vh', `${vh}px`)
+}
+
+// Initialize viewport height
+setViewportHeight()
+
+// Update on resize and orientation change
+window.addEventListener('resize', setViewportHeight)
+window.addEventListener('orientationchange', () => {
+  setTimeout(setViewportHeight, 100)
+})
+
 interface UserData {
   name: string
   class: string
@@ -143,72 +158,90 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
+      <div className="min-h-screen bg-background flex items-center justify-center safe-area-top safe-area-bottom">
+        <div className="text-center px-4">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="mx-auto mb-4"
+            className="mx-auto mb-4 sm:mb-6"
           >
-            <div className="anime-spinner rounded-full h-12 w-12 border-4 border-transparent"></div>
+            <div className="anime-spinner rounded-full h-10 w-10 sm:h-12 sm:w-12 lg:h-16 lg:w-16 border-4 border-transparent"></div>
           </motion.div>
-          <p className="text-muted-foreground gradient-text">Loading AstraForensics...</p>
+          <motion.p 
+            className="text-sm sm:text-base lg:text-lg text-muted-foreground gradient-text"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            Loading AstraForensics...
+          </motion.p>
+          <motion.p 
+            className="text-xs sm:text-sm text-muted-foreground mt-2 opacity-75"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            Preparing your cybersecurity learning experience
+          </motion.p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-background relative">
-      {currentState === 'welcome' && (
-        <WelcomeTour onComplete={handleWelcomeComplete} />
-      )}
-      
-      {currentState === 'registration' && (
-        <RegistrationForm onRegistrationComplete={handleRegistrationComplete} />
-      )}
-      
-      {currentState === 'dashboard' && userData && (
-        <Dashboard 
-          userData={userData}
-          onStartLearning={handleStartLearning}
-          onTakeQuiz={handleTakeQuiz}
-          onTakeAIQuiz={handleTakeAIQuiz}
-        />
-      )}
-      
-      {currentState === 'learning' && (
-        <LearningModule 
-          onBackToDashboard={handleBackToDashboard}
-          onTakeQuiz={handleTakeQuiz}
-        />
-      )}
+    <div className="min-h-screen bg-background relative flex flex-col">
+      {/* Main Content Area */}
+      <div className="flex-1 safe-area-top">
+        {currentState === 'welcome' && (
+          <WelcomeTour onComplete={handleWelcomeComplete} />
+        )}
+        
+        {currentState === 'registration' && (
+          <RegistrationForm onRegistrationComplete={handleRegistrationComplete} />
+        )}
+        
+        {currentState === 'dashboard' && userData && (
+          <Dashboard 
+            userData={userData}
+            onStartLearning={handleStartLearning}
+            onTakeQuiz={handleTakeQuiz}
+            onTakeAIQuiz={handleTakeAIQuiz}
+          />
+        )}
+        
+        {currentState === 'learning' && (
+          <LearningModule 
+            onBackToDashboard={handleBackToDashboard}
+            onTakeQuiz={handleTakeQuiz}
+          />
+        )}
 
-      {currentState === 'enhanced-modules' && (
-        <EnhancedLearningModules
-          selectedModuleId={selectedModuleId}
-          onBack={handleBackToDashboard}
-          onComplete={handleModuleComplete}
-        />
-      )}
-      
-      {currentState === 'quiz' && (
-        <Quiz onBackToDashboard={handleBackToDashboard} />
-      )}
+        {currentState === 'enhanced-modules' && (
+          <EnhancedLearningModules
+            selectedModuleId={selectedModuleId}
+            onBack={handleBackToDashboard}
+            onComplete={handleModuleComplete}
+          />
+        )}
+        
+        {currentState === 'quiz' && (
+          <Quiz onBackToDashboard={handleBackToDashboard} />
+        )}
 
-      {currentState === 'ai-quiz' && (
-        <AIQuizGenerator 
-          topic="cybersecurity"
-          difficulty="medium"
-          questionCount={10}
-          onComplete={handleQuizComplete}
-          onBack={handleBackToDashboard}
-        />
-      )}
+        {currentState === 'ai-quiz' && (
+          <AIQuizGenerator 
+            topic="cybersecurity"
+            difficulty="medium"
+            questionCount={10}
+            onComplete={handleQuizComplete}
+            onBack={handleBackToDashboard}
+          />
+        )}
+      </div>
 
-      {/* Enhanced AI Features - Floating Buttons */}
+      {/* Enhanced AI Features - Responsive Floating Buttons */}
       {userData && currentState === 'dashboard' && (
-        <div className="fixed bottom-4 right-4 flex flex-col gap-3 z-40">
+        <div className="fixed bottom-4 right-4 flex flex-col gap-2 sm:gap-3 z-40 safe-area-bottom safe-area-right">
           {/* Main AI Assistant */}
           <motion.div
             initial={{ scale: 0 }}
@@ -218,19 +251,19 @@ function App() {
             <Button
               onClick={() => setShowAIAssistant(true)}
               size="lg"
-              className="rounded-full w-16 h-16 shadow-lg anime-glow bg-gradient-to-r from-primary to-accent"
+              className="rounded-full w-12 h-12 sm:w-16 sm:h-16 shadow-lg anime-glow bg-gradient-to-r from-primary to-accent"
               title="AI Learning Assistant"
             >
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               >
-                <Robot size={24} className="text-white" weight="fill" />
+                <Robot size={20} className="text-white sm:w-6 sm:h-6" weight="fill" />
               </motion.div>
             </Button>
           </motion.div>
 
-          {/* Additional AI Features */}
+          {/* Additional AI Features - Responsive Grid */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -241,30 +274,30 @@ function App() {
               onClick={() => setShowOfflineLearning(true)}
               size="sm"
               variant="secondary"
-              className="rounded-full w-12 h-12 shadow-lg"
+              className="rounded-full w-10 h-10 sm:w-12 sm:h-12 shadow-lg"
               title="Offline Learning"
             >
-              <Download size={16} />
+              <Download size={14} className="sm:w-4 sm:h-4" />
             </Button>
             
             <Button
               onClick={() => setShowSkillAssessment(true)}
               size="sm"
               variant="secondary"
-              className="rounded-full w-12 h-12 shadow-lg"
+              className="rounded-full w-10 h-10 sm:w-12 sm:h-12 shadow-lg"
               title="Skill Assessment"
             >
-              <Trophy size={16} />
+              <Trophy size={14} className="sm:w-4 sm:h-4" />
             </Button>
             
             <Button
               onClick={() => setShowCareerRecommendation(true)}
               size="sm"
               variant="secondary"
-              className="rounded-full w-12 h-12 shadow-lg"
+              className="rounded-full w-10 h-10 sm:w-12 sm:h-12 shadow-lg"
               title="Career Guidance"
             >
-              <TrendUp size={16} />
+              <TrendUp size={14} className="sm:w-4 sm:h-4" />
             </Button>
           </motion.div>
         </div>
@@ -316,9 +349,13 @@ function App() {
         userData={userData}
       />
 
-      {/* Footer */}
-      <footer className="fixed bottom-0 left-0 right-0 p-4 text-center text-xs text-muted-foreground bg-background/80 backdrop-blur-sm border-t">
-        <p>© 2024 AstraForensics - Advanced AI-Powered Cybersecurity Learning Platform | Made by AstraForensics</p>
+      {/* Enhanced Responsive Footer */}
+      <footer className="safe-area-bottom border-t bg-background/95 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-3">
+          <p className="text-center text-xs sm:text-sm text-muted-foreground">
+            © 2024 AstraForensics - Advanced AI-Powered Cybersecurity Learning Platform | Made by AstraForensics
+          </p>
+        </div>
       </footer>
       
       <Toaster 
