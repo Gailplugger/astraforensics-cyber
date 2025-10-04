@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Certificate stamp design -->
+  <defs>
+    <radialGradient id="stampGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Outer circle -->
+  <circle cx="60" cy="60" r="58" fill="url(#stampGradient)" stroke="#1E40AF" stroke-width="2" filter="url(#glow)" opacity="0.9"/>
+  
+  <!-- Inner decorative circles -->
+  <circle cx="60" cy="60" r="48" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="60" cy="60" r="40" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.4"/>
+  
+  <!-- Central shield -->
+  <path d="M60 25 L70 30 L70 45 C70 52 65 58 60 60 C55 58 50 52 50 45 L50 30 Z" fill="#FFFFFF" stroke="#1E40AF" stroke-width="1.5"/>
+  
+  <!-- Shield checkmark -->
+  <path d="M55 42 L58 45 L65 38" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Top text arc -->
+  <path id="topArc" d="M 25 60 A 35 35 0 0 1 95 60" fill="none"/>
+  <text font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#FFFFFF">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">ASTRAFORENSICS</textPath>
+  </text>
+  
+  <!-- Bottom text arc -->
+  <path id="bottomArc" d="M 95 60 A 35 35 0 0 1 25 60" fill="none"/>
+  <text font-family="Inter, sans-serif" font-size="8" font-weight="500" fill="#FFFFFF">
+    <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">VERIFIED COMPLETION</textPath>
+  </text>
+  
+  <!-- Decorative stars -->
+  <g fill="#FFFFFF" opacity="0.8">
+    <polygon points="30,35 32,40 37,40 33,43 35,48 30,45 25,48 27,43 23,40 28,40" transform="scale(0.6)"/>
+    <polygon points="90,35 92,40 97,40 93,43 95,48 90,45 85,48 87,43 83,40 88,40" transform="scale(0.6)"/>
+    <polygon points="30,85 32,90 37,90 33,93 35,98 30,95 25,98 27,93 23,90 28,90" transform="scale(0.6)"/>
+    <polygon points="90,85 92,90 97,90 93,93 95,98 90,95 85,98 87,93 83,90 88,90" transform="scale(0.6)"/>
+  </g>
+  
+  <!-- Central year -->
+  <text x="60" y="80" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">2024</text>
+</svg>
