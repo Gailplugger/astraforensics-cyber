@@ -1,56 +1,62 @@
-/* Enhanced AstraForensics Theme - Production Ready */
+/* Enhanced AstraForensics Theme - Production Ready & Mobile Optimized */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 /* Custom variables for AstraForensics learning platform */
 :root {
-  /* Core theme colors - cybersecurity inspired */
-  --background: oklch(0.98 0.01 240); /* Almost white with cool undertone */
-  --foreground: oklch(0.15 0.02 240); /* Dark blue-gray */
+  /* Core theme colors - enhanced cybersecurity palette */
+  --background: oklch(0.99 0.005 240); /* Ultra clean white with subtle cool tone */
+  --foreground: oklch(0.08 0.015 240); /* Rich dark blue-black for maximum contrast */
 
-  --card: oklch(1 0 0); /* Pure white for cards */
-  --card-foreground: oklch(0.2 0.02 240); /* Slightly lighter than foreground */
+  --card: oklch(0.99 0.008 240); /* Subtle off-white for cards */
+  --card-foreground: oklch(0.12 0.02 240); /* Dark blue-gray for card text */
   
-  --popover: oklch(1 0 0); /* White for popovers */
-  --popover-foreground: oklch(0.2 0.02 240);
+  --popover: oklch(0.98 0.01 240); /* Slightly darker for popovers */
+  --popover-foreground: oklch(0.15 0.02 240);
 
-  /* Action colors - modern cybersecurity palette */
-  --primary: oklch(0.55 0.18 240); /* Deep cyber blue */
-  --primary-foreground: oklch(0.98 0.01 240); /* Light text on primary */
+  /* Action colors - sophisticated cybersecurity palette */
+  --primary: oklch(0.52 0.22 235); /* Deeper, more saturated cyber blue */
+  --primary-foreground: oklch(0.98 0.01 235); /* Clean white on primary */
   
-  --secondary: oklch(0.95 0.02 240); /* Light blue-gray */
-  --secondary-foreground: oklch(0.25 0.02 240); /* Dark text on secondary */
+  --secondary: oklch(0.94 0.015 240); /* Refined light blue-gray */
+  --secondary-foreground: oklch(0.22 0.02 240); /* Darker text for better contrast */
   
-  --accent: oklch(0.65 0.15 280); /* Purple accent for AI features */
-  --accent-foreground: oklch(0.98 0.01 280); /* Light text on accent */
+  --accent: oklch(0.62 0.18 285); /* Enhanced purple for AI features */
+  --accent-foreground: oklch(0.97 0.01 285); /* Pure white on accent */
   
-  --destructive: oklch(0.6 0.18 15); /* Cybersecurity red */
-  --destructive-foreground: oklch(0.98 0.01 15);
+  --destructive: oklch(0.58 0.22 20); /* Enhanced cybersecurity red */
+  --destructive-foreground: oklch(0.98 0.01 20);
 
-  /* Supporting UI colors */
-  --muted: oklch(0.96 0.01 240); /* Very light blue-gray */
-  --muted-foreground: oklch(0.45 0.02 240); /* Medium gray for muted text */
+  /* Supporting UI colors - enhanced contrast */
+  --muted: oklch(0.95 0.008 240); /* Refined muted background */
+  --muted-foreground: oklch(0.42 0.025 240); /* Better contrast for muted text */
   
-  --border: oklch(0.9 0.02 240); /* Light border color */
-  --input: oklch(0.9 0.02 240); /* Input border color */
-  --ring: oklch(0.55 0.18 240); /* Focus ring - matches primary */
+  --border: oklch(0.88 0.015 240); /* More defined borders */
+  --input: oklch(0.86 0.018 240); /* Clearer input borders */
+  --ring: oklch(0.52 0.22 235); /* Focus ring matches primary */
 
-  /* Success and status colors */
-  --success: oklch(0.65 0.12 140); /* Soft Green */
-  --warning: oklch(0.75 0.08 85); /* Warm Yellow */
-  --info: oklch(0.65 0.08 250); /* Soft Blue */
+  /* Enhanced status colors */
+  --success: oklch(0.61 0.15 145); /* More vibrant success green */
+  --warning: oklch(0.72 0.12 85); /* Enhanced warning yellow */
+  --info: oklch(0.61 0.12 250); /* Clearer info blue */
   
-  /* Anime-inspired accent colors for fun elements */
-  --anime-pink: oklch(0.8 0.15 340); /* Anime Pink */
-  --anime-blue: oklch(0.7 0.2 230); /* Anime Blue */
-  --anime-purple: oklch(0.75 0.18 280); /* Anime Purple */
+  /* Refined anime-inspired colors */
+  --anime-pink: oklch(0.75 0.18 340); /* More sophisticated pink */
+  --anime-blue: oklch(0.65 0.22 230); /* Enhanced anime blue */
+  --anime-purple: oklch(0.7 0.2 285); /* Richer purple */
 
   /* Professional certificate colors */
-  --cert-gold: oklch(0.75 0.15 60); /* Professional gold */
-  --cert-silver: oklch(0.8 0.02 240); /* Professional silver */
+  --cert-gold: oklch(0.72 0.18 65); /* Richer gold */
+  --cert-silver: oklch(0.78 0.015 240); /* Enhanced silver */
+  --cert-bronze: oklch(0.68 0.12 45); /* Bronze accent */
 
-  /* Border radius for consistent design language */
-  --radius: 0.75rem; /* Slightly more rounded for modern feel */
+  /* Enhanced gradients for modern UI */
+  --gradient-primary: linear-gradient(135deg, var(--primary), oklch(0.58 0.2 250));
+  --gradient-accent: linear-gradient(135deg, var(--accent), oklch(0.68 0.16 310));
+  --gradient-success: linear-gradient(135deg, var(--success), oklch(0.65 0.13 160));
+
+  /* Border radius for sophisticated design language */
+  --radius: 0.875rem; /* Optimized for both desktop and mobile */
 }
 
 /* Map the CSS variables to Tailwind's theme system */
@@ -75,18 +81,38 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Status colors */
+  /* Enhanced status colors */
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-info: var(--info);
 
+  /* Anime colors for special features */
+  --color-anime-pink: var(--anime-pink);
+  --color-anime-blue: var(--anime-blue);
+  --color-anime-purple: var(--anime-purple);
+
+  /* Certificate colors */
+  --color-cert-gold: var(--cert-gold);
+  --color-cert-silver: var(--cert-silver);
+  --color-cert-bronze: var(--cert-bronze);
+
   /* Map radius variables to create a consistent rounding system */
+  --radius-xs: calc(var(--radius) * 0.25);
   --radius-sm: calc(var(--radius) * 0.5);
   --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) * 1.5);
-  --radius-xl: calc(var(--radius) * 2);
-  --radius-2xl: calc(var(--radius) * 3);
+  --radius-lg: calc(var(--radius) * 1.25);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 2.5);
   --radius-full: 9999px;
+
+  /* Responsive spacing scale */
+  --space-mobile-sm: 0.75rem;
+  --space-mobile-md: 1rem;
+  --space-mobile-lg: 1.5rem;
+  --space-desktop-sm: 1rem;
+  --space-desktop-md: 1.5rem;
+  --space-desktop-lg: 2rem;
 }
 
 /* Application-specific styles */
@@ -99,11 +125,37 @@
   body {
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     font-variation-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  /* Ensure touch targets are large enough on mobile */
+  @media (max-width: 768px) {
+    button, a, input, select, textarea {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+
+  /* Improve text rendering on mobile */
+  @media (max-width: 768px) {
+    body {
+      font-size: 16px; /* Prevents zoom on iOS */
+      line-height: 1.5;
+    }
+  }
+
+  /* Custom focus styles for accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
   }
 }
 

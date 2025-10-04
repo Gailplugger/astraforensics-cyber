@@ -21,7 +21,11 @@ import {
   Medal,
   Sparkle,
   Star,
-  Certificate
+  Certificate,
+  ChartLine,
+  Lightning,
+  Gear,
+  List
 } from '@phosphor-icons/react'
 import cyberHero from '@/assets/images/cybersecurity-hero.svg'
 import animeCharacter from '@/assets/images/anime-character.svg'
@@ -128,10 +132,10 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Beginner': return 'bg-green-100 text-green-800'
-      case 'Intermediate': return 'bg-yellow-100 text-yellow-800'
-      case 'Advanced': return 'bg-red-100 text-red-800'
-      default: return 'bg-gray-100 text-gray-800'
+      case 'Beginner': return 'bg-success/10 text-success border-success/20'
+      case 'Intermediate': return 'bg-warning/10 text-warning border-warning/20'
+      case 'Advanced': return 'bg-destructive/10 text-destructive border-destructive/20'
+      default: return 'bg-muted text-muted-foreground border-border'
     }
   }
 
@@ -144,19 +148,19 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
+      {/* Responsive Header */}
       <motion.div 
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="border-b bg-card/50 backdrop-blur-sm relative overflow-hidden"
+        className="border-b bg-card/50 backdrop-blur-sm relative overflow-hidden safe-area-top"
       >
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-5">
           <img src={cyberHero} alt="" className="w-full h-full object-cover" />
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 py-6 relative">
-          <div className="flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6 relative">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <motion.div 
               className="flex items-center space-x-3"
               whileHover={{ scale: 1.05 }}
@@ -166,24 +170,25 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                 animate={{ rotate: [0, 360] }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >
-                <Shield size={32} className="text-primary" weight="bold" />
+                <Shield size={28} className="text-primary sm:w-8 sm:h-8" weight="bold" />
               </motion.div>
               <div>
-                <h1 className="text-2xl font-bold text-foreground">AstraForensics</h1>
-                <p className="text-sm text-muted-foreground">Cybersecurity Learning Platform</p>
+                <h1 className="text-xl sm:text-2xl font-bold text-foreground">AstraForensics</h1>
+                <p className="text-xs sm:text-sm text-muted-foreground">Cybersecurity Learning Platform</p>
               </div>
             </motion.div>
-            <div className="flex items-center space-x-4">
+            
+            <div className="flex items-center space-x-3 sm:space-x-4 w-full sm:w-auto justify-between sm:justify-end">
               <motion.img 
                 src={animeCharacter} 
                 alt="Character" 
-                className="w-12 h-12 rounded-full border-2 border-primary/20"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-primary/20"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               />
-              <div className="text-right">
+              <div className="text-left sm:text-right">
                 <motion.p 
-                  className="font-medium text-foreground"
+                  className="font-medium text-foreground text-sm sm:text-base"
                   initial={{ x: 20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
@@ -191,7 +196,7 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                   Welcome back, {userData.name}! ✨
                 </motion.p>
                 <motion.p 
-                  className="text-sm text-muted-foreground"
+                  className="text-xs sm:text-sm text-muted-foreground"
                   initial={{ x: 20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.3 }}
@@ -204,92 +209,95 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
         </div>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Stats Overview */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 safe-area-bottom">
+        {/* Responsive Stats Overview */}
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 md:mb-8"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
           <motion.div
-            whileHover={{ y: -5, scale: 1.02 }}
+            whileHover={{ y: -2, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <Card className="relative overflow-hidden">
-              <CardContent className="p-6">
+              <CardContent className="p-3 sm:p-4 lg:p-6">
                 <div className="flex items-center space-x-2">
                   <motion.div
                     animate={{ scale: [1, 1.1, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
-                    <TrendUp size={24} className="text-primary" />
+                    <TrendUp size={20} className="text-primary sm:w-6 sm:h-6" />
                   </motion.div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <motion.p 
-                      className="text-2xl font-bold text-foreground"
+                      className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground truncate"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.5 }}
                     >
                       {getOverallProgress()}%
                     </motion.p>
-                    <p className="text-sm text-muted-foreground">Overall Progress</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Overall Progress</p>
                   </div>
                 </div>
                 <motion.div
-                  className="absolute top-0 right-0 w-16 h-16 opacity-10"
+                  className="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16 opacity-10"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 >
-                  <Sparkle size={16} className="text-primary" weight="fill" />
+                  <Sparkle size={12} className="text-primary sm:w-4 sm:h-4" weight="fill" />
                 </motion.div>
               </CardContent>
             </Card>
           </motion.div>
 
           <motion.div
-            whileHover={{ y: -5, scale: 1.02 }}
+            whileHover={{ y: -2, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <Card className="relative overflow-hidden">
-              <CardContent className="p-6">
+              <CardContent className="p-3 sm:p-4 lg:p-6">
                 <div className="flex items-center space-x-2">
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   >
-                    <CheckCircle size={24} className="text-green-600" />
+                    <CheckCircle size={20} className="text-success sm:w-6 sm:h-6" />
                   </motion.div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <motion.p 
-                      className="text-2xl font-bold text-foreground"
+                      className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground truncate"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.6 }}
                     >
                       {getCompletedModules()}
                     </motion.p>
-                    <p className="text-sm text-muted-foreground">Modules Completed</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Modules Completed</p>
                   </div>
                 </div>
                 <motion.div
-                  className="absolute top-0 right-0 w-16 h-16 opacity-10"
+                  className="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16 opacity-10"
                   animate={{ rotate: -360 }}
                   transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
                 >
-                  <Star size={16} className="text-green-600" weight="fill" />
+                  <Star size={12} className="text-success sm:w-4 sm:h-4" weight="fill" />
                 </motion.div>
               </CardContent>
             </Card>
           </motion.div>
 
           <motion.div
-            whileHover={{ y: -5, scale: 1.02 }}
+            whileHover={{ y: -2, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <Card className="relative overflow-hidden">
-              <CardContent className="p-6">
+              <CardContent className="p-3 sm:p-4 lg:p-6">
                 <div className="flex items-center space-x-2">
                   <motion.div
                     animate={{ 
@@ -298,18 +306,18 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                     }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
-                    <Trophy size={24} className="text-yellow-600" />
+                    <Trophy size={20} className="text-warning sm:w-6 sm:h-6" />
                   </motion.div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <motion.p 
-                      className="text-2xl font-bold text-foreground"
+                      className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground truncate"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.7 }}
                     >
                       {getAverageQuizScore()}%
                     </motion.p>
-                    <p className="text-sm text-muted-foreground">Average Quiz Score</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Average Quiz Score</p>
                   </div>
                 </div>
               </CardContent>
@@ -317,35 +325,36 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
           </motion.div>
 
           <motion.div
-            whileHover={{ y: -5, scale: 1.02 }}
+            whileHover={{ y: -2, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <Card className={`relative overflow-hidden ${(certificates && certificates.length > 0) ? 'border-yellow-300 bg-gradient-to-br from-yellow-50 to-amber-50' : ''}`}>
-              <CardContent className="p-6">
+            <Card className={`relative overflow-hidden ${(certificates && certificates.length > 0) ? 'border-cert-gold/30 bg-gradient-to-br from-cert-gold/5 to-warning/5' : ''}`}>
+              <CardContent className="p-3 sm:p-4 lg:p-6">
                 <div className="flex items-center space-x-2">
                   <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                   >
-                    <Medal size={24} className="text-yellow-600" />
+                    <Medal size={20} className="text-cert-gold sm:w-6 sm:h-6" />
                   </motion.div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <motion.p 
-                      className="text-2xl font-bold text-foreground"
+                      className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground truncate"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.8 }}
                     >
                       {certificates?.length || 0}
                     </motion.p>
-                    <p className="text-sm text-muted-foreground">Certificates Earned</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Certificates Earned</p>
                   </div>
                 </div>
                 {certificates && certificates.length > 0 && (
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="mt-2 p-0 h-auto text-xs text-yellow-700 hover:text-yellow-800"
+                    className="mt-2 p-0 h-auto text-xs text-cert-gold hover:text-cert-gold/80"
                     onClick={() => setShowCertificates(true)}
                   >
                     View certificates →
@@ -356,21 +365,22 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
           </motion.div>
         </motion.div>
 
-        {/* Certificate Gallery Section */}
+        {/* Certificate Gallery Section - Responsive */}
         {showCertificates && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8"
+            className="mb-6 md:mb-8"
           >
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 md:mb-6">
               <div className="flex items-center space-x-3">
-                <Certificate size={24} className="text-yellow-600" />
-                <h2 className="text-2xl font-bold text-foreground">My Certificates</h2>
+                <Certificate size={20} className="text-cert-gold sm:w-6 sm:h-6" />
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground">My Certificates</h2>
               </div>
               <Button
                 onClick={() => setShowCertificates(false)}
                 variant="outline"
+                size="sm"
               >
                 Hide Certificates
               </Button>
@@ -379,32 +389,32 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
           </motion.div>
         )}
 
-        {/* Learning Progress */}
+        {/* Enhanced Learning Progress - Responsive */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
         >
-          <Card className="mb-8 relative overflow-hidden">
+          <Card className="mb-6 md:mb-8 relative overflow-hidden">
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent"
               animate={{ x: [-100, 800] }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
             />
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
+            <CardHeader className="p-4 md:p-6">
+              <CardTitle className="flex items-center space-x-2 text-lg sm:text-xl">
                 <motion.div
                   animate={{ rotate: [0, 360] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                 >
-                  <Target size={24} className="text-primary" />
+                  <Target size={20} className="text-primary sm:w-6 sm:h-6" />
                 </motion.div>
                 <span>Learning Progress</span>
               </CardTitle>
-              <CardDescription>Track your cybersecurity education journey</CardDescription>
+              <CardDescription className="text-sm">Track your cybersecurity education journey</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
+            <CardContent className="p-4 md:p-6 pt-0">
+              <div className="space-y-3 md:space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">Overall Completion</span>
                   <motion.span 
@@ -427,15 +437,15 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
           </Card>
         </motion.div>
 
-        {/* AI Recommendations Section */}
+        {/* AI Recommendations Section - Enhanced & Responsive */}
         {(quizScores && Object.keys(quizScores).length > 0) && (
           <motion.div 
-            className="mb-8"
+            className="mb-6 md:mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.1 }}
           >
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 md:mb-6">
               <div className="flex items-center space-x-3">
                 <motion.div
                   animate={{ 
@@ -444,10 +454,10 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                   }}
                   transition={{ duration: 3, repeat: Infinity }}
                 >
-                  <Brain size={24} className="text-primary" />
+                  <Brain size={20} className="text-primary sm:w-6 sm:h-6" />
                 </motion.div>
-                <h2 className="text-2xl font-bold text-foreground">AI Learning Recommendations</h2>
-                <Badge variant="secondary" className="bg-purple-100 text-purple-800">
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground">AI Learning Recommendations</h2>
+                <Badge variant="secondary" className="bg-accent/10 text-accent border-accent/20 text-xs sm:text-sm">
                   ✨ Powered by AI
                 </Badge>
               </div>
@@ -455,13 +465,14 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                 onClick={() => setShowRecommendations(!showRecommendations)}
                 variant="outline"
                 className="relative overflow-hidden"
+                size="sm"
               >
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent"
                   animate={{ x: ['-100%', '100%'] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
-                <span className="relative">
+                <span className="relative text-sm">
                   {showRecommendations ? 'Hide' : 'Show'} Recommendations
                 </span>
               </Button>
@@ -480,14 +491,14 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
           </motion.div>
         )}
 
-        {/* Learning Modules */}
+        {/* Learning Modules - Responsive Grid */}
         <motion.div 
-          className="space-y-6"
+          className="space-y-4 md:space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.3 }}
         >
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center space-x-3">
               <motion.div
                 animate={{ 
@@ -496,31 +507,31 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                 }}
                 transition={{ duration: 4, repeat: Infinity }}
               >
-                <BookOpen size={24} className="text-primary" />
+                <BookOpen size={20} className="text-primary sm:w-6 sm:h-6" />
               </motion.div>
-              <h2 className="text-2xl font-bold text-foreground">Learning Modules</h2>
-              <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground">Learning Modules</h2>
+              <Badge variant="secondary" className="bg-info/10 text-info text-xs sm:text-sm">
                 {modules.length} Available
               </Badge>
             </div>
-            <div className="flex space-x-3">
-              <Button onClick={onTakeQuiz} variant="outline" className="group">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <Button onClick={onTakeQuiz} variant="outline" className="group" size="sm">
                 <motion.div
                   animate={{ rotate: [0, 15, -15, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
-                  <Trophy size={18} className="mr-2 group-hover:text-yellow-600" />
+                  <Trophy size={16} className="mr-2 group-hover:text-warning" />
                 </motion.div>
                 Practice Quiz
               </Button>
               
               {onTakeAIQuiz && (
-                <Button onClick={onTakeAIQuiz} className="group bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
+                <Button onClick={onTakeAIQuiz} className="group bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90" size="sm">
                   <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                   >
-                    <Brain size={18} className="mr-2" />
+                    <Brain size={16} className="mr-2" />
                   </motion.div>
                   AI Quiz ✨
                 </Button>
@@ -528,7 +539,7 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6">
             {modules.map((module, index) => {
               const progress = getModuleProgress(module.id)
               const isUnlocked = isModuleUnlocked(index)
@@ -539,10 +550,11 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.4 + index * 0.1 }}
-                  whileHover={{ y: -8, scale: 1.02 }}
+                  whileHover={{ y: -4, scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
                   className="group"
                 >
-                  <Card className={`card-hover relative overflow-hidden ${!isUnlocked ? 'opacity-75' : ''} ${progress?.completed ? 'border-green-300 bg-gradient-to-br from-green-50 to-emerald-50' : ''}`}>
+                  <Card className={`card-hover relative overflow-hidden h-full ${!isUnlocked ? 'opacity-75' : ''} ${progress?.completed ? 'border-success/30 bg-gradient-to-br from-success/5 to-success/10' : ''}`}>
                     {/* Animated background effect */}
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent"
@@ -557,48 +569,48 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                     
                     {progress?.completed && (
                       <motion.div
-                        className="absolute top-2 right-2"
+                        className="absolute top-3 right-3"
                         animate={{ 
                           rotate: [0, 360],
                           scale: [1, 1.2, 1]
                         }}
                         transition={{ duration: 2, repeat: Infinity }}
                       >
-                        <Sparkle size={20} className="text-green-600" weight="fill" />
+                        <Sparkle size={18} className="text-success" weight="fill" />
                       </motion.div>
                     )}
 
-                    <CardHeader>
+                    <CardHeader className="p-4 md:p-6">
                       <div className="flex items-start justify-between">
-                        <div className="flex-1">
+                        <div className="flex-1 min-w-0">
                           <div className="flex items-center space-x-2 mb-2">
                             <motion.div
                               whileHover={{ scale: 1.2, rotate: 15 }}
                               transition={{ type: "spring", stiffness: 300 }}
                             >
                               {progress?.completed ? (
-                                <CheckCircle size={20} className="text-green-600" weight="fill" />
+                                <CheckCircle size={18} className="text-success sm:w-5 sm:h-5" weight="fill" />
                               ) : isUnlocked ? (
-                                <BookOpen size={20} className="text-primary" />
+                                <BookOpen size={18} className="text-primary sm:w-5 sm:h-5" />
                               ) : (
-                                <Lock size={20} className="text-muted-foreground" />
+                                <Lock size={18} className="text-muted-foreground sm:w-5 sm:h-5" />
                               )}
                             </motion.div>
-                            <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                            <CardTitle className="text-base sm:text-lg group-hover:text-primary transition-colors truncate">
                               {module.title}
                             </CardTitle>
                           </div>
-                          <CardDescription className="mb-3">{module.description}</CardDescription>
+                          <CardDescription className="mb-3 text-sm leading-relaxed">{module.description}</CardDescription>
                           
                           <div className="flex flex-wrap gap-2 mb-3">
                             <motion.div whileHover={{ scale: 1.05 }}>
-                              <Badge variant="secondary" className={getDifficultyColor(module.difficulty)}>
+                              <Badge variant="secondary" className={`${getDifficultyColor(module.difficulty)} text-xs`}>
                                 {module.difficulty}
                               </Badge>
                             </motion.div>
                             <motion.div whileHover={{ scale: 1.05 }}>
-                              <Badge variant="outline" className="flex items-center space-x-1">
-                                <Clock size={12} />
+                              <Badge variant="outline" className="flex items-center space-x-1 text-xs">
+                                <Clock size={10} />
                                 <span>{module.duration}</span>
                               </Badge>
                             </motion.div>
@@ -606,24 +618,31 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
 
                           <div className="space-y-2">
                             <div className="flex flex-wrap gap-1">
-                              {module.topics.map((topic, idx) => (
+                              {module.topics.slice(0, 3).map((topic, idx) => (
                                 <motion.div
                                   key={idx}
                                   whileHover={{ scale: 1.05 }}
-                                  transition={{ type: "spring", stiffness: 400 }}
+                                  initial={{ opacity: 0, scale: 0.8 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={{ delay: 1.5 + index * 0.1 + idx * 0.05 }}
                                 >
-                                  <Badge variant="outline" className="text-xs hover:bg-primary/10">
+                                  <Badge variant="outline" className="text-xs bg-secondary/50 hover:bg-secondary">
                                     {topic}
                                   </Badge>
                                 </motion.div>
                               ))}
+                              {module.topics.length > 3 && (
+                                <Badge variant="outline" className="text-xs">
+                                  +{module.topics.length - 3} more
+                                </Badge>
+                              )}
                             </div>
                           </div>
                         </div>
                       </div>
                     </CardHeader>
                     
-                    <CardContent>
+                    <CardContent className="p-4 md:p-6 pt-0">
                       {progress && (
                         <motion.div 
                           className="mb-4"
@@ -668,7 +687,7 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                         <Button 
                           onClick={() => onStartLearning(module.id)}
                           disabled={!isUnlocked}
-                          className="w-full relative overflow-hidden group"
+                          className="w-full relative overflow-hidden group h-11"
                           variant={progress?.completed ? "outline" : "default"}
                         >
                           <motion.div
@@ -676,20 +695,20 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                             animate={{ x: ['-100%', '100%'] }}
                             transition={{ duration: 3, repeat: Infinity }}
                           />
-                          <span className="relative flex items-center justify-center">
+                          <span className="relative flex items-center justify-center text-sm">
                             {!isUnlocked ? (
                               <>
-                                <Lock size={18} className="mr-2" />
+                                <Lock size={16} className="mr-2" />
                                 Complete Previous Module
                               </>
                             ) : progress?.completed ? (
                               <>
-                                <CheckCircle size={18} className="mr-2" />
+                                <CheckCircle size={16} className="mr-2" />
                                 Review Module ✨
                               </>
                             ) : (
                               <>
-                                <BookOpen size={18} className="mr-2" />
+                                <BookOpen size={16} className="mr-2" />
                                 Start Learning 🚀
                               </>
                             )}
@@ -704,9 +723,9 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
           </div>
         </motion.div>
 
-        {/* Footer */}
+        {/* Responsive Footer */}
         <motion.div 
-          className="mt-16 text-center text-sm text-muted-foreground border-t pt-8 relative"
+          className="mt-12 md:mt-16 text-center text-sm text-muted-foreground border-t pt-6 md:pt-8 relative safe-area-bottom"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2 }}
@@ -718,7 +737,7 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
             transition={{ duration: 5, repeat: Infinity }}
             className="bg-gradient-to-r from-transparent via-primary/10 to-transparent h-px w-full absolute top-0"
           />
-          <div className="flex items-center justify-center space-x-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-2">
             <span>Made with</span>
             <motion.span
               animate={{ scale: [1, 1.3, 1] }}

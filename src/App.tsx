@@ -7,7 +7,7 @@ import { LearningModule } from './components/LearningModule'
 import { Quiz } from './components/Quiz'
 import { AIQuizGenerator } from './components/AIQuizGenerator'
 import { EnhancedLearningModules } from './components/EnhancedLearningModules'
-import { AIAssistant } from './components/AIAssistant'
+import { EnhancedAIAssistant } from './components/EnhancedAIAssistant'
 import { Button } from './components/ui/button'
 import { Robot } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
@@ -132,13 +132,13 @@ function App() {
         />
       )}
 
-      {/* AI Assistant Floating Button */}
+      {/* Enhanced AI Assistant Floating Button - Responsive */}
       {userData && (
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 2, type: "spring", stiffness: 300 }}
-          className="fixed bottom-6 right-6 z-40"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40"
         >
           <motion.div
             whileHover={{ scale: 1.1 }}
@@ -147,29 +147,38 @@ function App() {
             <Button
               onClick={() => setShowAIAssistant(true)}
               size="lg"
-              className="rounded-full w-16 h-16 shadow-lg anime-glow relative overflow-hidden group"
+              className="rounded-full w-12 h-12 sm:w-16 sm:h-16 shadow-lg anime-glow relative overflow-hidden group"
             >
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               >
-                <Robot size={28} className="text-white" weight="fill" />
+                <Robot size={20} className="text-white sm:w-7 sm:h-7" weight="fill" />
               </motion.div>
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-primary/30 to-transparent"
                 animate={{ x: ['-100%', '100%'] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
+              
+              {/* Notification dot for new features */}
+              <motion.div
+                className="absolute -top-1 -right-1 w-4 h-4 bg-accent rounded-full border-2 border-background"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <div className="w-full h-full bg-accent rounded-full" />
+              </motion.div>
             </Button>
           </motion.div>
         </motion.div>
       )}
 
-      {/* AI Assistant Modal */}
-      <AIAssistant
+      {/* Enhanced AI Assistant Modal */}
+      <EnhancedAIAssistant
         isOpen={showAIAssistant}
         onClose={() => setShowAIAssistant(false)}
-        userData={userData}
+        userData={userData || null}
         currentModule={selectedModuleId}
         context={currentState}
       />
