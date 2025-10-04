@@ -124,6 +124,39 @@ function App() {
     setSelectedModuleId(undefined)
   }
 
+  const getModuleName = (moduleId: string) => {
+    const moduleNames: Record<string, string> = {
+      'cybersecurity-fundamentals': 'Cybersecurity Fundamentals',
+      'network-security': 'Network Security Essentials',
+      'ethical-hacking': 'Ethical Hacking & Penetration Testing',
+      'incident-response': 'Incident Response & Digital Forensics',
+      'cloud-security': 'Cloud Security Architecture'
+    }
+    return moduleNames[moduleId] || `Module ${moduleId}`
+  }
+
+  const getModuleSkills = (moduleId: string) => {
+    const moduleSkills: Record<string, string[]> = {
+      'cybersecurity-fundamentals': ['CIA Triad', 'Risk Assessment', 'Security Frameworks', 'Threat Analysis'],
+      'network-security': ['Network Protocols', 'Firewalls', 'Zero Trust', 'Access Control'],
+      'ethical-hacking': ['Penetration Testing', 'Vulnerability Assessment', 'Security Tools', 'Ethical Hacking'],
+      'incident-response': ['Incident Response', 'Digital Forensics', 'Evidence Collection', 'Recovery Planning'],
+      'cloud-security': ['Cloud Architecture', 'Shared Responsibility', 'Cloud Controls', 'Compliance']
+    }
+    return moduleSkills[moduleId] || ['Cybersecurity', 'Security Analysis', 'Risk Management']
+  }
+
+  const getModuleDuration = (moduleId: string) => {
+    const moduleDurations: Record<string, string> = {
+      'cybersecurity-fundamentals': '6 weeks',
+      'network-security': '4 weeks',
+      'ethical-hacking': '5 weeks',
+      'incident-response': '4 weeks',
+      'cloud-security': '3 weeks'
+    }
+    return moduleDurations[moduleId] || '4 weeks'
+  }
+
   const handleModuleComplete = (moduleId: string, score: number) => {
     // Generate certificate data
     const grade = score >= 95 ? 'A+' : score >= 90 ? 'A' : score >= 85 ? 'B+' : score >= 80 ? 'B' : 'C+'
@@ -131,18 +164,22 @@ function App() {
     const certData: CertificateData = {
       id: Date.now().toString(),
       studentName: userData?.name || 'Student',
-      courseName: `Module ${moduleId}`,
+      courseName: getModuleName(moduleId),
       completionDate: new Date(),
       score,
       grade,
       moduleId,
-      skills: ['Network Security', 'Risk Assessment', 'Incident Response'],
-      duration: '4 weeks',
+      skills: getModuleSkills(moduleId),
+      duration: getModuleDuration(moduleId),
       certificateType: score >= 90 ? 'mastery' : score >= 80 ? 'achievement' : 'completion'
     }
     
     // Save certificate to user's collection
-    setUserCertificates(prev => [...(prev || []), certData])
+    setUserCertificates(prev => [...(prev || []), {
+      ...certData,
+      completedAt: certData.completionDate.toISOString(),
+      moduleName: certData.courseName
+    }])
     
     setCertificateData(certData)
     setShowCertificate(true)

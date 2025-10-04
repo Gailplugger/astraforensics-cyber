@@ -77,7 +77,7 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
   const [progress, setProgress] = useKV<ModuleProgress[]>('module-progress', [])
   const [loading, setLoading] = useState(true)
 
-  // Sample module content - in a real app this would come from API/database
+  // Enhanced module content with more variety
   const moduleData: Record<string, ModuleContent> = {
     'cybersecurity-fundamentals': {
       id: 'cybersecurity-fundamentals',
@@ -426,6 +426,13 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
             options: ['Defense in Depth', 'Zero Trust', 'Perimeter Security', 'Network Segmentation'],
             correctAnswer: 1,
             explanation: 'Zero Trust model follows the principle of never trusting and always verifying, regardless of location.'
+          },
+          {
+            id: 'q2',
+            question: 'Which type of firewall examines packets at the network layer?',
+            options: ['Application Layer', 'Stateful Inspection', 'Packet-Filtering', 'Next-Generation'],
+            correctAnswer: 2,
+            explanation: 'Packet-filtering firewalls examine packets at the network layer, checking headers for source/destination addresses and ports.'
           }
         ],
         passingScore: 80
@@ -434,6 +441,244 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
         enabled: true,
         certificateType: 'achievement',
         requiredScore: 85
+      }
+    },
+    'ethical-hacking': {
+      id: 'ethical-hacking',
+      title: 'Ethical Hacking & Penetration Testing',
+      description: 'Learn authorized security testing methodologies',
+      pages: [
+        {
+          id: 'intro-ethical-hacking',
+          title: 'Introduction to Ethical Hacking',
+          content: `
+            <h2>What is Ethical Hacking?</h2>
+            <p>Ethical hacking, also known as "white hat" hacking, involves authorized attempts to gain unauthorized access to systems to identify security vulnerabilities.</p>
+            
+            <h3>🎯 Core Principles</h3>
+            <ul>
+              <li><strong>Authorization:</strong> Always get explicit permission</li>
+              <li><strong>Scope:</strong> Stay within defined boundaries</li>
+              <li><strong>Documentation:</strong> Record all findings</li>
+              <li><strong>Responsible Disclosure:</strong> Report vulnerabilities properly</li>
+            </ul>
+            
+            <h3>🔍 Penetration Testing Phases</h3>
+            <ol>
+              <li><strong>Reconnaissance:</strong> Information gathering</li>
+              <li><strong>Scanning:</strong> System and service discovery</li>
+              <li><strong>Enumeration:</strong> Detailed target analysis</li>
+              <li><strong>Exploitation:</strong> Attempting to gain access</li>
+              <li><strong>Reporting:</strong> Documenting findings and remediation</li>
+            </ol>
+          `,
+          type: 'text',
+          duration: 20
+        },
+        {
+          id: 'tools-techniques',
+          title: 'Common Tools and Techniques',
+          content: `
+            <h2>Essential Ethical Hacking Tools</h2>
+            <p>Professional penetration testers rely on various tools to assess security posture effectively.</p>
+            
+            <h3>🔧 Reconnaissance Tools</h3>
+            <ul>
+              <li><strong>Nmap:</strong> Network discovery and port scanning</li>
+              <li><strong>Nslookup/Dig:</strong> DNS information gathering</li>
+              <li><strong>Whois:</strong> Domain registration information</li>
+              <li><strong>Maltego:</strong> Visual link analysis</li>
+            </ul>
+            
+            <h3>⚡ Vulnerability Scanners</h3>
+            <ul>
+              <li><strong>Nessus:</strong> Comprehensive vulnerability scanner</li>
+              <li><strong>OpenVAS:</strong> Open-source vulnerability assessment</li>
+              <li><strong>Burp Suite:</strong> Web application security testing</li>
+              <li><strong>OWASP ZAP:</strong> Free security testing proxy</li>
+            </ul>
+            
+            <div class="warning-box">
+              <h4>⚠️ Legal and Ethical Considerations</h4>
+              <p>Never use these tools without proper authorization. Unauthorized access is illegal and unethical.</p>
+            </div>
+          `,
+          type: 'interactive',
+          duration: 25
+        }
+      ],
+      quiz: {
+        questions: [
+          {
+            id: 'q1',
+            question: 'What is the first principle of ethical hacking?',
+            options: ['Documentation', 'Authorization', 'Exploitation', 'Reporting'],
+            correctAnswer: 1,
+            explanation: 'Authorization is fundamental - you must always get explicit permission before conducting any security testing.'
+          },
+          {
+            id: 'q2',
+            question: 'Which tool is primarily used for network discovery and port scanning?',
+            options: ['Burp Suite', 'Nmap', 'Maltego', 'OpenVAS'],
+            correctAnswer: 1,
+            explanation: 'Nmap (Network Mapper) is the standard tool for network discovery and port scanning.'
+          }
+        ],
+        passingScore: 85
+      },
+      certification: {
+        enabled: true,
+        certificateType: 'mastery',
+        requiredScore: 90
+      }
+    },
+    'incident-response': {
+      id: 'incident-response',
+      title: 'Incident Response & Digital Forensics',
+      description: 'Handle security incidents and conduct digital investigations',
+      pages: [
+        {
+          id: 'incident-fundamentals',
+          title: 'Incident Response Fundamentals',
+          content: `
+            <h2>Cybersecurity Incident Response</h2>
+            <p>Incident response is the systematic approach to handling and managing the aftermath of a security breach or cyberattack.</p>
+            
+            <h3>🚨 Incident Response Lifecycle</h3>
+            <ol>
+              <li><strong>Preparation:</strong> Develop plans, train teams, establish tools</li>
+              <li><strong>Identification:</strong> Detect and analyze potential incidents</li>
+              <li><strong>Containment:</strong> Limit damage and prevent spread</li>
+              <li><strong>Eradication:</strong> Remove threats and vulnerabilities</li>
+              <li><strong>Recovery:</strong> Restore systems to normal operations</li>
+              <li><strong>Lessons Learned:</strong> Review and improve processes</li>
+            </ol>
+            
+            <h3>👥 Incident Response Team Roles</h3>
+            <ul>
+              <li><strong>Incident Commander:</strong> Overall response coordination</li>
+              <li><strong>Security Analyst:</strong> Technical investigation and analysis</li>
+              <li><strong>Forensics Specialist:</strong> Evidence collection and analysis</li>
+              <li><strong>Communications Lead:</strong> Internal and external communications</li>
+              <li><strong>Legal Counsel:</strong> Legal implications and compliance</li>
+            </ul>
+          `,
+          type: 'text',
+          duration: 22
+        },
+        {
+          id: 'digital-forensics',
+          title: 'Digital Forensics Basics',
+          content: `
+            <h2>Digital Forensics Investigation</h2>
+            <p>Digital forensics involves the recovery and investigation of material found in digital devices, often in relation to cybercrime.</p>
+            
+            <h3>🔍 Forensics Process</h3>
+            <ol>
+              <li><strong>Identification:</strong> Recognize and prioritize evidence sources</li>
+              <li><strong>Preservation:</strong> Protect evidence from contamination</li>
+              <li><strong>Collection:</strong> Gather evidence using proper procedures</li>
+              <li><strong>Examination:</strong> Process and extract relevant information</li>
+              <li><strong>Analysis:</strong> Interpret findings and draw conclusions</li>
+              <li><strong>Presentation:</strong> Report findings clearly and accurately</li>
+            </ol>
+            
+            <h3>💾 Types of Digital Evidence</h3>
+            <ul>
+              <li><strong>Computer Systems:</strong> Hard drives, memory, system logs</li>
+              <li><strong>Mobile Devices:</strong> Smartphones, tablets, GPS devices</li>
+              <li><strong>Network Data:</strong> Traffic logs, firewall records, IDS alerts</li>
+              <li><strong>Cloud Services:</strong> Email, storage, application data</li>
+            </ul>
+            
+            <div class="best-practice">
+              <h4>📋 Chain of Custody</h4>
+              <p>Maintaining proper documentation of evidence handling is crucial for legal proceedings.</p>
+            </div>
+          `,
+          type: 'interactive',
+          duration: 28
+        }
+      ],
+      quiz: {
+        questions: [
+          {
+            id: 'q1',
+            question: 'What is the first phase of the incident response lifecycle?',
+            options: ['Identification', 'Preparation', 'Containment', 'Recovery'],
+            correctAnswer: 1,
+            explanation: 'Preparation is the first phase, involving developing plans, training teams, and establishing tools before incidents occur.'
+          },
+          {
+            id: 'q2',
+            question: 'What does "chain of custody" refer to in digital forensics?',
+            options: ['Evidence storage', 'Documentation of evidence handling', 'Analysis tools', 'Legal procedures'],
+            correctAnswer: 1,
+            explanation: 'Chain of custody refers to the documentation that records the sequence of custody, control, transfer, analysis, and disposition of evidence.'
+          }
+        ],
+        passingScore: 80
+      },
+      certification: {
+        enabled: true,
+        certificateType: 'achievement',
+        requiredScore: 85
+      }
+    },
+    'cloud-security': {
+      id: 'cloud-security',
+      title: 'Cloud Security Architecture',
+      description: 'Secure cloud environments and services effectively',
+      pages: [
+        {
+          id: 'cloud-basics',
+          title: 'Cloud Security Fundamentals',
+          content: `
+            <h2>Understanding Cloud Security</h2>
+            <p>Cloud security encompasses the technologies, policies, controls, and services that protect cloud data, applications, and infrastructure from threats.</p>
+            
+            <h3>☁️ Cloud Service Models</h3>
+            <ul>
+              <li><strong>IaaS (Infrastructure as a Service):</strong> Virtual machines, storage, networks</li>
+              <li><strong>PaaS (Platform as a Service):</strong> Development platforms and tools</li>
+              <li><strong>SaaS (Software as a Service):</strong> Complete applications and services</li>
+            </ul>
+            
+            <h3>🔒 Shared Responsibility Model</h3>
+            <p>Security responsibilities are shared between cloud provider and customer:</p>
+            <ul>
+              <li><strong>Provider Responsibility:</strong> Physical security, infrastructure, hypervisor</li>
+              <li><strong>Customer Responsibility:</strong> Data, applications, operating systems, network controls</li>
+            </ul>
+            
+            <h3>🌐 Cloud Deployment Models</h3>
+            <ul>
+              <li><strong>Public Cloud:</strong> Shared infrastructure, cost-effective</li>
+              <li><strong>Private Cloud:</strong> Dedicated infrastructure, enhanced control</li>
+              <li><strong>Hybrid Cloud:</strong> Combination of public and private</li>
+              <li><strong>Multi-Cloud:</strong> Multiple cloud providers</li>
+            </ul>
+          `,
+          type: 'text',
+          duration: 20
+        }
+      ],
+      quiz: {
+        questions: [
+          {
+            id: 'q1',
+            question: 'In the shared responsibility model, who is responsible for data security?',
+            options: ['Cloud provider only', 'Customer only', 'Both provider and customer', 'Third-party vendors'],
+            correctAnswer: 1,
+            explanation: 'In the shared responsibility model, the customer is responsible for securing their data, regardless of the service model.'
+          }
+        ],
+        passingScore: 80
+      },
+      certification: {
+        enabled: true,
+        certificateType: 'completion',
+        requiredScore: 80
       }
     }
   }

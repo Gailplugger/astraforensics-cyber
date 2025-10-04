@@ -18,7 +18,8 @@ import certificateTemplate from '@/assets/images/certificate-template.svg'
 interface Certificate {
   id: string
   moduleId: string
-  moduleName: string
+  moduleName?: string
+  courseName?: string
   studentName: string
   completedAt: string
   score: number
@@ -88,7 +89,7 @@ function CertificateModal({ certificate, isOpen, onClose }: CertificateModalProp
 
     ctx.font = 'bold 28px sans-serif'
     ctx.fillStyle = '#B45309'
-    ctx.fillText(certificate.moduleName, 400, 370)
+    ctx.fillText(certificate.moduleName || certificate.courseName || 'Unknown Module', 400, 370)
 
     ctx.font = '20px sans-serif'
     ctx.fillText(`Score: ${certificate.score}% (Grade: ${certificate.grade})`, 400, 420)
@@ -104,7 +105,7 @@ function CertificateModal({ certificate, isOpen, onClose }: CertificateModalProp
 
     // Download
     const link = document.createElement('a')
-    link.download = `${certificate.moduleName}-certificate.png`
+    link.download = `${certificate.moduleName || certificate.courseName || 'certificate'}-certificate.png`
     link.href = canvas.toDataURL()
     link.click()
   }
@@ -113,8 +114,8 @@ function CertificateModal({ certificate, isOpen, onClose }: CertificateModalProp
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `Certificate - ${certificate.moduleName}`,
-          text: `I just completed ${certificate.moduleName} on AstraForensics with a score of ${certificate.score}%!`,
+          title: `Certificate - ${certificate.moduleName || certificate.courseName}`,
+          text: `I just completed ${certificate.moduleName || certificate.courseName} on AstraForensics with a score of ${certificate.score}%!`,
           url: window.location.href,
         })
       } catch (error) {
@@ -123,7 +124,7 @@ function CertificateModal({ certificate, isOpen, onClose }: CertificateModalProp
     } else {
       // Fallback - copy to clipboard
       await navigator.clipboard.writeText(
-        `I just completed ${certificate.moduleName} on AstraForensics with a score of ${certificate.score}%! 🎓✨`
+        `I just completed ${certificate.moduleName || certificate.courseName} on AstraForensics with a score of ${certificate.score}%! 🎓✨`
       )
     }
   }
@@ -209,7 +210,7 @@ function CertificateModal({ certificate, isOpen, onClose }: CertificateModalProp
                       <p className="text-sm text-amber-700">This certifies that</p>
                       <p className="text-xl font-bold text-amber-900">{certificate.studentName}</p>
                       <p className="text-sm text-amber-700">has successfully completed</p>
-                      <p className="text-lg font-semibold text-amber-800">{certificate.moduleName}</p>
+                      <p className="text-lg font-semibold text-amber-800">{certificate.moduleName || certificate.courseName}</p>
                     </motion.div>
 
                     <motion.div
@@ -346,7 +347,9 @@ export function CertificateGallery({ userData }: CertificateGalleryProps) {
                   </motion.div>
                   
                   <div>
-                    <h3 className="font-semibold text-foreground text-sm">{certificate.moduleName}</h3>
+                    <h3 className="font-semibold text-foreground text-sm">
+                      {certificate.moduleName || certificate.courseName || 'Unknown Module'}
+                    </h3>
                     <p className="text-xs text-muted-foreground">
                       Completed {new Date(certificate.completedAt).toLocaleDateString()}
                     </p>

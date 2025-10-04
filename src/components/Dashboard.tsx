@@ -73,44 +73,59 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
 
   const modules = [
     {
-      id: 'cybersecurity-basics',
+      id: 'cybersecurity-fundamentals',
       title: 'Cybersecurity Fundamentals',
-      description: 'Learn the core concepts of cybersecurity and threat landscape',
-      duration: '45 min',
+      description: 'Master the core principles and concepts of cybersecurity',
+      duration: '85 min',
       difficulty: 'Beginner',
-      topics: ['CIA Triad', 'Threat Types', 'Risk Assessment', 'Security Controls']
+      topics: ['CIA Triad', 'Threat Landscape', 'Risk Management', 'Security Frameworks'],
+      pages: 5,
+      hasQuiz: true,
+      hasCertification: true
     },
     {
       id: 'network-security',
-      title: 'Network Security',
-      description: 'Understanding network protocols, firewalls, and intrusion detection',
-      duration: '60 min',
+      title: 'Network Security Essentials',
+      description: 'Comprehensive guide to securing network infrastructure',
+      duration: '45 min',
       difficulty: 'Intermediate',
-      topics: ['Firewalls', 'VPN', 'IDS/IPS', 'Network Monitoring']
+      topics: ['Zero Trust', 'Firewalls', 'Network Protocols', 'Access Control'],
+      pages: 2,
+      hasQuiz: true,
+      hasCertification: true
     },
     {
-      id: 'malware-analysis',
-      title: 'Malware Analysis',
-      description: 'Techniques for analyzing and understanding malicious software',
-      duration: '75 min',
+      id: 'ethical-hacking',
+      title: 'Ethical Hacking & Penetration Testing',
+      description: 'Learn authorized security testing methodologies',
+      duration: '45 min',
       difficulty: 'Advanced',
-      topics: ['Static Analysis', 'Dynamic Analysis', 'Reverse Engineering', 'Sandboxing']
+      topics: ['Reconnaissance', 'Vulnerability Testing', 'Exploitation', 'Reporting'],
+      pages: 2,
+      hasQuiz: true,
+      hasCertification: true
     },
     {
       id: 'incident-response',
-      title: 'Incident Response',
-      description: 'Learn how to respond to and manage cybersecurity incidents',
+      title: 'Incident Response & Digital Forensics',
+      description: 'Handle security incidents and conduct digital investigations',
       duration: '50 min',
       difficulty: 'Intermediate',
-      topics: ['NIST Framework', 'Forensics', 'Recovery', 'Documentation']
+      topics: ['NIST Framework', 'Digital Forensics', 'Evidence Collection', 'Recovery'],
+      pages: 2,
+      hasQuiz: true,
+      hasCertification: true
     },
     {
-      id: 'penetration-testing',
-      title: 'Penetration Testing',
-      description: 'Ethical hacking techniques and vulnerability assessment',
-      duration: '90 min',
-      difficulty: 'Advanced',
-      topics: ['Reconnaissance', 'Exploitation', 'Post-Exploitation', 'Reporting']
+      id: 'cloud-security',
+      title: 'Cloud Security Architecture',
+      description: 'Secure cloud environments and services effectively',
+      duration: '20 min',
+      difficulty: 'Intermediate',
+      topics: ['Shared Responsibility', 'IaaS/PaaS/SaaS', 'Cloud Controls', 'Compliance'],
+      pages: 1,
+      hasQuiz: true,
+      hasCertification: true
     }
   ]
 
@@ -626,6 +641,20 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                                 <span>{module.duration}</span>
                               </Badge>
                             </motion.div>
+                            <motion.div whileHover={{ scale: 1.05 }}>
+                              <Badge variant="outline" className="flex items-center space-x-1 text-xs">
+                                <List size={10} />
+                                <span>{module.pages} pages</span>
+                              </Badge>
+                            </motion.div>
+                            {module.hasCertification && (
+                              <motion.div whileHover={{ scale: 1.05 }}>
+                                <Badge variant="outline" className="flex items-center space-x-1 text-xs bg-cert-gold/10 text-cert-gold border-cert-gold/20">
+                                  <Certificate size={10} />
+                                  <span>Certificate</span>
+                                </Badge>
+                              </motion.div>
+                            )}
                           </div>
 
                           <div className="space-y-2">
