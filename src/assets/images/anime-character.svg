@@ -1,0 +1,53 @@
+<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="anime-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFE4E1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFC1CC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#anime-bg)"/>
+  
+  <!-- Character head -->
+  <ellipse cx="150" cy="100" rx="45" ry="50" fill="#FDBCB4"/>
+  
+  <!-- Hair -->
+  <path d="M105 70 Q120 50 150 55 Q180 50 195 70 L195 85 Q185 75 175 80 Q165 75 150 80 Q135 75 125 80 Q115 75 105 85 Z" fill="#4A90E2"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="135" cy="90" rx="8" ry="12" fill="white"/>
+  <ellipse cx="165" cy="90" rx="8" ry="12" fill="white"/>
+  <circle cx="135" cy="90" r="5" fill="#2C3E50"/>
+  <circle cx="165" cy="90" r="5" fill="#2C3E50"/>
+  <circle cx="136" cy="88" r="2" fill="white"/>
+  <circle cx="166" cy="88" r="2" fill="white"/>
+  
+  <!-- Nose -->
+  <ellipse cx="150" cy="100" rx="1" ry="2" fill="#F4A7A7"/>
+  
+  <!-- Mouth -->
+  <path d="M145 110 Q150 115 155 110" stroke="#E74C3C" stroke-width="2" fill="none"/>
+  
+  <!-- Blush -->
+  <circle cx="120" cy="105" r="6" fill="#FFB6C1" opacity="0.6"/>
+  <circle cx="180" cy="105" r="6" fill="#FFB6C1" opacity="0.6"/>
+  
+  <!-- Body -->
+  <rect x="120" y="140" width="60" height="50" rx="10" fill="#3498DB"/>
+  
+  <!-- Arms -->
+  <ellipse cx="105" cy="155" rx="12" ry="25" fill="#FDBCB4"/>
+  <ellipse cx="195" cy="155" rx="12" ry="25" fill="#FDBCB4"/>
+  
+  <!-- Sparkles -->
+  <g fill="#FFD700">
+    <path d="M80 50 L82 55 L87 53 L85 58 L90 60 L85 62 L87 67 L82 65 L80 70 L78 65 L73 67 L75 62 L70 60 L75 58 L73 53 L78 55 Z"/>
+    <path d="M220 40 L221 43 L224 42 L223 45 L226 46 L223 47 L224 50 L221 49 L220 52 L219 49 L216 50 L217 47 L214 46 L217 45 L216 42 L219 43 Z"/>
+    <circle cx="250" cy="80" r="3"/>
+    <circle cx="50" cy="120" r="2"/>
+  </g>
+  
+  <!-- Gradient overlay for anime style -->
+  <rect width="300" height="200" fill="url(#anime-bg)" opacity="0.2"/>
+</svg>

@@ -5,6 +5,9 @@
   --success: oklch(0.65 0.12 140); /* Soft Green */
   --warning: oklch(0.75 0.08 85); /* Warm Yellow */
   --info: oklch(0.65 0.08 250); /* Soft Blue */
+  --anime-pink: oklch(0.8 0.15 340); /* Anime Pink */
+  --anime-blue: oklch(0.7 0.2 230); /* Anime Blue */
+  --anime-purple: oklch(0.75 0.18 280); /* Anime Purple */
 }
 
 /* Application-specific styles */
@@ -14,6 +17,85 @@
   }
 }
 
+/* Anime-style glow effect */
+@keyframes anime-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--anime-pink), 0 0 10px var(--anime-pink), 0 0 15px var(--anime-pink);
+  }
+  50% {
+    box-shadow: 0 0 10px var(--anime-blue), 0 0 20px var(--anime-blue), 0 0 30px var(--anime-blue);
+  }
+}
+
+.anime-glow {
+  animation: anime-glow 3s ease-in-out infinite;
+}
+
+/* Floating animation for characters */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Sparkle animation */
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+.sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+/* Rainbow text animation */
+@keyframes rainbow {
+  0% { color: #ff6b6b; }
+  16.66% { color: #4ecdc4; }
+  33.33% { color: #45b7d1; }
+  50% { color: #96ceb4; }
+  66.66% { color: #feca57; }
+  83.33% { color: #ff9ff3; }
+  100% { color: #ff6b6b; }
+}
+
+.rainbow-text {
+  animation: rainbow 3s linear infinite;
+}
+
+/* Pulse animation for success states */
+@keyframes success-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(72, 187, 120, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(72, 187, 120, 0);
+  }
+}
+
+.success-pulse {
+  animation: success-pulse 2s infinite;
+}
+
 /* Progress animation for learning modules */
 @keyframes progress-fill {
   from {
@@ -28,17 +110,90 @@
   animation: progress-fill 1.5s ease-out forwards;
 }
 
+/* Bounce animation for completed items */
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.3) rotate(-10deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  70% {
+    transform: scale(0.9) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.bounce-in {
+  animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
 /* Hover animations for cards */
 .card-hover {
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+  z-index: 1;
+}
+
+.card-hover:hover::before {
+  left: 100%;
 }
 
 .card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px oklch(0.75 0.04 65 / 0.15);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 40px oklch(0.75 0.04 65 / 0.15);
 }
 
-/* Custom scrollbar */
+/* Confetti animation */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti {
+  animation: confetti-fall 3s linear infinite;
+}
+
+/* Shake animation for wrong answers */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Custom scrollbar with anime colors */
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
@@ -49,53 +204,119 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: oklch(0.75 0.04 65);
+  background: linear-gradient(45deg, var(--anime-pink), var(--anime-blue));
   border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.7 0.06 65);
+  background: linear-gradient(45deg, var(--anime-blue), var(--anime-purple));
 }
 
-/* Progress animation for learning modules */
-@keyframes progress-fill {
-  from {
-    width: 0%;
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(45deg, var(--anime-pink), var(--anime-blue), var(--anime-purple));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
   }
-  to {
-    width: var(--progress-width);
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
-.progress-animate {
-  animation: progress-fill 1.5s ease-out forwards;
+/* Heartbeat animation for notifications */
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
-/* Hover animations for cards */
-.card-hover {
-  transition: all 0.3s ease;
+.heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
 }
 
-.card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px oklch(0.75 0.04 65 / 0.15);
+/* Star twinkle effect */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
 }
 
-/* Custom scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
+.twinkle {
+  animation: twinkle 2s ease-in-out infinite;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: oklch(0.95 0.012 80);
-  border-radius: 4px;
+/* Loading spinner with anime colors */
+@keyframes anime-spinner {
+  0% {
+    transform: rotate(0deg);
+    border-color: var(--anime-pink) transparent transparent transparent;
+  }
+  25% {
+    border-color: var(--anime-blue) transparent transparent transparent;
+  }
+  50% {
+    transform: rotate(180deg);
+    border-color: var(--anime-purple) transparent transparent transparent;
+  }
+  75% {
+    border-color: var(--anime-pink) transparent transparent transparent;
+  }
+  100% {
+    transform: rotate(360deg);
+    border-color: var(--anime-blue) transparent transparent transparent;
+  }
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: oklch(0.75 0.04 65);
-  border-radius: 4px;
+.anime-spinner {
+  animation: anime-spinner 2s linear infinite;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.7 0.06 65);
+/* Slide in animations */
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-right {
+  animation: slide-in-right 0.6s ease-out;
+}
+
+.slide-in-left {
+  animation: slide-in-left 0.6s ease-out;
 }
