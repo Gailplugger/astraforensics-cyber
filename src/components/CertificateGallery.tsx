@@ -293,7 +293,7 @@ function CertificateModal({ certificate, isOpen, onClose }: CertificateModalProp
 }
 
 export function CertificateGallery({ userData }: CertificateGalleryProps) {
-  const [certificates] = useKV<Certificate[]>('certificates', [])
+  const [certificates] = useKV<Certificate[]>('user-certificates', [])
   const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null)
 
   if (!certificates || certificates.length === 0) {
@@ -324,7 +324,7 @@ export function CertificateGallery({ userData }: CertificateGalleryProps) {
         </Badge>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {certificates.map((certificate, index) => (
           <motion.div
             key={certificate.id}
@@ -335,9 +335,9 @@ export function CertificateGallery({ userData }: CertificateGalleryProps) {
             className="cursor-pointer"
             onClick={() => setSelectedCertificate(certificate)}
           >
-            <Card className="card-hover border-yellow-200 bg-gradient-to-br from-yellow-50 to-amber-50">
-              <CardContent className="p-6">
-                <div className="text-center space-y-4">
+            <Card className="card-hover border-yellow-200 bg-gradient-to-br from-yellow-50 to-amber-50 h-full">
+              <CardContent className="p-4 h-full flex flex-col">
+                <div className="text-center space-y-3 flex-1">
                   <motion.div
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
@@ -346,26 +346,26 @@ export function CertificateGallery({ userData }: CertificateGalleryProps) {
                   </motion.div>
                   
                   <div>
-                    <h3 className="font-semibold text-foreground">{certificate.moduleName}</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <h3 className="font-semibold text-foreground text-sm">{certificate.moduleName}</h3>
+                    <p className="text-xs text-muted-foreground">
                       Completed {new Date(certificate.completedAt).toLocaleDateString()}
                     </p>
                   </div>
 
-                  <div className="flex justify-center gap-2">
-                    <Badge variant="secondary" className="bg-green-100 text-green-800">
+                  <div className="flex justify-center gap-1">
+                    <Badge variant="secondary" className="bg-green-100 text-green-800 text-xs">
                       {certificate.score}%
                     </Badge>
-                    <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                    <Badge variant="secondary" className="bg-blue-100 text-blue-800 text-xs">
                       Grade {certificate.grade}
                     </Badge>
                   </div>
 
                   <motion.div
                     whileHover={{ scale: 1.05 }}
-                    className="pt-2"
+                    className="pt-2 mt-auto"
                   >
-                    <Button variant="outline" size="sm" className="w-full">
+                    <Button variant="outline" size="sm" className="w-full text-xs">
                       View Certificate
                     </Button>
                   </motion.div>

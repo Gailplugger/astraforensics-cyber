@@ -19,6 +19,7 @@ import {
 } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import html2canvas from 'html2canvas'
+import stampImage from '@/assets/images/STAMP.svg'
 
 interface CertificateData {
   id: string
@@ -58,7 +59,6 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
   const [isDownloading, setIsDownloading] = useState(false)
   const [viewMode, setViewMode] = useState<'preview' | 'download'>('preview')
   const certificateRef = useRef<HTMLDivElement>(null)
-  const [certificates, setCertificates] = useKV<CertificateData[]>('user-certificates', [])
 
   const downloadCertificate = async () => {
     if (!certificateRef.current) return
@@ -79,14 +79,7 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
       link.click()
       document.body.removeChild(link)
 
-      // Save certificate to user's collection
-      setCertificates(prev => {
-        const currentList = prev || []
-        const existing = currentList.find(cert => cert.id === certificateData.id)
-        if (existing) return currentList
-        return [...currentList, certificateData]
-      })
-
+      // Save certificate to user's collection - handle this in parent component
       toast.success('Certificate downloaded successfully!')
     } catch (error) {
       console.error('Error downloading certificate:', error)
@@ -336,9 +329,25 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
                   </div>
                 )}
 
+                {/* Official Stamp */}
+                <div className="absolute top-1/3 right-12 transform -translate-y-1/2">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0, rotate: -45 }}
+                    animate={{ opacity: 0.8, scale: 1, rotate: -15 }}
+                    transition={{ delay: 1, duration: 0.8 }}
+                    className="w-32 h-32"
+                  >
+                    <img 
+                      src={stampImage} 
+                      alt="Official Stamp" 
+                      className="w-full h-full object-contain opacity-80"
+                    />
+                  </motion.div>
+                </div>
+
                 {/* QR Code Placeholder */}
-                <div className="absolute top-1/2 right-8 transform -translate-y-1/2">
-                  <div className="w-24 h-24 bg-slate-200 rounded-lg flex items-center justify-center">
+                <div className="absolute bottom-20 right-8">
+                  <div className="w-20 h-20 bg-slate-200 rounded-lg flex items-center justify-center">
                     <div className="text-xs text-slate-500 text-center">
                       QR Code<br />Verification
                     </div>

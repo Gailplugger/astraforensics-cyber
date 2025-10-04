@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress'
 import { useKV } from '@github/spark/hooks'
 import { LearningRecommendations } from './LearningRecommendations'
 import { CertificateGallery } from './CertificateGallery'
+import { ProfileSettings } from './ProfileSettings'
 import { 
   Shield, 
   BookOpen, 
@@ -32,10 +33,13 @@ import animeCharacter from '@/assets/images/anime-character.svg'
 
 interface UserData {
   name: string
+  username?: string
   class: string
   email: string
   phone: string
   registeredAt: string
+  profilePicture?: string
+  bio?: string
 }
 
 interface ModuleProgress {
@@ -56,9 +60,11 @@ interface DashboardProps {
 export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz }: DashboardProps) {
   const [moduleProgress] = useKV<ModuleProgress[]>('module-progress', [])
   const [quizScores] = useKV<Record<string, number>>('quiz-scores', {})
-  const [certificates] = useKV<any[]>('certificates', [])
+  const [certificates] = useKV<any[]>('user-certificates', [])
   const [showRecommendations, setShowRecommendations] = useState(false)
   const [showCertificates, setShowCertificates] = useState(false)
+  const [showProfile, setShowProfile] = useState(false)
+  const [userProfileData, setUserProfileData] = useKV<UserData>('user-data', userData)
 
   const handleStartRecommendation = (recommendationId: string) => {
     // Navigate to specific learning path based on recommendation
@@ -179,21 +185,27 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
             </motion.div>
             
             <div className="flex items-center space-x-3 sm:space-x-4 w-full sm:w-auto justify-between sm:justify-end">
-              <motion.img 
-                src={animeCharacter} 
-                alt="Character" 
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-primary/20"
+              <motion.div
+                className="cursor-pointer"
+                onClick={() => setShowProfile(true)}
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 300 }}
-              />
+              >
+                <img 
+                  src={animeCharacter} 
+                  alt="Character" 
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-primary/20"
+                />
+              </motion.div>
               <div className="text-left sm:text-right">
                 <motion.p 
-                  className="font-medium text-foreground text-sm sm:text-base"
+                  className="font-medium text-foreground text-sm sm:text-base cursor-pointer hover:text-primary transition-colors"
+                  onClick={() => setShowProfile(true)}
                   initial={{ x: 20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  Welcome back, {userData.name}! ✨
+                  Welcome back, {userProfileData?.name}! ✨
                 </motion.p>
                 <motion.p 
                   className="text-xs sm:text-sm text-muted-foreground"
@@ -201,7 +213,7 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  {userData.class}
+                  {userProfileData?.class}
                 </motion.p>
               </div>
             </div>
@@ -761,6 +773,22 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
             </motion.div>
           </div>
         </motion.div>
+
+        {/* Profile Settings Modal */}
+        <ProfileSettings
+          isOpen={showProfile}
+          onClose={() => setShowProfile(false)}
+          userData={{
+            ...userProfileData || userData,
+            username: (userProfileData?.username || userData.name.toLowerCase().replace(/\s+/g, '')),
+            totalScore: getAverageQuizScore(),
+            completedModules: getCompletedModules()
+          }}
+          onUpdate={(updatedData) => {
+            setUserProfileData(updatedData)
+            setShowProfile(false)
+          }}
+        />
       </div>
     </div>
   )

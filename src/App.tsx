@@ -7,7 +7,7 @@ import { Dashboard } from './components/Dashboard'
 import { LearningModule } from './components/LearningModule'
 import { Quiz } from './components/Quiz'
 import { AIQuizGenerator } from './components/AIQuizGenerator'
-import { EnhancedLearningModules } from './components/EnhancedLearningModules'
+import { ModuleContentViewer } from './components/ModuleContentViewer'
 import { EnhancedAIAssistant } from './components/EnhancedAIAssistant'
 import { AIChatAssistant } from './components/AIChatAssistant'
 import { AISkillAssessment } from './components/AISkillAssessment'
@@ -54,12 +54,13 @@ interface CertificateData {
   certificateType: 'completion' | 'achievement' | 'mastery'
 }
 
-type AppState = 'welcome' | 'registration' | 'dashboard' | 'learning' | 'quiz' | 'ai-quiz' | 'enhanced-modules'
+type AppState = 'welcome' | 'registration' | 'dashboard' | 'learning' | 'quiz' | 'ai-quiz' | 'module-content'
 
 function App() {
   const [currentState, setCurrentState] = useState<AppState>('welcome')
   const [userData] = useKV<UserData | null>('user-data', null)
   const [hasSeenWelcome, setHasSeenWelcome] = useKV<boolean>('has-seen-welcome', false)
+  const [userCertificates, setUserCertificates] = useKV<CertificateData[]>('user-certificates', [])
   const [isLoading, setIsLoading] = useState(true)
   const [showAIAssistant, setShowAIAssistant] = useState(false)
   const [showChatAssistant, setShowChatAssistant] = useState(false)
@@ -107,7 +108,7 @@ function App() {
     if (moduleId) {
       setSelectedModuleId(moduleId)
     }
-    setCurrentState('enhanced-modules')
+    setCurrentState('module-content')
   }
 
   const handleTakeQuiz = () => {
@@ -139,6 +140,9 @@ function App() {
       duration: '4 weeks',
       certificateType: score >= 90 ? 'mastery' : score >= 80 ? 'achievement' : 'completion'
     }
+    
+    // Save certificate to user's collection
+    setUserCertificates(prev => [...(prev || []), certData])
     
     setCertificateData(certData)
     setShowCertificate(true)
@@ -216,9 +220,9 @@ function App() {
           />
         )}
 
-        {currentState === 'enhanced-modules' && (
-          <EnhancedLearningModules
-            selectedModuleId={selectedModuleId}
+        {currentState === 'module-content' && (
+          <ModuleContentViewer
+            moduleId={selectedModuleId || 'cybersecurity-fundamentals'}
             onBack={handleBackToDashboard}
             onComplete={handleModuleComplete}
           />
