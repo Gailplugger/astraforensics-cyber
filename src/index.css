@@ -1,19 +1,109 @@
-/* Lightweight import - letting main.css handle most imports */
+/* Enhanced AstraForensics Theme - Production Ready */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* Custom variables for AstraForensics learning platform */
 :root {
+  /* Core theme colors - cybersecurity inspired */
+  --background: oklch(0.98 0.01 240); /* Almost white with cool undertone */
+  --foreground: oklch(0.15 0.02 240); /* Dark blue-gray */
+
+  --card: oklch(1 0 0); /* Pure white for cards */
+  --card-foreground: oklch(0.2 0.02 240); /* Slightly lighter than foreground */
+  
+  --popover: oklch(1 0 0); /* White for popovers */
+  --popover-foreground: oklch(0.2 0.02 240);
+
+  /* Action colors - modern cybersecurity palette */
+  --primary: oklch(0.55 0.18 240); /* Deep cyber blue */
+  --primary-foreground: oklch(0.98 0.01 240); /* Light text on primary */
+  
+  --secondary: oklch(0.95 0.02 240); /* Light blue-gray */
+  --secondary-foreground: oklch(0.25 0.02 240); /* Dark text on secondary */
+  
+  --accent: oklch(0.65 0.15 280); /* Purple accent for AI features */
+  --accent-foreground: oklch(0.98 0.01 280); /* Light text on accent */
+  
+  --destructive: oklch(0.6 0.18 15); /* Cybersecurity red */
+  --destructive-foreground: oklch(0.98 0.01 15);
+
+  /* Supporting UI colors */
+  --muted: oklch(0.96 0.01 240); /* Very light blue-gray */
+  --muted-foreground: oklch(0.45 0.02 240); /* Medium gray for muted text */
+  
+  --border: oklch(0.9 0.02 240); /* Light border color */
+  --input: oklch(0.9 0.02 240); /* Input border color */
+  --ring: oklch(0.55 0.18 240); /* Focus ring - matches primary */
+
+  /* Success and status colors */
   --success: oklch(0.65 0.12 140); /* Soft Green */
   --warning: oklch(0.75 0.08 85); /* Warm Yellow */
   --info: oklch(0.65 0.08 250); /* Soft Blue */
+  
+  /* Anime-inspired accent colors for fun elements */
   --anime-pink: oklch(0.8 0.15 340); /* Anime Pink */
   --anime-blue: oklch(0.7 0.2 230); /* Anime Blue */
   --anime-purple: oklch(0.75 0.18 280); /* Anime Purple */
+
+  /* Professional certificate colors */
+  --cert-gold: oklch(0.75 0.15 60); /* Professional gold */
+  --cert-silver: oklch(0.8 0.02 240); /* Professional silver */
+
+  /* Border radius for consistent design language */
+  --radius: 0.75rem; /* Slightly more rounded for modern feel */
+}
+
+/* Map the CSS variables to Tailwind's theme system */
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Status colors */
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  /* Map radius variables to create a consistent rounding system */
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) * 1.5);
+  --radius-xl: calc(var(--radius) * 2);
+  --radius-2xl: calc(var(--radius) * 3);
+  --radius-full: 9999px;
 }
 
 /* Application-specific styles */
 @layer base {
   * {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    @apply border-border;
+  }
+  
+  body {
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-variation-settings: normal;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 }
 

@@ -44,11 +44,12 @@ interface ModuleProgress {
 
 interface DashboardProps {
   userData: UserData
-  onStartLearning: () => void
+  onStartLearning: (moduleId?: string) => void
   onTakeQuiz: () => void
+  onTakeAIQuiz?: () => void
 }
 
-export function Dashboard({ userData, onStartLearning, onTakeQuiz }: DashboardProps) {
+export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz }: DashboardProps) {
   const [moduleProgress] = useKV<ModuleProgress[]>('module-progress', [])
   const [quizScores] = useKV<Record<string, number>>('quiz-scores', {})
   const [certificates] = useKV<any[]>('certificates', [])
@@ -502,15 +503,29 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz }: DashboardPr
                 {modules.length} Available
               </Badge>
             </div>
-            <Button onClick={onTakeQuiz} variant="outline" className="group">
-              <motion.div
-                animate={{ rotate: [0, 15, -15, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <Trophy size={18} className="mr-2 group-hover:text-yellow-600" />
-              </motion.div>
-              Take Practice Quiz
-            </Button>
+            <div className="flex space-x-3">
+              <Button onClick={onTakeQuiz} variant="outline" className="group">
+                <motion.div
+                  animate={{ rotate: [0, 15, -15, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Trophy size={18} className="mr-2 group-hover:text-yellow-600" />
+                </motion.div>
+                Practice Quiz
+              </Button>
+              
+              {onTakeAIQuiz && (
+                <Button onClick={onTakeAIQuiz} className="group bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Brain size={18} className="mr-2" />
+                  </motion.div>
+                  AI Quiz ✨
+                </Button>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -651,7 +666,7 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz }: DashboardPr
                         whileTap={{ scale: 0.98 }}
                       >
                         <Button 
-                          onClick={onStartLearning}
+                          onClick={() => onStartLearning(module.id)}
                           disabled={!isUnlocked}
                           className="w-full relative overflow-hidden group"
                           variant={progress?.completed ? "outline" : "default"}
