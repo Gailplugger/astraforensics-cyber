@@ -88,6 +88,38 @@ export function AIQuizGenerator({
       
       const prompt = createPrompt`Generate a cybersecurity quiz with exactly ${questionCount} questions about ${topic} with ${difficulty} difficulty level.
 
+      Create diverse question types including:
+      - Technical knowledge questions
+      - Scenario-based practical questions  
+      - Current threat analysis questions
+      - Best practices and compliance questions
+      - Incident response scenarios
+      - Risk assessment questions
+      - Tool and technology questions
+      - Legal and ethical considerations
+
+      Topics to cover (mix and vary):
+      - CIA Triad and security principles
+      - Network security and protocols
+      - Malware types and prevention
+      - Encryption and cryptography
+      - Access control and authentication
+      - Incident response procedures
+      - Risk management frameworks
+      - Compliance regulations (GDPR, HIPAA, SOX)
+      - Social engineering and human factors
+      - Cloud security considerations
+      - Mobile and IoT security
+      - Digital forensics basics
+      - Penetration testing concepts
+      - Security awareness training
+      - Business continuity planning
+
+      Difficulty guidelines:
+      - Easy: Basic definitions, common knowledge, straightforward scenarios
+      - Medium: Applied knowledge, analysis, multi-step reasoning
+      - Hard: Complex scenarios, advanced concepts, critical thinking
+
       Return a JSON object with a "questions" property containing an array of question objects. Each question should have:
       - id: unique identifier
       - question: the question text
@@ -98,7 +130,9 @@ export function AIQuizGenerator({
       - topic: "${topic}"
       - points: point value (easy=5, medium=10, hard=15)
 
-      Focus on practical cybersecurity concepts, real-world scenarios, and current threats. Make questions challenging but fair.
+      Focus on practical cybersecurity concepts, real-world scenarios, and current threats. 
+      Make questions challenging but fair, with clear explanations.
+      Ensure variety in question formats and avoid repetitive patterns.
 
       Example format:
       {
@@ -160,9 +194,100 @@ export function AIQuizGenerator({
         difficulty: 'medium',
         topic: 'cybersecurity',
         points: 10
+      },
+      {
+        id: 'fallback3',
+        question: 'What is the primary purpose of a firewall in network security?',
+        options: [
+          'To encrypt all network traffic',
+          'To monitor and control incoming and outgoing network traffic',
+          'To backup network data automatically',
+          'To provide wireless network connectivity'
+        ],
+        correctAnswer: 1,
+        explanation: 'A firewall acts as a barrier between trusted and untrusted networks, monitoring and controlling network traffic based on predetermined security rules to prevent unauthorized access.',
+        difficulty: 'easy',
+        topic: 'cybersecurity',
+        points: 5
+      },
+      {
+        id: 'fallback4',
+        question: 'In a phishing attack scenario, what should an employee do when receiving a suspicious email claiming to be from IT requesting password verification?',
+        options: [
+          'Immediately provide the password to help IT',
+          'Reply to the email asking for more details',
+          'Verify the request through official IT channels before responding',
+          'Forward the email to all colleagues as a warning'
+        ],
+        correctAnswer: 2,
+        explanation: 'The correct response is to verify the request through official IT channels. Legitimate IT departments typically never request passwords via email, and verification through known, official channels helps prevent social engineering attacks.',
+        difficulty: 'medium',
+        topic: 'cybersecurity',
+        points: 10
+      },
+      {
+        id: 'fallback5',
+        question: 'Which encryption standard is currently recommended for securing sensitive data at rest?',
+        options: ['DES', 'AES-256', 'MD5', 'SHA-1'],
+        correctAnswer: 1,
+        explanation: 'AES-256 (Advanced Encryption Standard with 256-bit keys) is currently the gold standard for encrypting sensitive data at rest, providing strong security and being widely accepted by security professionals and regulatory bodies.',
+        difficulty: 'medium',
+        topic: 'cybersecurity',
+        points: 10
+      },
+      {
+        id: 'fallback6',
+        question: 'What is the concept of "Zero Trust" in cybersecurity?',
+        options: [
+          'Never trusting any network security measures',
+          'Verifying every user and device before granting access, regardless of location',
+          'Using only open-source security tools',
+          'Eliminating all external network connections'
+        ],
+        correctAnswer: 1,
+        explanation: 'Zero Trust is a security model that requires verification of every user and device attempting to access network resources, regardless of whether they are inside or outside the network perimeter. It operates on the principle "never trust, always verify."',
+        difficulty: 'hard',
+        topic: 'cybersecurity',
+        points: 15
+      },
+      {
+        id: 'fallback7',
+        question: 'During an incident response, what is the first priority after discovering a potential security breach?',
+        options: [
+          'Analyze the attack vectors',
+          'Contain the threat to prevent further damage',
+          'Notify all stakeholders immediately',
+          'Begin forensic data collection'
+        ],
+        correctAnswer: 1,
+        explanation: 'The first priority in incident response is containment - stopping the threat from spreading and causing additional damage. This prevents the situation from worsening while allowing time for proper analysis and response planning.',
+        difficulty: 'hard',
+        topic: 'cybersecurity',
+        points: 15
+      },
+      {
+        id: 'fallback8',
+        question: 'Which of the following is an example of multi-factor authentication (MFA)?',
+        options: [
+          'Username and password only',
+          'Two different passwords',
+          'Password + SMS verification code',
+          'Biometric scan + another biometric scan'
+        ],
+        correctAnswer: 2,
+        explanation: 'Multi-factor authentication requires two or more different types of authentication factors. Password (something you know) + SMS code (something you have) represents two different factor types, providing stronger security than single-factor authentication.',
+        difficulty: 'easy',
+        topic: 'cybersecurity',
+        points: 5
       }
     ]
-    setQuestions(fallbackQuestions)
+    
+    // Select random questions based on questionCount
+    const selectedQuestions = fallbackQuestions
+      .sort(() => Math.random() - 0.5)
+      .slice(0, Math.min(questionCount, fallbackQuestions.length))
+    
+    setQuestions(selectedQuestions)
   }
 
   const handleAnswerSelect = (answerIndex: number) => {

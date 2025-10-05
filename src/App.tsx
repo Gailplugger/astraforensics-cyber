@@ -260,59 +260,59 @@ function App() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-card to-background flex items-center justify-center safe-area-top safe-area-bottom relative overflow-hidden">
         {/* Enhanced Cyber Grid Background */}
-        <div className="cyber-grid absolute inset-0 opacity-15"></div>
+        <div className="cyber-grid absolute inset-0 opacity-10"></div>
         
         {/* Floating Spark Elements with Enhanced Animation */}
-        {[...Array(15)].map((_, i) => (
+        {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className={`absolute w-3 h-3 rounded-full spark-float-${(i % 3) + 1}`}
+            className={`absolute w-2 h-2 sm:w-3 sm:h-3 rounded-full floating-orb`}
             style={{
-              background: `var(--spark-${['electric', 'neon', 'plasma', 'energy'][i % 4]})`,
-              left: `${5 + (i * 6)}%`,
-              top: `${10 + (i * 5)}%`,
-              boxShadow: `0 0 15px var(--spark-${['electric', 'neon', 'plasma', 'energy'][i % 4]})`
+              background: `var(--spark-${['electric', 'neon', 'plasma', 'aurora', 'quantum'][i % 5]})`,
+              left: `${5 + (i * 4.5)}%`,
+              top: `${8 + (i * 4)}%`,
+              boxShadow: `0 0 ${8 + (i % 3) * 4}px var(--spark-${['electric', 'neon', 'plasma', 'aurora', 'quantum'][i % 5]})`
             }}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 0.8, scale: 1 }}
-            transition={{ delay: i * 0.1, duration: 1.5 }}
+            transition={{ delay: i * 0.05, duration: 1.5 }}
           />
         ))}
 
         {/* Neural Network Pattern */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <svg width="800" height="600" className="opacity-20">
-            {[...Array(8)].map((_, i) => (
+          <svg width="900" height="700" className="opacity-15">
+            {[...Array(12)].map((_, i) => (
               <motion.circle
                 key={i}
-                cx={100 + (i % 4) * 200}
-                cy={150 + Math.floor(i / 4) * 300}
-                r="4"
-                fill="var(--spark-electric)"
+                cx={120 + (i % 4) * 220}
+                cy={160 + Math.floor(i / 4) * 200}
+                r="6"
+                fill={`var(--spark-${['electric', 'neon', 'plasma'][i % 3]})`}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: [0.3, 1, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity, delay: i * 0.25 }}
+                animate={{ opacity: [0.2, 1, 0.2] }}
+                transition={{ duration: 3, repeat: Infinity, delay: i * 0.2 }}
               />
             ))}
-            {[...Array(6)].map((_, i) => (
+            {[...Array(16)].map((_, i) => (
               <motion.line
                 key={i}
-                x1={100 + (i % 3) * 200}
-                y1={150}
-                x2={300 + (i % 2) * 200}
-                y2={450}
-                stroke="var(--spark-neon)"
-                strokeWidth="1"
-                opacity="0.4"
+                x1={120 + (i % 3) * 220}
+                y1={160}
+                x2={340 + (i % 2) * 220}
+                y2={360}
+                stroke={`var(--spark-${['aurora', 'quantum', 'electric'][i % 3]})`}
+                strokeWidth="2"
+                opacity="0.3"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: [0, 1, 0] }}
-                transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+                transition={{ duration: 4, repeat: Infinity, delay: i * 0.3 }}
               />
             ))}
           </svg>
         </div>
 
-        <div className="text-center px-4 relative z-10 max-w-md">
+        <div className="text-center px-4 relative z-10 max-w-lg">
           <SparkLoader 
             size="xl" 
             variant="neural" 
@@ -320,88 +320,113 @@ function App() {
           />
           
           <motion.div
-            className="mt-8 space-y-4"
+            className="mt-8 space-y-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
-            <h1 className="text-3xl sm:text-4xl font-bold gradient-text mb-3">
-              AstraForensics
-            </h1>
-            <p className="text-muted-foreground text-lg">
-              Advanced AI-Powered Cybersecurity Learning
-            </p>
+            <div className="premium-text-reveal">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-4">
+                AstraForensics
+              </h1>
+              <p className="text-muted-foreground text-lg sm:text-xl leading-relaxed">
+                Advanced AI-Powered Cybersecurity Learning Platform
+              </p>
+            </div>
             
-            {/* Loading Steps */}
+            {/* Loading Steps with Premium Animation */}
             <motion.div
-              className="space-y-2 mt-6"
+              className="space-y-3 mt-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
             >
               {[
-                'Loading security modules...',
-                'Initializing AI assistant...',
-                'Preparing learning environment...',
-                'Almost ready...'
+                { text: 'Loading security modules...', icon: '🛡️' },
+                { text: 'Initializing AI assistant...', icon: '🤖' },
+                { text: 'Preparing learning environment...', icon: '📚' },
+                { text: 'Almost ready...', icon: '✨' }
               ].map((step, index) => (
                 <motion.div
                   key={index}
-                  className="flex items-center justify-center gap-2 text-sm text-muted-foreground"
+                  className="flex items-center justify-center gap-3 text-sm sm:text-base text-muted-foreground"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.5 + index * 0.5, duration: 0.5 }}
+                  transition={{ delay: 1.5 + index * 0.4, duration: 0.6 }}
                 >
+                  <motion.span
+                    className="text-lg"
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: index * 0.3
+                    }}
+                  >
+                    {step.icon}
+                  </motion.span>
                   <motion.div
-                    className="w-2 h-2 rounded-full"
-                    style={{ background: 'var(--spark-electric)' }}
+                    className="premium-spark-glow w-2 h-2 rounded-full"
+                    style={{ background: `var(--spark-${['electric', 'neon', 'plasma', 'aurora'][index]})` }}
                     animate={{
                       scale: [1, 1.5, 1],
                       opacity: [0.5, 1, 0.5]
                     }}
                     transition={{
-                      duration: 1,
+                      duration: 1.5,
                       repeat: Infinity,
                       delay: index * 0.2
                     }}
                   />
-                  {step}
+                  <span className="font-medium">{step.text}</span>
                 </motion.div>
               ))}
             </motion.div>
             
-            {/* Progress Bar */}
+            {/* Enhanced Progress Bar */}
             <motion.div
-              className="w-full bg-muted h-2 rounded-full overflow-hidden mt-6"
+              className="w-full bg-muted/50 h-3 rounded-full overflow-hidden mt-8 relative"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 2 }}
             >
               <motion.div
-                className="h-full rounded-full"
+                className="h-full rounded-full premium-progress"
                 style={{ background: 'var(--gradient-spark)' }}
                 initial={{ width: '0%' }}
                 animate={{ width: '100%' }}
-                transition={{ duration: 2, ease: 'easeOut' }}
+                transition={{ duration: 3, ease: 'easeOut' }}
+              />
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent h-full rounded-full"
+                animate={{ x: ['-100%', '100%'] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               />
             </motion.div>
             
-            {/* Spark Technology Badge */}
+            {/* Premium Spark Technology Badge */}
             <motion.div
-              className="flex items-center justify-center gap-2 mt-6 p-3 rounded-full bg-card/50 backdrop-blur-sm border border-primary/20"
-              initial={{ opacity: 0, scale: 0.8 }}
+              className="flex items-center justify-center gap-3 mt-8 p-4 rounded-2xl bg-gradient-to-r from-card/50 to-secondary/20 backdrop-blur-sm border border-primary/10"
+              style={{ boxShadow: 'var(--shadow-premium)' }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 2.5 }}
+              transition={{ delay: 3 }}
             >
-              <motion.span
+              <motion.div
+                className="premium-spark-glow p-2 rounded-full bg-gradient-to-r from-primary to-accent"
                 animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
               >
                 ⚡
-              </motion.span>
-              <span className="text-sm font-medium gradient-text">
-                Powered by Spark Technology
-              </span>
+              </motion.div>
+              <div className="text-center">
+                <div className="text-sm font-bold gradient-text">
+                  Powered by Spark Technology
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  Next-Generation Learning Experience
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>

@@ -1791,150 +1791,287 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Premium Background Effects */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="cyber-grid absolute inset-0 opacity-5"></div>
+        
+        {/* Floating Learning Particles */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="floating-orb absolute w-3 h-3"
+            style={{
+              background: `var(--spark-${['electric', 'neon', 'plasma', 'aurora'][i % 4]})`,
+              left: `${5 + (i * 8)}%`,
+              top: `${10 + (i * 7)}%`,
+              filter: 'blur(0.5px)'
+            }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 0.4, scale: 1 }}
+            transition={{ delay: i * 0.1, duration: 1 }}
+          />
+        ))}
+        
+        {/* Premium Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-transparent to-background/80"></div>
+      </div>
+
+      {/* Enhanced Header */}
       <motion.div
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="border-b bg-card/80 backdrop-blur-lg sticky top-0 z-10"
+        className="border-b bg-card/70 backdrop-blur-xl sticky top-0 z-20 relative"
+        style={{ boxShadow: 'var(--shadow-premium)' }}
       >
-        <div className="container mx-auto px-4 py-4">
+        {/* Aurora effect */}
+        <div className="absolute inset-0 aurora-shimmer opacity-15"></div>
+        
+        <div className="container mx-auto px-4 py-4 relative z-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Button
-                variant="ghost"
-                onClick={onBack}
-                className="flex items-center space-x-2"
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: -5 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <ArrowLeft size={16} />
-                <span>Back</span>
-              </Button>
+                <Button
+                  variant="outline"
+                  onClick={onBack}
+                  className="flex items-center space-x-2 premium-button-hover bg-gradient-to-r from-card to-secondary/50 border-primary/20"
+                >
+                  <ArrowLeft size={16} />
+                  <span>Back</span>
+                </Button>
+              </motion.div>
               
-              <div className="flex items-center space-x-3">
-                <BookOpen size={20} className="text-primary" />
+              <div className="flex items-center space-x-3 premium-text-reveal">
+                <motion.div
+                  className="premium-spark-glow p-2 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20"
+                  animate={{ rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                >
+                  <BookOpen size={20} className="text-primary" />
+                </motion.div>
                 <div>
-                  <h1 className="text-xl font-bold">{moduleContent.title}</h1>
+                  <h1 className="text-xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                    {moduleContent.title}
+                  </h1>
                   <p className="text-sm text-muted-foreground">
-                    Page {currentPageIndex + 1} of {moduleContent.pages.length}
+                    Page {currentPageIndex + 1} of {moduleContent.pages.length} • Interactive Learning
                   </p>
                 </div>
               </div>
             </div>
 
+            {/* Enhanced Right Side - Progress & Navigation */}
             <div className="flex items-center space-x-4">
-              <Badge variant="outline" className="flex items-center space-x-1">
-                <Clock size={12} />
-                <span>{currentPage?.duration || 0} min</span>
-              </Badge>
-              <div className="text-sm text-muted-foreground">
-                {getProgressPercentage()}% Complete
-              </div>
+              <motion.div
+                className="hidden sm:flex items-center space-x-3"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <Badge variant="outline" className="flex items-center space-x-1 bg-gradient-to-r from-card to-secondary/50">
+                  <Clock size={12} />
+                  <span>{currentPage?.duration || 0} min</span>
+                </Badge>
+                
+                <div className="text-sm font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  {getProgressPercentage()}% Complete
+                </div>
+              </motion.div>
             </div>
           </div>
 
-          {/* Progress Bar */}
-          <div className="mt-4">
-            <Progress value={getProgressPercentage()} className="h-2" />
-          </div>
+          {/* Enhanced Progress Bar */}
+          <motion.div 
+            className="mt-4"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <div className="relative">
+              <Progress value={getProgressPercentage()} className="h-3 premium-progress" />
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent h-full rounded-full"
+                animate={{ x: ['-100%', '100%'] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
+          </motion.div>
         </div>
       </motion.div>
 
-      {/* Content */}
-      <div className="container mx-auto px-4 py-8">
+      {/* Enhanced Content Area */}
+      <div className="container mx-auto px-4 py-8 relative z-10">
         <div className="max-w-4xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentPageIndex}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, y: 30, rotateX: -5 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              exit={{ opacity: 0, y: -30, rotateX: 5 }}
+              transition={{ 
+                duration: 0.5,
+                type: "spring",
+                stiffness: 100
+              }}
             >
-              <Card className="relative overflow-hidden">
-                {/* Background animation based on content type */}
+              <Card className="relative overflow-hidden border-0 backdrop-blur-sm bg-gradient-to-br from-card to-card/80" style={{ boxShadow: 'var(--shadow-premium)' }}>
+                {/* Premium Background Effects */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3"></div>
+                
+                {/* Aurora effect for interactive content */}
                 {currentPage.type === 'interactive' && (
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3"
-                    animate={{ 
-                      background: [
-                        "linear-gradient(45deg, rgba(59, 130, 246, 0.03), transparent, rgba(139, 92, 246, 0.03))",
-                        "linear-gradient(135deg, rgba(139, 92, 246, 0.03), transparent, rgba(59, 130, 246, 0.03))"
-                      ]
-                    }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                  />
+                  <div className="absolute inset-0 aurora-shimmer opacity-10"></div>
                 )}
-
-                <CardHeader className="relative z-10">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-2xl">{currentPage.title}</CardTitle>
-                    <div className="flex items-center space-x-2">
-                      <Badge variant="secondary" className="capitalize">
-                        {currentPage.type}
-                      </Badge>
-                      {currentPage.type === 'interactive' && (
-                        <Badge variant="secondary" className="bg-accent/10 text-accent">
-                          ✨ Interactive
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
+                
+                {/* Content Type Indicator */}
+                <motion.div
+                  className="absolute top-4 right-4 z-10"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+                >
+                  <Badge 
+                    variant="outline" 
+                    className={`
+                      premium-spark-glow flex items-center space-x-1 font-medium
+                      ${currentPage.type === 'interactive' ? 'bg-gradient-to-r from-accent/10 to-primary/10 text-accent border-accent/30' : 
+                        currentPage.type === 'video' ? 'bg-gradient-to-r from-info/10 to-primary/10 text-info border-info/30' : 
+                        'bg-gradient-to-r from-primary/10 to-secondary/10 text-primary border-primary/30'}
+                    `}
+                  >
+                    {currentPage.type === 'interactive' && <Brain size={12} />}
+                    {currentPage.type === 'video' && <PlayCircle size={12} />}
+                    {currentPage.type === 'text' && <BookOpen size={12} />}
+                    <span className="capitalize">{currentPage.type}</span>
+                  </Badge>
+                </motion.div>
+                
+                <CardHeader className="relative z-10 p-6 md:p-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="flex items-center justify-between"
+                  >
+                    <CardTitle className="text-2xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                      {currentPage.title}
+                    </CardTitle>
+                  </motion.div>
                 </CardHeader>
 
-                <CardContent className="relative z-10 prose prose-lg max-w-none">
-                  <div 
+                <CardContent className="relative z-10 p-6 md:p-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="prose prose-lg max-w-none learning-content"
                     dangerouslySetInnerHTML={{ __html: currentPage.content }}
-                    className="space-y-6"
                   />
+                  
+                  {/* Reading progress indicator */}
+                  <motion.div
+                    className="mt-8 pt-6 border-t border-border/50"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                  >
+                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                      <span>Reading time: ~{currentPage?.duration || 0} minutes</span>
+                      <motion.div
+                        className="flex items-center space-x-1"
+                        animate={{ scale: [1, 1.05, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        <CheckCircle size={14} className="text-success" />
+                        <span>Page completed</span>
+                      </motion.div>
+                    </div>
+                  </motion.div>
                 </CardContent>
               </Card>
             </motion.div>
           </AnimatePresence>
 
-          {/* Navigation */}
-          <div className="flex justify-between items-center mt-8">
-            <Button
-              onClick={handlePreviousPage}
-              disabled={currentPageIndex === 0}
-              variant="outline"
-              className="flex items-center space-x-2"
+          {/* Enhanced Navigation */}
+          <motion.div 
+            className="flex justify-between items-center mt-8 p-4 rounded-xl bg-gradient-to-r from-card to-secondary/20 backdrop-blur-sm"
+            style={{ boxShadow: 'var(--shadow-md)' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05, x: -5 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <ArrowLeft size={16} />
-              <span>Previous</span>
-            </Button>
+              <Button
+                onClick={handlePreviousPage}
+                disabled={currentPageIndex === 0}
+                variant="outline"
+                className="flex items-center space-x-2 premium-button-hover bg-gradient-to-r from-card to-secondary/50"
+              >
+                <ArrowLeft size={16} />
+                <span>Previous</span>
+              </Button>
+            </motion.div>
 
-            <div className="flex space-x-1">
-              {moduleContent.pages.map((_, index) => (
-                <motion.div
-                  key={index}
-                  className={`w-3 h-3 rounded-full ${
-                    index <= currentPageIndex ? 'bg-primary' : 'bg-muted'
-                  }`}
-                  animate={{
-                    scale: index === currentPageIndex ? [1, 1.2, 1] : 1
-                  }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                />
-              ))}
+            {/* Enhanced Page Indicators */}
+            <div className="flex items-center space-x-3">
+              <span className="text-sm text-muted-foreground font-medium">
+                {currentPageIndex + 1} of {moduleContent.pages.length}
+              </span>
+              <div className="flex space-x-2">
+                {moduleContent.pages.map((_, index) => (
+                  <motion.div
+                    key={index}
+                    className={`
+                      w-3 h-3 rounded-full cursor-pointer
+                      ${index <= currentPageIndex ? 
+                        'bg-gradient-to-r from-primary to-accent' : 
+                        'bg-muted/50'
+                      }
+                    `}
+                    animate={{
+                      scale: index === currentPageIndex ? [1, 1.3, 1] : 1,
+                      boxShadow: index === currentPageIndex ? [
+                        '0 0 0px var(--primary)',
+                        '0 0 8px var(--primary)',
+                        '0 0 4px var(--primary)'
+                      ] : '0 0 0px transparent'
+                    }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                    onClick={() => setCurrentPageIndex(index)}
+                    whileHover={{ scale: 1.2 }}
+                  />
+                ))}
+              </div>
             </div>
 
-            <Button
-              onClick={handleNextPage}
-              className="flex items-center space-x-2 bg-gradient-to-r from-primary to-accent"
+            <motion.div
+              whileHover={{ scale: 1.05, x: 5 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {isLastPage ? (
-                <>
-                  <Trophy size={16} />
-                  <span>Take Quiz</span>
-                </>
-              ) : (
-                <>
-                  <span>Next</span>
-                  <ArrowRight size={16} />
-                </>
-              )}
-            </Button>
-          </div>
+              <Button
+                onClick={handleNextPage}
+                className="flex items-center space-x-2 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 premium-button-hover"
+              >
+                {isLastPage ? (
+                  <>
+                    <Trophy size={16} />
+                    <span>Take Quiz</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Next</span>
+                    <ArrowRight size={16} />
+                  </>
+                )}
+              </Button>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </div>
