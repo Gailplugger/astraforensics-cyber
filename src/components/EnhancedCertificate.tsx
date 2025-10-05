@@ -73,7 +73,7 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
       })
 
       const link = document.createElement('a')
-      link.download = `AstraForensics-Certificate-${certificateData.courseName.replace(/\s+/g, '-')}-${certificateData.studentName.replace(/\s+/g, '-')}.png`
+      link.download = `AstraForensics-Certificate-${certificateData?.courseName?.replace(/\s+/g, '-') || 'Course'}-${certificateData?.studentName?.replace(/\s+/g, '-') || 'Student'}.png`
       link.href = canvas.toDataURL('image/png')
       document.body.appendChild(link)
       link.click()
@@ -93,14 +93,14 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
     try {
       if (navigator.share) {
         await navigator.share({
-          title: `${certificateData.courseName} Certificate`,
-          text: `I just completed ${certificateData.courseName} on AstraForensics with a score of ${certificateData.score}%!`,
+          title: `${certificateData?.courseName || 'Course'} Certificate`,
+          text: `I just completed ${certificateData?.courseName || 'a course'} on AstraForensics with a score of ${certificateData?.score || 0}%!`,
           url: window.location.href
         })
       } else {
         // Fallback to copying link
         await navigator.clipboard.writeText(
-          `I just earned my ${certificateData.courseName} certificate on AstraForensics with a score of ${certificateData.score}%! 🎓 #Cybersecurity #AstraForensics`
+          `I just earned my ${certificateData?.courseName || 'course'} certificate on AstraForensics with a score of ${certificateData?.score || 0}%! 🎓 #Cybersecurity #AstraForensics`
         )
         toast.success('Certificate text copied to clipboard!')
       }
@@ -136,7 +136,11 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
 
   if (!isOpen) return null
 
-  const TypeIcon = certificateTypes[certificateData.certificateType].icon
+  if (!certificateData) {
+    return null
+  }
+
+  const TypeIcon = certificateTypes[certificateData.certificateType || 'completion'].icon
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -150,7 +154,7 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
               <div>
                 <DialogTitle className="text-xl">Professional Certificate</DialogTitle>
                 <p className="text-sm text-muted-foreground">
-                  {certificateTypes[certificateData.certificateType].label}
+                  {certificateTypes[certificateData.certificateType || 'completion'].label}
                 </p>
               </div>
             </div>
@@ -218,10 +222,10 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
 
                   {/* Certificate Type */}
                   <div className="mb-4">
-                    <div className={`inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r ${certificateGradients[certificateData.grade]} text-white rounded-full`}>
+                    <div className={`inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r ${certificateGradients[certificateData.grade || 'C+']} text-white rounded-full`}>
                       <TypeIcon size={20} weight="fill" />
                       <span className="font-semibold text-lg">
-                        {certificateTypes[certificateData.certificateType].label}
+                        {certificateTypes[certificateData.certificateType || 'completion'].label}
                       </span>
                     </div>
                   </div>
@@ -232,26 +236,26 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
                   <p className="text-xl text-slate-600 mb-6">This is to certify that</p>
                   
                   <h2 className="text-5xl font-bold text-slate-800 mb-8 border-b-2 border-slate-300 pb-4 inline-block">
-                    {certificateData.studentName}
+                    {certificateData?.studentName || 'Student'}
                   </h2>
                   
                   <p className="text-xl text-slate-600 mb-4">has successfully completed</p>
                   
                   <h3 className="text-3xl font-semibold text-primary mb-6">
-                    {certificateData.courseName}
+                    {certificateData?.courseName || 'Course'}
                   </h3>
                   
                   <div className="grid grid-cols-3 gap-8 my-8 px-8">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-slate-800">{certificateData.score}%</div>
+                      <div className="text-2xl font-bold text-slate-800">{certificateData?.score || 0}%</div>
                       <div className="text-sm text-slate-600">Final Score</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-slate-800">{certificateData.grade}</div>
+                      <div className="text-2xl font-bold text-slate-800">{certificateData?.grade || 'N/A'}</div>
                       <div className="text-sm text-slate-600">Grade Achieved</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-slate-800">{certificateData.duration}</div>
+                      <div className="text-2xl font-bold text-slate-800">{certificateData?.duration || 'N/A'}</div>
                       <div className="text-sm text-slate-600">Course Duration</div>
                     </div>
                   </div>
@@ -260,7 +264,7 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
                   <div className="mb-8">
                     <p className="text-lg text-slate-600 mb-3">Skills Demonstrated:</p>
                     <div className="flex flex-wrap justify-center gap-2">
-                      {certificateData.skills.map((skill, index) => (
+                      {certificateData?.skills?.map((skill, index) => (
                         <span
                           key={index}
                           className="px-3 py-1 bg-slate-200 text-slate-700 rounded-full text-sm font-medium"
@@ -279,11 +283,15 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
                       <div className="w-48 border-t border-slate-400 mb-2"></div>
                       <p className="text-sm text-slate-600">Certificate Date</p>
                       <p className="font-medium text-slate-800">
-                        {certificateData.completionDate.toLocaleDateString('en-US', {
+                        {certificateData?.completionDate ? 
+                          (typeof certificateData.completionDate === 'string' ? 
+                            new Date(certificateData.completionDate) : 
+                            certificateData.completionDate
+                          ).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric'
-                        })}
+                        }) : 'N/A'}
                       </p>
                     </div>
                     
@@ -298,7 +306,7 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
                       <div className="w-48 border-t border-slate-400 mb-2"></div>
                       <p className="text-sm text-slate-600">Certificate ID</p>
                       <p className="font-medium text-slate-800 font-mono text-xs">
-                        AF-{certificateData.id.toUpperCase().slice(0, 8)}
+                        AF-{certificateData?.id?.toUpperCase().slice(0, 8) || 'UNKNOWN'}
                       </p>
                     </div>
                   </div>
@@ -312,7 +320,7 @@ export function EnhancedCertificate({ isOpen, onClose, certificateData, userData
                 </div>
 
                 {/* Achievement Stars */}
-                {certificateData.score >= 90 && (
+                {(certificateData?.score || 0) >= 90 && (
                   <div className="absolute top-1/2 left-8 transform -translate-y-1/2">
                     <div className="flex flex-col gap-2">
                       {[...Array(3)].map((_, i) => (

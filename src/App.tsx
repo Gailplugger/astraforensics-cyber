@@ -54,13 +54,24 @@ interface CertificateData {
   certificateType: 'completion' | 'achievement' | 'mastery'
 }
 
+interface StoredCertificate {
+  id: string
+  moduleId: string
+  moduleName: string
+  courseName: string
+  studentName: string
+  completedAt: string
+  score: number
+  grade: 'A+' | 'A' | 'B+' | 'B' | 'C+'
+}
+
 type AppState = 'welcome' | 'registration' | 'dashboard' | 'learning' | 'quiz' | 'ai-quiz' | 'module-content'
 
 function App() {
   const [currentState, setCurrentState] = useState<AppState>('welcome')
   const [userData] = useKV<UserData | null>('user-data', null)
   const [hasSeenWelcome, setHasSeenWelcome] = useKV<boolean>('has-seen-welcome', false)
-  const [userCertificates, setUserCertificates] = useKV<CertificateData[]>('user-certificates', [])
+  const [userCertificates, setUserCertificates] = useKV<StoredCertificate[]>('user-certificates', [])
   const [isLoading, setIsLoading] = useState(true)
   const [showAIAssistant, setShowAIAssistant] = useState(false)
   const [showChatAssistant, setShowChatAssistant] = useState(false)
@@ -158,12 +169,17 @@ function App() {
   }
 
   const handleModuleComplete = (moduleId: string, score: number) => {
+    if (!userData) {
+      console.error('User data is required to complete module')
+      return
+    }
+
     // Generate certificate data
     const grade = score >= 95 ? 'A+' : score >= 90 ? 'A' : score >= 85 ? 'B+' : score >= 80 ? 'B' : 'C+'
     
     const certData: CertificateData = {
       id: Date.now().toString(),
-      studentName: userData?.name || 'Student',
+      studentName: userData.name,
       courseName: getModuleName(moduleId),
       completionDate: new Date(),
       score,
@@ -174,12 +190,19 @@ function App() {
       certificateType: score >= 90 ? 'mastery' : score >= 80 ? 'achievement' : 'completion'
     }
     
-    // Save certificate to user's collection
-    setUserCertificates(prev => [...(prev || []), {
-      ...certData,
+    // Save certificate to user's collection with proper structure
+    const certificateForStorage: StoredCertificate = {
+      id: certData.id,
+      moduleId: certData.moduleId,
+      moduleName: certData.courseName,
+      courseName: certData.courseName,
+      studentName: certData.studentName,
       completedAt: certData.completionDate.toISOString(),
-      moduleName: certData.courseName
-    }])
+      score: certData.score,
+      grade: certData.grade
+    }
+    
+    setUserCertificates(prev => [...(prev || []), certificateForStorage])
     
     setCertificateData(certData)
     setShowCertificate(true)

@@ -834,6 +834,24 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
   const currentPage = moduleContent.pages[currentPageIndex]
   const isLastPage = currentPageIndex >= moduleContent.pages.length - 1
 
+  // Safety check for current page
+  if (!currentPage) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="p-8 text-center max-w-md">
+          <CardContent className="space-y-4">
+            <div className="text-destructive">
+              <Target size={48} className="mx-auto mb-4" />
+            </div>
+            <h3 className="text-lg font-semibold">Page Not Found</h3>
+            <p className="text-muted-foreground">The requested page could not be loaded.</p>
+            <Button onClick={onBack}>Return to Modules</Button>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -868,7 +886,7 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
             <div className="flex items-center space-x-4">
               <Badge variant="outline" className="flex items-center space-x-1">
                 <Clock size={12} />
-                <span>{currentPage.duration} min</span>
+                <span>{currentPage?.duration || 0} min</span>
               </Badge>
               <div className="text-sm text-muted-foreground">
                 {getProgressPercentage()}% Complete

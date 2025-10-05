@@ -513,6 +513,24 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
     const currentSection = currentModule.content[currentSectionIndex]
     const progress = ((currentSectionIndex + 1) / currentModule.content.length) * 100
 
+    // Safety check for current section
+    if (!currentSection) {
+      return (
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <Card className="p-8 text-center max-w-md">
+            <CardContent className="space-y-4">
+              <div className="text-destructive">
+                <BookOpen size={48} className="mx-auto mb-4" />
+              </div>
+              <h3 className="text-lg font-semibold">Section Not Found</h3>
+              <p className="text-muted-foreground">The requested section could not be loaded.</p>
+              <Button onClick={() => setIsStudying(false)}>Back to Overview</Button>
+            </CardContent>
+          </Card>
+        </div>
+      )
+    }
+
     return (
       <div className="min-h-screen bg-background flex flex-col">
         {/* Enhanced Responsive Study Header */}
@@ -600,17 +618,17 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
 
               <CardHeader className="relative z-10 p-4 sm:p-6 lg:p-8">
                 <CardTitle className="text-xl sm:text-2xl lg:text-3xl mb-3 lg:mb-4">
-                  {currentSection.title}
+                  {currentSection?.title || 'Loading...'}
                 </CardTitle>
                 <div className="flex flex-wrap items-center gap-2 sm:gap-4">
                   <Badge variant="secondary" className="text-xs sm:text-sm">
                     <Clock size={12} className="mr-1" />
-                    {currentSection.duration} min
+                    {currentSection?.duration || 0} min
                   </Badge>
                   <Badge variant="outline" className="text-xs sm:text-sm capitalize">
-                    {currentSection.type}
+                    {currentSection?.type || 'content'}
                   </Badge>
-                  {currentSection.type === 'interactive' && (
+                  {currentSection?.type === 'interactive' && (
                     <Badge variant="secondary" className="bg-accent/10 text-accent text-xs sm:text-sm">
                       ✨ Interactive
                     </Badge>
@@ -627,12 +645,12 @@ export function EnhancedLearningModules({ selectedModuleId, onBack, onComplete }
                     transition={{ delay: 0.2 }}
                   >
                     <p className="text-base sm:text-lg leading-relaxed text-foreground">
-                      {currentSection.content}
+                      {currentSection?.content || 'Content loading...'}
                     </p>
                   </motion.div>
                   
                   {/* Additional interactive elements for certain content types */}
-                  {currentSection.type === 'interactive' && (
+                  {currentSection?.type === 'interactive' && (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -47,12 +47,26 @@ interface ProfileSettingsProps {
 }
 
 export function ProfileSettings({ isOpen, onClose, userData, onUpdate }: ProfileSettingsProps) {
-  const [editedProfile, setEditedProfile] = useState<UserProfile>(userData)
+  const [editedProfile, setEditedProfile] = useState<UserProfile>(userData || {
+    name: '',
+    username: '',
+    email: '',
+    phone: '',
+    class: '',
+    registeredAt: new Date().toISOString()
+  })
   const [isUploading, setIsUploading] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [certificates] = useKV<any[]>('user-certificates', [])
   const [moduleProgress] = useKV<any[]>('module-progress', [])
+
+  // Update profile when userData changes
+  useEffect(() => {
+    if (userData) {
+      setEditedProfile(userData)
+    }
+  }, [userData])
 
   const handleInputChange = (field: keyof UserProfile, value: string) => {
     setEditedProfile(prev => ({

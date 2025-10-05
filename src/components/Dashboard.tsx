@@ -220,7 +220,7 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  Welcome back, {userProfileData?.name}! ✨
+                  Welcome back, {userProfileData?.name || userData?.name || 'User'}! ✨
                 </motion.p>
                 <motion.p 
                   className="text-xs sm:text-sm text-muted-foreground"
@@ -228,7 +228,7 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  {userProfileData?.class}
+                  {userProfileData?.class || userData?.class || 'Student'}
                 </motion.p>
               </div>
             </div>
@@ -809,7 +809,7 @@ export function Dashboard({ userData, onStartLearning, onTakeQuiz, onTakeAIQuiz 
           onClose={() => setShowProfile(false)}
           userData={{
             ...userProfileData || userData,
-            username: (userProfileData?.username || userData.name.toLowerCase().replace(/\s+/g, '')),
+            username: (userProfileData?.username || userData?.name?.toLowerCase().replace(/\s+/g, '') || 'user'),
             totalScore: getAverageQuizScore(),
             completedModules: getCompletedModules()
           }}

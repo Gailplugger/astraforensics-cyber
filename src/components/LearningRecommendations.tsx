@@ -363,7 +363,7 @@ export function LearningRecommendations({ onStartRecommendation }: LearningRecom
                                 <span className="text-sm">{resource.title}</span>
                               </div>
                               <Badge variant="outline" className="text-xs">
-                                {resource.duration}
+                                {resource?.duration || '0 min'}
                               </Badge>
                             </div>
                           ))}
