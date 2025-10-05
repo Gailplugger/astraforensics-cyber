@@ -14,9 +14,13 @@ import { AISkillAssessment } from './components/AISkillAssessment'
 import { CareerPathRecommendation } from './components/CareerPathRecommendation'
 import { SparkEnhancedCertificate } from './components/SparkEnhancedCertificate'
 import { OfflineLearning } from './components/OfflineLearning'
+import { BackendErrorBoundary } from './components/BackendErrorBoundary'
 import { Button } from './components/ui/button'
 import { Robot, Download, Trophy, TrendUp } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
+import { initializeBackend, sparkLog, sparkError } from './lib/spark-api'
+import { backendValidator } from './lib/backend-validator'
+import { toast } from 'sonner'
 
 // Enhanced viewport height handling for mobile devices with better support
 const setViewportHeight = () => {
@@ -103,18 +107,50 @@ function App() {
 
   useEffect(() => {
     const initApp = async () => {
-      // Simulate app initialization
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      
-      if (userData && hasSeenWelcome) {
-        setCurrentState('dashboard')
-      } else if (userData && !hasSeenWelcome) {
-        setCurrentState('welcome')
-      } else {
-        setCurrentState('welcome')
+      try {
+        sparkLog('Starting application initialization...')
+        
+        // Initialize backend systems
+        const backendReady = await initializeBackend()
+        if (!backendReady) {
+          sparkError('Backend initialization failed, some features may not work correctly')
+          toast.error('Some features may be limited due to backend issues')
+        } else {
+          // Run comprehensive health check in development
+          if (import.meta.env.DEV) {
+            backendValidator.runFullHealthCheck().then(results => {
+              const status = backendValidator.getSystemStatus()
+              sparkLog(`Backend health check completed: ${status}`, results)
+              
+              if (status === 'unhealthy') {
+                toast.error('Backend health check detected issues')
+              } else if (status === 'degraded') {
+                toast.warning('Backend health check detected warnings')
+              }
+            }).catch(error => {
+              sparkError('Health check failed', error)
+            })
+          }
+        }
+        
+        // Simulate app initialization
+        await new Promise(resolve => setTimeout(resolve, 1500))
+        
+        if (userData && hasSeenWelcome) {
+          setCurrentState('dashboard')
+        } else if (userData && !hasSeenWelcome) {
+          setCurrentState('welcome')
+        } else {
+          setCurrentState('welcome')
+        }
+        
+        sparkLog('Application initialization completed')
+      } catch (error) {
+        sparkError('Application initialization failed', error)
+        toast.error('Failed to initialize application')
+      } finally {
+        setIsLoading(false)
       }
-      
-      setIsLoading(false)
     }
 
     initApp()
@@ -322,11 +358,12 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-card to-background relative flex flex-col container">
-      {/* Spark Background Effects */}
-      <div className="cyber-grid absolute inset-0 opacity-10 pointer-events-none"></div>
-      
-      {/* Main Content Area */}
+    <BackendErrorBoundary>
+      <div className="min-h-screen bg-gradient-to-br from-background via-card to-background relative flex flex-col container">
+        {/* Spark Background Effects */}
+        <div className="cyber-grid absolute inset-0 opacity-10 pointer-events-none"></div>
+        
+        {/* Main Content Area */}
       <div className="flex-1 safe-area-top relative z-10">
         {currentState === 'welcome' && (
           <WelcomeTour onComplete={handleWelcomeComplete} />
@@ -567,6 +604,7 @@ function App() {
         }}
       />
     </div>
+    </BackendErrorBoundary>
   )
 }
 

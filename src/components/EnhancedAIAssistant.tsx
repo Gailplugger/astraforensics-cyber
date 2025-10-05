@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useKV } from '@github/spark/hooks'
 import { formatDate, formatTime } from '@/lib/utils'
+import { createPrompt, callLLM, sparkError } from '@/lib/spark-api'
 import { 
   Robot, 
   X, 
@@ -147,7 +148,7 @@ Context: ${context || 'General assistance'}
 Chat History: ${(messages || []).slice(-3).map(m => `${m.role}: ${m.content}`).join('\n')}
 ` : ''
 
-      const prompt = (window as any).spark.llmPrompt`You are an advanced AI cybersecurity learning assistant for AstraForensics platform. You are helpful, knowledgeable, and encouraging.
+      const prompt = createPrompt`You are an advanced AI cybersecurity learning assistant for AstraForensics platform. You are helpful, knowledgeable, and encouraging.
 
 Context:
 ${contextInfo}
@@ -156,7 +157,7 @@ User Question: ${messageToSend}
 
 Please provide a helpful, accurate, and encouraging response about cybersecurity. Keep responses concise but informative. Use emojis sparingly but appropriately. If the user asks for quizzes, create relevant cybersecurity questions. If they need explanations, break down complex concepts into digestible parts.`
 
-      const response = await (window as any).spark.llm(prompt)
+      const response = await callLLM(prompt)
 
       // Add AI response
       const aiMessage: Message = {
@@ -168,7 +169,7 @@ Please provide a helpful, accurate, and encouraging response about cybersecurity
 
       setMessages(currentMessages => [...(currentMessages || []), aiMessage])
     } catch (error) {
-      console.error('AI response error:', error)
+      sparkError('AI response error', error)
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',

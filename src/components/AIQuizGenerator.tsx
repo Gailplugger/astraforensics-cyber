@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
+import { createPrompt, callLLM, sparkLog, sparkError } from '@/lib/spark-api'
 import { 
   Brain, 
   CheckCircle, 
@@ -83,7 +84,9 @@ export function AIQuizGenerator({
   const generateQuiz = async () => {
     setIsGenerating(true)
     try {
-      const prompt = (window as any).spark.llmPrompt`Generate a cybersecurity quiz with exactly ${questionCount} questions about ${topic} with ${difficulty} difficulty level.
+      sparkLog('Generating AI quiz', { topic, difficulty, questionCount })
+      
+      const prompt = createPrompt`Generate a cybersecurity quiz with exactly ${questionCount} questions about ${topic} with ${difficulty} difficulty level.
 
       Return a JSON object with a "questions" property containing an array of question objects. Each question should have:
       - id: unique identifier
@@ -113,16 +116,17 @@ export function AIQuizGenerator({
         ]
       }`
 
-      const response = await (window as any).spark.llm(prompt, 'gpt-4o', true)
+      const response = await callLLM(prompt, 'gpt-4o', true)
       const quizData = JSON.parse(response)
       
       if (quizData.questions && Array.isArray(quizData.questions)) {
         setQuestions(quizData.questions)
+        sparkLog('Quiz generated successfully', { questionCount: quizData.questions.length })
       } else {
-        throw new Error('Invalid quiz format')
+        throw new Error('Invalid quiz format: missing questions array')
       }
     } catch (error) {
-      console.error('Failed to generate quiz:', error)
+      sparkError('Failed to generate quiz', error)
       toast.error('Failed to generate quiz. Using fallback questions.')
       generateFallbackQuiz()
     } finally {

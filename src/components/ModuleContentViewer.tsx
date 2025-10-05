@@ -685,21 +685,30 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
 
   useEffect(() => {
     const loadModule = async () => {
-      setLoading(true)
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      const content = moduleData[moduleId]
-      if (content) {
-        setModuleContent(content)
+      try {
+        setLoading(true)
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000))
         
-        // Load existing progress
-        const existingProgress = progress?.find(p => p.moduleId === moduleId)
-        if (existingProgress) {
-          setCurrentPageIndex(existingProgress.currentPage)
+        const content = moduleData[moduleId]
+        if (content) {
+          setModuleContent(content)
+          
+          // Load existing progress
+          const existingProgress = progress?.find(p => p.moduleId === moduleId)
+          if (existingProgress) {
+            setCurrentPageIndex(existingProgress.currentPage)
+          }
+        } else {
+          console.error(`Module content not found for moduleId: ${moduleId}`)
+          toast.error('Module content not found')
         }
+      } catch (error) {
+        console.error('Failed to load module:', error)
+        toast.error('Failed to load module content')
+      } finally {
+        setLoading(false)
       }
-      setLoading(false)
     }
 
     if (moduleId) {
