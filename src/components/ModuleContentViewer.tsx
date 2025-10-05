@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
 import { ModuleQuiz } from './ModuleQuiz'
+import { SparkLoader } from './SparkLoader'
 import { 
   ArrowLeft, 
   ArrowRight,
@@ -19,7 +20,14 @@ import {
   Brain,
   Eye,
   List,
-  Certificate as CertificateIcon
+  Certificate as CertificateIcon,
+  Star,
+  User,
+  Shield,
+  Network,
+  Bug,
+  Database,
+  CloudCheck
 } from '@phosphor-icons/react'
 
 interface ModulePage {
@@ -77,7 +85,7 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
   const [progress, setProgress] = useKV<ModuleProgress[]>('module-progress', [])
   const [loading, setLoading] = useState(true)
 
-  // Enhanced module content with more variety
+  // Enhanced module content with more comprehensive details
   const moduleData: Record<string, ModuleContent> = {
     'cybersecurity-fundamentals': {
       id: 'cybersecurity-fundamentals',
@@ -88,227 +96,666 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
           id: 'intro',
           title: 'Introduction to Cybersecurity',
           content: `
-            <h2>Welcome to Cybersecurity Fundamentals</h2>
-            <p>In today's digital world, cybersecurity has become one of the most critical aspects of technology and business operations. This comprehensive module will introduce you to the fundamental concepts that form the backbone of information security.</p>
-            
-            <h3>What You'll Learn</h3>
-            <ul>
-              <li>The CIA Triad: Confidentiality, Integrity, and Availability</li>
-              <li>Common cybersecurity threats and vulnerabilities</li>
-              <li>Risk assessment and management principles</li>
-              <li>Security frameworks and compliance standards</li>
-            </ul>
-            
-            <h3>Why Cybersecurity Matters</h3>
-            <p>With cyber attacks increasing by 67% over the last 5 years, organizations need skilled cybersecurity professionals more than ever. This field offers:</p>
-            <ul>
-              <li>High-demand career opportunities</li>
-              <li>Excellent salary potential</li>
-              <li>Intellectual challenges and continuous learning</li>
-              <li>The satisfaction of protecting critical systems and data</li>
-            </ul>
+            <div class="learning-content">
+              <h2>🛡️ Welcome to Cybersecurity Fundamentals</h2>
+              <p class="lead-text">In today's interconnected digital world, cybersecurity has become one of the most critical aspects of technology and business operations. This comprehensive module will introduce you to the fundamental concepts that form the backbone of information security.</p>
+              
+              <div class="highlight-box">
+                <h3>📊 Industry Snapshot 2024</h3>
+                <ul>
+                  <li>Global cybersecurity market worth <strong>$173.5 billion</strong></li>
+                  <li>Average cost of a data breach: <strong>$4.45 million</strong></li>
+                  <li>3.5 million unfilled cybersecurity jobs worldwide</li>
+                  <li>95% of successful attacks are due to human error</li>
+                </ul>
+              </div>
+              
+              <h3>🎯 What You'll Master</h3>
+              <div class="skills-grid">
+                <div class="skill-item">
+                  <div class="skill-icon">🔐</div>
+                  <h4>CIA Triad Mastery</h4>
+                  <p>Deep dive into Confidentiality, Integrity, and Availability principles</p>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-icon">⚠️</div>
+                  <h4>Threat Intelligence</h4>
+                  <p>Understand modern cybersecurity threats and attack vectors</p>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-icon">📊</div>
+                  <h4>Risk Assessment</h4>
+                  <p>Learn systematic approaches to risk management</p>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-icon">📋</div>
+                  <h4>Security Frameworks</h4>
+                  <p>Master industry-standard compliance and governance models</p>
+                </div>
+              </div>
+              
+              <h3>🚀 Career Opportunities</h3>
+              <p>Cybersecurity professionals are in unprecedented demand across all industries:</p>
+              <div class="career-paths">
+                <div class="career-card">
+                  <h4>🔒 Security Analyst</h4>
+                  <p><strong>Avg. Salary:</strong> $99,730/year</p>
+                  <p>Monitor security events, investigate incidents, implement protective measures</p>
+                </div>
+                <div class="career-card">
+                  <h4>🕵️ Penetration Tester</h4>
+                  <p><strong>Avg. Salary:</strong> $115,780/year</p>
+                  <p>Ethical hacking to identify vulnerabilities and strengthen defenses</p>
+                </div>
+                <div class="career-card">
+                  <h4>👨‍💼 Security Manager</h4>
+                  <p><strong>Avg. Salary:</strong> $142,530/year</p>
+                  <p>Lead security teams, develop strategies, manage enterprise security</p>
+                </div>
+              </div>
+              
+              <div class="interactive-element">
+                <h4>💡 Did You Know?</h4>
+                <p>The first computer virus, "Creeper," was created in 1971 and displayed the message: "I'm the creeper, catch me if you can!" This marked the beginning of our ongoing battle against cyber threats.</p>
+              </div>
+            </div>
           `,
-          type: 'text',
+          type: 'interactive',
           duration: 15
         },
         {
           id: 'cia-triad',
-          title: 'The CIA Triad',
+          title: 'The CIA Triad: Foundation of Security',
           content: `
-            <h2>The CIA Triad: Foundation of Information Security</h2>
-            <p>The CIA Triad is the fundamental model that guides information security policies within organizations. It consists of three core principles:</p>
-            
-            <h3>🔒 Confidentiality</h3>
-            <p>Ensures that information is accessible only to those authorized to access it. This involves:</p>
-            <ul>
-              <li>Access controls and authentication</li>
-              <li>Encryption of sensitive data</li>
-              <li>Data classification and handling procedures</li>
-              <li>Privacy protection measures</li>
-            </ul>
-            
-            <h3>🛡️ Integrity</h3>
-            <p>Maintains the accuracy and completeness of data and systems. Key aspects include:</p>
-            <ul>
-              <li>Data validation and verification</li>
-              <li>Digital signatures and hashing</li>
-              <li>Version control and change management</li>
-              <li>Protection against unauthorized modifications</li>
-            </ul>
-            
-            <h3>⚡ Availability</h3>
-            <p>Ensures that information and resources are accessible when needed. This involves:</p>
-            <ul>
-              <li>System redundancy and backup strategies</li>
-              <li>Disaster recovery planning</li>
-              <li>Performance monitoring and maintenance</li>
-              <li>DDoS protection and mitigation</li>
-            </ul>
-            
-            <div class="interactive-section">
-              <h4>💡 Real-World Example</h4>
-              <p>Consider a banking system:</p>
-              <ul>
-                <li><strong>Confidentiality:</strong> Customer account information is encrypted and only accessible to authorized personnel</li>
-                <li><strong>Integrity:</strong> Transaction records cannot be altered without proper authorization and audit trails</li>
-                <li><strong>Availability:</strong> The banking system must be accessible 24/7 for customer transactions</li>
-              </ul>
+            <div class="learning-content">
+              <h2>🔐 The CIA Triad: Foundation of Information Security</h2>
+              <p class="lead-text">The CIA Triad forms the cornerstone of information security policy and practice. Every security decision should consider these three fundamental principles.</p>
+              
+              <div class="triad-container">
+                <div class="triad-element confidentiality">
+                  <div class="triad-icon">🔒</div>
+                  <h3>Confidentiality</h3>
+                  <p class="principle-desc">Ensures information is accessible only to authorized individuals, entities, or processes.</p>
+                  
+                  <h4>🛠️ Implementation Techniques:</h4>
+                  <ul>
+                    <li><strong>Encryption:</strong> AES-256, RSA, elliptic curve cryptography</li>
+                    <li><strong>Access Controls:</strong> Role-based (RBAC), attribute-based (ABAC)</li>
+                    <li><strong>Authentication:</strong> Multi-factor authentication (MFA), biometrics</li>
+                    <li><strong>Data Classification:</strong> Public, internal, confidential, restricted</li>
+                    <li><strong>Privacy Controls:</strong> Data anonymization, pseudonymization</li>
+                  </ul>
+                  
+                  <div class="real-world-example">
+                    <h5>🏥 Healthcare Example:</h5>
+                    <p>Patient medical records are encrypted at rest and in transit. Only authorized healthcare providers with valid credentials can access specific patient information based on their role and need-to-know basis.</p>
+                  </div>
+                </div>
+                
+                <div class="triad-element integrity">
+                  <div class="triad-icon">🛡️</div>
+                  <h3>Integrity</h3>
+                  <p class="principle-desc">Maintains accuracy, completeness, and consistency of data throughout its lifecycle.</p>
+                  
+                  <h4>🛠️ Implementation Techniques:</h4>
+                  <ul>
+                    <li><strong>Hashing:</strong> SHA-256, MD5 checksums for data verification</li>
+                    <li><strong>Digital Signatures:</strong> PKI-based authentication and non-repudiation</li>
+                    <li><strong>Version Control:</strong> Git, SVN for change tracking</li>
+                    <li><strong>Input Validation:</strong> Sanitization, whitelisting, bounds checking</li>
+                    <li><strong>Audit Trails:</strong> Comprehensive logging and monitoring</li>
+                  </ul>
+                  
+                  <div class="real-world-example">
+                    <h5>🏦 Financial Example:</h5>
+                    <p>Banking transactions use digital signatures and checksums to ensure no unauthorized modifications. Each transaction is logged with immutable timestamps and cannot be altered without detection.</p>
+                  </div>
+                </div>
+                
+                <div class="triad-element availability">
+                  <div class="triad-icon">⚡</div>
+                  <h3>Availability</h3>
+                  <p class="principle-desc">Ensures information and resources are accessible when needed by authorized users.</p>
+                  
+                  <h4>🛠️ Implementation Techniques:</h4>
+                  <ul>
+                    <li><strong>Redundancy:</strong> Load balancing, failover systems, clustering</li>
+                    <li><strong>Backup Strategies:</strong> 3-2-1 rule, incremental, differential backups</li>
+                    <li><strong>Disaster Recovery:</strong> RTO, RPO planning, business continuity</li>
+                    <li><strong>DDoS Protection:</strong> Rate limiting, traffic filtering, CDNs</li>
+                    <li><strong>Monitoring:</strong> 24/7 SOC, automated alerting, health checks</li>
+                  </ul>
+                  
+                  <div class="real-world-example">
+                    <h5>☁️ Cloud Service Example:</h5>
+                    <p>Major cloud providers maintain 99.99% uptime through geographic redundancy, automatic failover, and real-time monitoring across multiple data centers worldwide.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="balance-section">
+                <h3>⚖️ Balancing the CIA Triad</h3>
+                <p>Security professionals must often balance these three principles as they can sometimes conflict:</p>
+                <ul>
+                  <li><strong>High Confidentiality vs. Availability:</strong> Strong encryption may slow system performance</li>
+                  <li><strong>High Integrity vs. Usability:</strong> Strict validation can impact user experience</li>
+                  <li><strong>High Availability vs. Security:</strong> Redundant systems may introduce new attack vectors</li>
+                </ul>
+              </div>
+              
+              <div class="practical-exercise">
+                <h4>🎓 Practical Exercise</h4>
+                <p><strong>Scenario:</strong> You're designing security for an e-commerce platform that processes credit card payments.</p>
+                <div class="exercise-questions">
+                  <p><strong>Question 1:</strong> How would you ensure confidentiality of customer payment data?</p>
+                  <p><strong>Question 2:</strong> What measures would maintain transaction integrity?</p>
+                  <p><strong>Question 3:</strong> How would you guarantee 99.9% availability during peak shopping seasons?</p>
+                </div>
+              </div>
             </div>
           `,
           type: 'interactive',
-          duration: 20
-        },
-        {
-          id: 'threat-landscape',
-          title: 'Understanding the Threat Landscape',
-          content: `
-            <h2>Modern Cybersecurity Threats</h2>
-            <p>Understanding the current threat landscape is crucial for developing effective security strategies. Let's explore the most common types of cyber threats:</p>
-            
-            <h3>🦠 Malware</h3>
-            <p>Malicious software designed to damage, disrupt, or gain unauthorized access to systems:</p>
-            <ul>
-              <li><strong>Viruses:</strong> Self-replicating programs that attach to other files</li>
-              <li><strong>Trojans:</strong> Disguised malicious software that appears legitimate</li>
-              <li><strong>Ransomware:</strong> Encrypts files and demands payment for decryption</li>
-              <li><strong>Spyware:</strong> Secretly monitors and collects user information</li>
-            </ul>
-            
-            <h3>🎣 Social Engineering</h3>
-            <p>Psychological manipulation to trick people into divulging confidential information:</p>
-            <ul>
-              <li><strong>Phishing:</strong> Fraudulent emails attempting to steal credentials</li>
-              <li><strong>Spear Phishing:</strong> Targeted phishing attacks on specific individuals</li>
-              <li><strong>Pretexting:</strong> Creating false scenarios to gain trust</li>
-              <li><strong>Baiting:</strong> Offering something enticing to spark curiosity</li>
-            </ul>
-            
-            <h3>💻 Network Attacks</h3>
-            <p>Attacks targeting network infrastructure and communications:</p>
-            <ul>
-              <li><strong>DDoS:</strong> Overwhelming systems with traffic to cause downtime</li>
-              <li><strong>Man-in-the-Middle:</strong> Intercepting communications between parties</li>
-              <li><strong>SQL Injection:</strong> Exploiting database vulnerabilities</li>
-              <li><strong>Zero-day Exploits:</strong> Attacks using unknown vulnerabilities</li>
-            </ul>
-            
-            <div class="statistics-box">
-              <h4>📊 2024 Threat Statistics</h4>
-              <ul>
-                <li>Ransomware attacks increased by 41% year-over-year</li>
-                <li>95% of successful cyber attacks are due to human error</li>
-                <li>The average cost of a data breach is $4.45 million</li>
-                <li>It takes an average of 277 days to identify and contain a breach</li>
-              </ul>
-            </div>
-          `,
-          type: 'text',
           duration: 25
         },
         {
-          id: 'risk-management',
-          title: 'Risk Assessment and Management',
+          id: 'threat-landscape',
+          title: 'Modern Cybersecurity Threat Landscape',
           content: `
-            <h2>Cybersecurity Risk Management</h2>
-            <p>Effective risk management is essential for maintaining a strong security posture. It involves identifying, analyzing, and mitigating potential threats to your organization.</p>
-            
-            <h3>🎯 Risk Assessment Process</h3>
-            <ol>
-              <li><strong>Asset Identification:</strong> Catalog all valuable assets (data, systems, applications)</li>
-              <li><strong>Threat Identification:</strong> Identify potential threats to each asset</li>
-              <li><strong>Vulnerability Assessment:</strong> Find weaknesses that could be exploited</li>
-              <li><strong>Impact Analysis:</strong> Evaluate potential consequences of security incidents</li>
-              <li><strong>Risk Calculation:</strong> Determine risk levels using probability and impact</li>
-            </ol>
-            
-            <h3>📊 Risk Matrix</h3>
-            <p>Risks are typically categorized using a matrix based on:</p>
-            <ul>
-              <li><strong>Likelihood:</strong> How probable is the threat? (Low, Medium, High)</li>
-              <li><strong>Impact:</strong> What would be the consequences? (Low, Medium, High, Critical)</li>
-            </ul>
-            
-            <h3>🛡️ Risk Mitigation Strategies</h3>
-            <p>Once risks are identified, you can choose from several mitigation approaches:</p>
-            <ul>
-              <li><strong>Accept:</strong> Acknowledge the risk and decide to live with it</li>
-              <li><strong>Avoid:</strong> Eliminate the risk by removing the threat source</li>
-              <li><strong>Mitigate:</strong> Reduce the likelihood or impact of the risk</li>
-              <li><strong>Transfer:</strong> Share the risk with another party (insurance, outsourcing)</li>
-            </ul>
-            
-            <div class="practical-exercise">
-              <h4>🎓 Practical Exercise</h4>
-              <p>Consider a small business with the following assets:</p>
-              <ul>
-                <li>Customer database with 10,000 records</li>
-                <li>E-commerce website processing payments</li>
-                <li>Email system for business communications</li>
-              </ul>
-              <p>What are the main threats to each asset? How would you prioritize them?</p>
+            <div class="learning-content">
+              <h2>🦠 Understanding the Modern Threat Landscape</h2>
+              <p class="lead-text">The cybersecurity threat landscape is constantly evolving, with new attack vectors emerging daily. Understanding these threats is crucial for developing effective defense strategies.</p>
+              
+              <div class="threat-timeline">
+                <h3>📈 Evolution of Cyber Threats</h3>
+                <div class="timeline-item">
+                  <span class="year">1980s</span>
+                  <span class="threat">Computer Viruses</span>
+                  <span class="impact">Local system infections</span>
+                </div>
+                <div class="timeline-item">
+                  <span class="year">1990s</span>
+                  <span class="threat">Internet Worms</span>
+                  <span class="impact">Network propagation</span>
+                </div>
+                <div class="timeline-item">
+                  <span class="year">2000s</span>
+                  <span class="threat">Botnets & Spam</span>
+                  <span class="impact">Coordinated attacks</span>
+                </div>
+                <div class="timeline-item">
+                  <span class="year">2010s</span>
+                  <span class="threat">Advanced Persistent Threats</span>
+                  <span class="impact">Nation-state attacks</span>
+                </div>
+                <div class="timeline-item">
+                  <span class="year">2020s</span>
+                  <span class="threat">AI-Powered Attacks</span>
+                  <span class="impact">Automated, targeted threats</span>
+                </div>
+              </div>
+              
+              <div class="threat-categories">
+                <div class="threat-category malware">
+                  <h3>🦠 Malware Evolution</h3>
+                  <div class="threat-types">
+                    <div class="threat-type">
+                      <h4>🔴 Ransomware</h4>
+                      <p><strong>Mechanism:</strong> Encrypts files, demands payment</p>
+                      <p><strong>Examples:</strong> WannaCry, Ryuk, REvil</p>
+                      <p><strong>Impact:</strong> $20 billion in damages (2021)</p>
+                      <div class="prevention-tips">
+                        <strong>Prevention:</strong>
+                        <ul>
+                          <li>Regular offline backups (3-2-1 rule)</li>
+                          <li>Endpoint detection and response (EDR)</li>
+                          <li>Network segmentation</li>
+                          <li>Employee training on phishing</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div class="threat-type">
+                      <h4>🎭 Trojans & Banking Malware</h4>
+                      <p><strong>Mechanism:</strong> Masquerades as legitimate software</p>
+                      <p><strong>Examples:</strong> Zeus, Emotet, TrickBot</p>
+                      <p><strong>Target:</strong> Financial institutions, credentials</p>
+                      <div class="prevention-tips">
+                        <strong>Prevention:</strong>
+                        <ul>
+                          <li>Application whitelisting</li>
+                          <li>Behavioral analysis</li>
+                          <li>Browser isolation</li>
+                          <li>Multi-factor authentication</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div class="threat-type">
+                      <h4>🕷️ Advanced Persistent Threats (APTs)</h4>
+                      <p><strong>Mechanism:</strong> Long-term, stealthy infiltration</p>
+                      <p><strong>Actors:</strong> Nation-states, organized crime</p>
+                      <p><strong>Objectives:</strong> Espionage, sabotage, theft</p>
+                      <div class="prevention-tips">
+                        <strong>Detection:</strong>
+                        <ul>
+                          <li>Threat hunting programs</li>
+                          <li>SIEM with advanced analytics</li>
+                          <li>Network traffic analysis</li>
+                          <li>Zero-trust architecture</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="threat-category social-engineering">
+                  <h3>🎣 Social Engineering Attacks</h3>
+                  <p class="category-desc">Psychological manipulation to extract information or gain unauthorized access.</p>
+                  
+                  <div class="attack-techniques">
+                    <div class="technique">
+                      <h4>📧 Phishing & Spear Phishing</h4>
+                      <ul>
+                        <li><strong>Phishing:</strong> Mass emails targeting credentials</li>
+                        <li><strong>Spear Phishing:</strong> Targeted attacks on specific individuals</li>
+                        <li><strong>Whaling:</strong> Targeting C-level executives</li>
+                        <li><strong>Vishing:</strong> Voice-based phishing attacks</li>
+                      </ul>
+                      <div class="statistics">
+                        <p><strong>📊 Statistics:</strong> 83% of organizations experienced phishing attacks in 2022</p>
+                      </div>
+                    </div>
+                    
+                    <div class="technique">
+                      <h4>🎭 Pretexting & Baiting</h4>
+                      <ul>
+                        <li><strong>Pretexting:</strong> False scenarios to gain trust</li>
+                        <li><strong>Baiting:</strong> Offering rewards to trigger curiosity</li>
+                        <li><strong>Quid Pro Quo:</strong> Offering services in exchange for information</li>
+                        <li><strong>Tailgating:</strong> Physical unauthorized access</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="threat-category network-attacks">
+                  <h3>💻 Network-Based Attacks</h3>
+                  <div class="network-threat-grid">
+                    <div class="network-threat">
+                      <h4>⚡ Distributed Denial of Service (DDoS)</h4>
+                      <p><strong>Types:</strong> Volumetric, protocol, application layer</p>
+                      <p><strong>Scale:</strong> Attacks can exceed 1 Tbps</p>
+                      <p><strong>Motivation:</strong> Disruption, extortion, distraction</p>
+                    </div>
+                    
+                    <div class="network-threat">
+                      <h4>🔍 Man-in-the-Middle (MitM)</h4>
+                      <p><strong>Techniques:</strong> ARP spoofing, DNS hijacking, SSL stripping</p>
+                      <p><strong>Targets:</strong> Unencrypted communications</p>
+                      <p><strong>Prevention:</strong> End-to-end encryption, certificate pinning</p>
+                    </div>
+                    
+                    <div class="network-threat">
+                      <h4>💉 Injection Attacks</h4>
+                      <p><strong>SQL Injection:</strong> Database manipulation</p>
+                      <p><strong>Command Injection:</strong> OS command execution</p>
+                      <p><strong>LDAP Injection:</strong> Directory service attacks</p>
+                    </div>
+                    
+                    <div class="network-threat">
+                      <h4>🌐 Zero-Day Exploits</h4>
+                      <p><strong>Definition:</strong> Unknown vulnerabilities</p>
+                      <p><strong>Market:</strong> $2.5 million for iOS zero-days</p>
+                      <p><strong>Defense:</strong> Behavioral analysis, sandboxing</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="emerging-threats">
+                <h3>🚀 Emerging Threats 2024</h3>
+                <div class="emerging-grid">
+                  <div class="emerging-threat">
+                    <h4>🤖 AI-Powered Attacks</h4>
+                    <ul>
+                      <li>Deepfake voice cloning for social engineering</li>
+                      <li>AI-generated phishing emails</li>
+                      <li>Automated vulnerability discovery</li>
+                      <li>Adversarial ML attacks</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="emerging-threat">
+                    <h4>☁️ Cloud-Native Threats</h4>
+                    <ul>
+                      <li>Container escape attacks</li>
+                      <li>Serverless function abuse</li>
+                      <li>API-based attacks</li>
+                      <li>Cloud misconfigurations</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="emerging-threat">
+                    <h4>🔗 Supply Chain Attacks</h4>
+                    <ul>
+                      <li>SolarWinds-style infiltrations</li>
+                      <li>NPM package poisoning</li>
+                      <li>Hardware implants</li>
+                      <li>Third-party service compromises</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="threat-intelligence">
+                <h3>🎯 Threat Intelligence Framework</h3>
+                <p>Understanding threats requires systematic intelligence gathering:</p>
+                <ol>
+                  <li><strong>Collection:</strong> OSINT, dark web monitoring, threat feeds</li>
+                  <li><strong>Processing:</strong> Data normalization, correlation, enrichment</li>
+                  <li><strong>Analysis:</strong> Pattern recognition, attribution, impact assessment</li>
+                  <li><strong>Dissemination:</strong> Actionable intelligence to stakeholders</li>
+                  <li><strong>Feedback:</strong> Continuous improvement and validation</li>
+                </ol>
+              </div>
             </div>
           `,
           type: 'interactive',
           duration: 30
         },
         {
-          id: 'security-frameworks',
-          title: 'Security Frameworks and Standards',
+          id: 'risk-management',
+          title: 'Cybersecurity Risk Assessment & Management',
           content: `
-            <h2>Cybersecurity Frameworks and Standards</h2>
-            <p>Security frameworks provide structured approaches to managing cybersecurity risks and implementing best practices across organizations.</p>
-            
-            <h3>🏛️ NIST Cybersecurity Framework</h3>
-            <p>The most widely adopted framework, consisting of five core functions:</p>
-            <ul>
-              <li><strong>Identify:</strong> Understand your business context, resources, and risks</li>
-              <li><strong>Protect:</strong> Implement safeguards to ensure delivery of critical services</li>
-              <li><strong>Detect:</strong> Develop activities to identify cybersecurity events</li>
-              <li><strong>Respond:</strong> Take action regarding detected cybersecurity incidents</li>
-              <li><strong>Recover:</strong> Maintain resilience plans and restore capabilities</li>
-            </ul>
-            
-            <h3>🌐 ISO 27001</h3>
-            <p>International standard for information security management systems (ISMS):</p>
-            <ul>
-              <li>Provides a systematic approach to managing sensitive information</li>
-              <li>Includes people, processes, and IT systems</li>
-              <li>Based on risk management and continuous improvement</li>
-              <li>Internationally recognized certification available</li>
-            </ul>
-            
-            <h3>⚖️ Compliance Standards</h3>
-            <p>Industry-specific regulations that organizations must follow:</p>
-            <ul>
-              <li><strong>PCI DSS:</strong> Payment Card Industry Data Security Standard</li>
-              <li><strong>HIPAA:</strong> Health Insurance Portability and Accountability Act</li>
-              <li><strong>GDPR:</strong> General Data Protection Regulation (EU)</li>
-              <li><strong>SOX:</strong> Sarbanes-Oxley Act (Financial reporting)</li>
-            </ul>
-            
-            <h3>🔧 Implementation Benefits</h3>
-            <p>Adopting security frameworks provides:</p>
-            <ul>
-              <li>Structured approach to cybersecurity</li>
-              <li>Common language for discussing security issues</li>
-              <li>Measurable security improvements</li>
-              <li>Regulatory compliance support</li>
-              <li>Enhanced stakeholder confidence</li>
-            </ul>
-            
-            <div class="framework-comparison">
-              <h4>📋 Framework Selection Guide</h4>
-              <p>Choose the right framework based on:</p>
-              <ul>
-                <li>Organization size and complexity</li>
-                <li>Industry requirements and regulations</li>
-                <li>Available resources and expertise</li>
-                <li>Business objectives and risk tolerance</li>
-              </ul>
+            <div class="learning-content">
+              <h2>🎯 Cybersecurity Risk Assessment & Management</h2>
+              <p class="lead-text">Effective risk management is the cornerstone of any successful cybersecurity program. It provides a systematic approach to identifying, analyzing, and mitigating potential threats to your organization.</p>
+              
+              <div class="risk-framework">
+                <h3>📊 Risk Management Framework</h3>
+                <div class="framework-steps">
+                  <div class="step step-1">
+                    <div class="step-number">1</div>
+                    <h4>🏢 Asset Identification</h4>
+                    <p>Catalog all valuable organizational assets</p>
+                    <ul>
+                      <li><strong>Information Assets:</strong> Customer data, IP, financial records</li>
+                      <li><strong>Technology Assets:</strong> Servers, networks, applications</li>
+                      <li><strong>Physical Assets:</strong> Data centers, hardware, facilities</li>
+                      <li><strong>Human Assets:</strong> Key personnel, expertise, knowledge</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="step step-2">
+                    <div class="step-number">2</div>
+                    <h4>⚠️ Threat Identification</h4>
+                    <p>Identify potential threats to each asset</p>
+                    <div class="threat-sources">
+                      <div class="threat-source">
+                        <h5>👤 Human Threats</h5>
+                        <ul>
+                          <li>Malicious insiders</li>
+                          <li>Social engineering</li>
+                          <li>Human error</li>
+                          <li>Sabotage</li>
+                        </ul>
+                      </div>
+                      <div class="threat-source">
+                        <h5>🌐 External Threats</h5>
+                        <ul>
+                          <li>Cybercriminals</li>
+                          <li>Nation-state actors</li>
+                          <li>Hacktivists</li>
+                          <li>Competitors</li>
+                        </ul>
+                      </div>
+                      <div class="threat-source">
+                        <h5>🌿 Environmental</h5>
+                        <ul>
+                          <li>Natural disasters</li>
+                          <li>Power outages</li>
+                          <li>Equipment failure</li>
+                          <li>Supply chain disruption</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="step step-3">
+                    <div class="step-number">3</div>
+                    <h4>🔍 Vulnerability Assessment</h4>
+                    <p>Find weaknesses that could be exploited</p>
+                    <div class="vulnerability-types">
+                      <div class="vuln-category">
+                        <h5>💻 Technical Vulnerabilities</h5>
+                        <ul>
+                          <li>Unpatched software</li>
+                          <li>Weak configurations</li>
+                          <li>Poor code quality</li>
+                          <li>Network design flaws</li>
+                        </ul>
+                      </div>
+                      <div class="vuln-category">
+                        <h5>📋 Process Vulnerabilities</h5>
+                        <ul>
+                          <li>Inadequate procedures</li>
+                          <li>Lack of training</li>
+                          <li>Poor change management</li>
+                          <li>Insufficient monitoring</li>
+                        </ul>
+                      </div>
+                      <div class="vuln-category">
+                        <h5>🏢 Physical Vulnerabilities</h5>
+                        <ul>
+                          <li>Unsecured facilities</li>
+                          <li>Inadequate access controls</li>
+                          <li>Environmental hazards</li>
+                          <li>Equipment placement</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="step step-4">
+                    <div class="step-number">4</div>
+                    <h4>💥 Impact Analysis</h4>
+                    <p>Evaluate potential consequences of security incidents</p>
+                    <div class="impact-categories">
+                      <div class="impact-type financial">
+                        <h5>💰 Financial Impact</h5>
+                        <ul>
+                          <li>Direct costs (incident response, recovery)</li>
+                          <li>Lost revenue (downtime, customer loss)</li>
+                          <li>Regulatory fines and penalties</li>
+                          <li>Legal costs and litigation</li>
+                          <li>Increased insurance premiums</li>
+                        </ul>
+                      </div>
+                      <div class="impact-type operational">
+                        <h5>⚙️ Operational Impact</h5>
+                        <ul>
+                          <li>Service disruption</li>
+                          <li>Productivity loss</li>
+                          <li>Supply chain interruption</li>
+                          <li>Resource reallocation</li>
+                        </ul>
+                      </div>
+                      <div class="impact-type reputational">
+                        <h5>📊 Reputational Impact</h5>
+                        <ul>
+                          <li>Brand damage</li>
+                          <li>Customer trust erosion</li>
+                          <li>Media coverage</li>
+                          <li>Competitive disadvantage</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="step step-5">
+                    <div class="step-number">5</div>
+                    <h4>🧮 Risk Calculation</h4>
+                    <p>Determine risk levels using probability and impact</p>
+                    <div class="risk-formula">
+                      <h5>📐 Risk Formula</h5>
+                      <div class="formula">
+                        <span class="formula-text">Risk = Threat × Vulnerability × Impact</span>
+                      </div>
+                      <p>Where each factor is rated on a scale (e.g., 1-5 or Low/Medium/High)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="risk-matrix">
+                <h3>📊 Risk Assessment Matrix</h3>
+                <p>Visualize risk levels based on likelihood and impact:</p>
+                <div class="matrix-container">
+                  <table class="risk-matrix-table">
+                    <thead>
+                      <tr>
+                        <th>Impact →<br>Likelihood ↓</th>
+                        <th>Low</th>
+                        <th>Medium</th>
+                        <th>High</th>
+                        <th>Critical</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="likelihood-label"><strong>High</strong></td>
+                        <td class="risk-medium">Medium</td>
+                        <td class="risk-high">High</td>
+                        <td class="risk-critical">Critical</td>
+                        <td class="risk-critical">Critical</td>
+                      </tr>
+                      <tr>
+                        <td class="likelihood-label"><strong>Medium</strong></td>
+                        <td class="risk-low">Low</td>
+                        <td class="risk-medium">Medium</td>
+                        <td class="risk-high">High</td>
+                        <td class="risk-critical">Critical</td>
+                      </tr>
+                      <tr>
+                        <td class="likelihood-label"><strong>Low</strong></td>
+                        <td class="risk-low">Low</td>
+                        <td class="risk-low">Low</td>
+                        <td class="risk-medium">Medium</td>
+                        <td class="risk-high">High</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="risk-treatment">
+                <h3>🛡️ Risk Mitigation Strategies</h3>
+                <p>Once risks are identified and assessed, choose appropriate treatment strategies:</p>
+                
+                <div class="mitigation-strategies">
+                  <div class="strategy accept">
+                    <h4>✅ Accept</h4>
+                    <p><strong>When to use:</strong> Low-impact risks, cost of mitigation exceeds potential loss</p>
+                    <p><strong>Requirements:</strong> Formal acceptance by management, monitoring plan</p>
+                    <div class="example">
+                      <strong>Example:</strong> Accepting risk of minor website defacement due to low business impact
+                    </div>
+                  </div>
+                  
+                  <div class="strategy avoid">
+                    <h4>🚫 Avoid</h4>
+                    <p><strong>When to use:</strong> High-risk activities that can be eliminated</p>
+                    <p><strong>Implementation:</strong> Remove threat source, discontinue risky processes</p>
+                    <div class="example">
+                      <strong>Example:</strong> Discontinuing use of legacy systems with known vulnerabilities
+                    </div>
+                  </div>
+                  
+                  <div class="strategy mitigate">
+                    <h4>🔧 Mitigate</h4>
+                    <p><strong>When to use:</strong> Most common approach for manageable risks</p>
+                    <p><strong>Methods:</strong> Reduce likelihood or impact through controls</p>
+                    <div class="mitigation-controls">
+                      <h5>🛠️ Control Types:</h5>
+                      <ul>
+                        <li><strong>Preventive:</strong> Firewalls, access controls, encryption</li>
+                        <li><strong>Detective:</strong> SIEM, IDS/IPS, monitoring</li>
+                        <li><strong>Corrective:</strong> Incident response, backup recovery</li>
+                        <li><strong>Administrative:</strong> Policies, training, procedures</li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div class="strategy transfer">
+                    <h4>🔄 Transfer</h4>
+                    <p><strong>When to use:</strong> Risks that can be shared with third parties</p>
+                    <p><strong>Methods:</strong> Insurance, outsourcing, contracts</p>
+                    <div class="example">
+                      <strong>Example:</strong> Cyber insurance to cover financial losses from data breaches
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="practical-scenario">
+                <h3>🎓 Practical Risk Assessment Scenario</h3>
+                <div class="scenario-box">
+                  <h4>📱 Mobile Banking Application Risk Assessment</h4>
+                  <p><strong>Organization:</strong> Regional bank with 500,000 customers</p>
+                  <p><strong>Asset:</strong> Mobile banking application processing $2B annually</p>
+                  
+                  <div class="scenario-analysis">
+                    <h5>🎯 Key Threats Identified:</h5>
+                    <ul>
+                      <li>Mobile malware stealing credentials</li>
+                      <li>Man-in-the-middle attacks on public WiFi</li>
+                      <li>Phishing targeting mobile users</li>
+                      <li>Device theft with stored credentials</li>
+                    </ul>
+                    
+                    <h5>🔍 Vulnerabilities Found:</h5>
+                    <ul>
+                      <li>Weak session management</li>
+                      <li>Insufficient certificate pinning</li>
+                      <li>Local data storage without encryption</li>
+                      <li>Lack of device binding</li>
+                    </ul>
+                    
+                    <h5>💥 Potential Impact:</h5>
+                    <ul>
+                      <li>$50M+ in fraud losses</li>
+                      <li>Regulatory fines up to $25M</li>
+                      <li>Customer attrition (15-20%)</li>
+                      <li>Reputation damage</li>
+                    </ul>
+                    
+                    <h5>🛡️ Recommended Controls:</h5>
+                    <ul>
+                      <li>Implement multi-factor authentication</li>
+                      <li>Add certificate pinning and SSL/TLS validation</li>
+                      <li>Encrypt all local data storage</li>
+                      <li>Deploy mobile threat defense solution</li>
+                      <li>Enhance user security awareness training</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="continuous-monitoring">
+                <h3>📈 Continuous Risk Monitoring</h3>
+                <p>Risk management is an ongoing process requiring continuous monitoring and adjustment:</p>
+                <ul>
+                  <li><strong>Regular assessments:</strong> Quarterly formal reviews, annual comprehensive assessments</li>
+                  <li><strong>Threat intelligence integration:</strong> Real-time threat feeds and indicators</li>
+                  <li><strong>Control effectiveness testing:</strong> Regular validation of security measures</li>
+                  <li><strong>Metrics and KPIs:</strong> Risk trends, control performance, incident rates</li>
+                  <li><strong>Management reporting:</strong> Executive dashboards, risk registers, treatment plans</li>
+                </ul>
+              </div>
             </div>
           `,
-          type: 'text',
-          duration: 25
+          type: 'interactive',
+          duration: 35
         }
       ],
       quiz: {
@@ -318,43 +765,64 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
             question: 'What does the "C" in CIA Triad stand for?',
             options: ['Cyber-security', 'Confidentiality', 'Compliance', 'Control'],
             correctAnswer: 1,
-            explanation: 'Confidentiality ensures that information is accessible only to those authorized to access it.'
+            explanation: 'Confidentiality ensures that information is accessible only to those authorized to access it. It\'s the first pillar of the CIA Triad, protecting sensitive data from unauthorized disclosure.'
           },
           {
             id: 'q2',
-            question: 'Which type of malware encrypts files and demands payment?',
+            question: 'Which type of malware encrypts files and demands payment for decryption?',
             options: ['Virus', 'Trojan', 'Ransomware', 'Spyware'],
             correctAnswer: 2,
-            explanation: 'Ransomware encrypts files and demands payment for decryption keys.'
+            explanation: 'Ransomware is a type of malware that encrypts a victim\'s files and demands payment (usually in cryptocurrency) for the decryption key. Examples include WannaCry and Ryuk.'
           },
           {
             id: 'q3',
-            question: 'What is the first step in the risk assessment process?',
-            options: ['Threat Identification', 'Asset Identification', 'Vulnerability Assessment', 'Impact Analysis'],
-            correctAnswer: 1,
-            explanation: 'Asset identification is the first step - you need to know what you\'re protecting before assessing threats.'
+            question: 'What is the formula for calculating cybersecurity risk?',
+            options: ['Risk = Threat + Vulnerability', 'Risk = Impact × Likelihood', 'Risk = Threat × Vulnerability × Impact', 'Risk = (Threat + Vulnerability) ÷ Impact'],
+            correctAnswer: 2,
+            explanation: 'The fundamental risk formula is: Risk = Threat × Vulnerability × Impact. This considers the threat actors, system weaknesses, and potential consequences to determine overall risk level.'
           },
           {
             id: 'q4',
-            question: 'Which NIST Framework function involves taking action on detected incidents?',
+            question: 'Which NIST Framework function involves taking action on detected cybersecurity incidents?',
             options: ['Identify', 'Protect', 'Detect', 'Respond'],
             correctAnswer: 3,
-            explanation: 'The Respond function involves taking action regarding detected cybersecurity incidents.'
+            explanation: 'The Respond function involves taking action regarding detected cybersecurity incidents. It includes response planning, communications, analysis, mitigation, and improvements.'
           },
           {
             id: 'q5',
-            question: 'What percentage of successful cyber attacks are due to human error?',
+            question: 'What percentage of successful cyber attacks are attributed to human error?',
             options: ['75%', '85%', '95%', '100%'],
             correctAnswer: 2,
-            explanation: '95% of successful cyber attacks are due to human error, highlighting the importance of security awareness training.'
+            explanation: '95% of successful cyber attacks are due to human error. This highlights the critical importance of security awareness training, proper procedures, and human-centered security design.'
+          },
+          {
+            id: 'q6',
+            question: 'Which risk mitigation strategy involves purchasing cyber insurance?',
+            options: ['Accept', 'Avoid', 'Mitigate', 'Transfer'],
+            correctAnswer: 3,
+            explanation: 'Transfer involves sharing risk with third parties, such as through cyber insurance, outsourcing, or contractual agreements. It helps organizations manage financial exposure to cyber risks.'
+          },
+          {
+            id: 'q7',
+            question: 'What is the primary difference between phishing and spear phishing?',
+            options: ['Technical complexity', 'Target specificity', 'Delivery method', 'Success rate'],
+            correctAnswer: 1,
+            explanation: 'Spear phishing is targeted at specific individuals or organizations, while regular phishing uses mass, generic attacks. Spear phishing is more sophisticated and personalized.'
+          },
+          {
+            id: 'q8',
+            question: 'Which CIA Triad principle is primarily concerned with preventing unauthorized data modification?',
+            options: ['Confidentiality', 'Integrity', 'Availability', 'Authentication'],
+            correctAnswer: 1,
+            explanation: 'Integrity ensures data accuracy and prevents unauthorized modifications. It uses techniques like hashing, digital signatures, and access controls to maintain data consistency.'
           }
         ],
-        passingScore: 80
+        passingScore: 75
       },
       certification: {
         enabled: true,
         certificateType: 'completion',
-        requiredScore: 80
+        requiredScore: 75
       }
     },
     'network-security': {
@@ -363,59 +831,443 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
       description: 'Comprehensive guide to securing network infrastructure',
       pages: [
         {
-          id: 'network-basics',
+          id: 'network-fundamentals',
           title: 'Network Security Fundamentals',
           content: `
-            <h2>Network Security Fundamentals</h2>
-            <p>Network security involves protecting the integrity, confidentiality, and availability of data as it travels across or is stored in networks. This includes both hardware and software technologies.</p>
-            
-            <h3>🌐 Network Architecture Security</h3>
-            <p>Understanding network architecture is crucial for implementing effective security:</p>
-            <ul>
-              <li><strong>Perimeter Security:</strong> First line of defense at network boundaries</li>
-              <li><strong>Internal Segmentation:</strong> Dividing networks into smaller, manageable segments</li>
-              <li><strong>Zero Trust Model:</strong> Never trust, always verify approach</li>
-              <li><strong>Defense in Depth:</strong> Multiple layers of security controls</li>
-            </ul>
-            
-            <h3>🔧 Common Network Protocols</h3>
-            <p>Key protocols and their security implications:</p>
-            <ul>
-              <li><strong>TCP/IP:</strong> Foundation of internet communication</li>
-              <li><strong>HTTP/HTTPS:</strong> Web communication protocols</li>
-              <li><strong>DNS:</strong> Domain name resolution system</li>
-              <li><strong>DHCP:</strong> Dynamic IP address assignment</li>
-              <li><strong>SSH:</strong> Secure shell for remote access</li>
-            </ul>
-          `,
-          type: 'text',
-          duration: 20
-        },
-        {
-          id: 'firewalls',
-          title: 'Firewalls and Access Control',
-          content: `
-            <h2>Firewalls: Your Network's First Line of Defense</h2>
-            <p>Firewalls are network security devices that monitor and control incoming and outgoing network traffic based on predetermined security rules.</p>
-            
-            <h3>🛡️ Types of Firewalls</h3>
-            <ul>
-              <li><strong>Packet-Filtering:</strong> Examines packets at network layer</li>
-              <li><strong>Stateful Inspection:</strong> Tracks connection states</li>
-              <li><strong>Application Layer:</strong> Inspects application-specific data</li>
-              <li><strong>Next-Generation (NGFW):</strong> Advanced threat detection</li>
-            </ul>
-            
-            <h3>⚙️ Firewall Configuration Best Practices</h3>
-            <ul>
-              <li>Default deny policy</li>
-              <li>Regular rule review and cleanup</li>
-              <li>Logging and monitoring</li>
-              <li>Regular updates and patches</li>
-            </ul>
+            <div class="learning-content">
+              <h2>🌐 Network Security Fundamentals</h2>
+              <p class="lead-text">Network security is the practice of securing a computer network from intruders, whether targeted attackers or opportunistic malware. It encompasses both hardware and software technologies and targets a variety of threats.</p>
+              
+              <div class="network-overview">
+                <h3>🏗️ Network Architecture Security</h3>
+                <p>Understanding network architecture is crucial for implementing effective security:</p>
+                
+                <div class="architecture-models">
+                  <div class="model-card">
+                    <h4>🛡️ Perimeter Security (Traditional)</h4>
+                    <ul>
+                      <li><strong>Concept:</strong> "Castle and moat" approach</li>
+                      <li><strong>Components:</strong> Firewalls, DMZ, VPNs</li>
+                      <li><strong>Strengths:</strong> Simple to understand, cost-effective</li>
+                      <li><strong>Weaknesses:</strong> Vulnerable to insider threats, assumes trust within perimeter</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="model-card highlight">
+                    <h4>🎯 Zero Trust Architecture (Modern)</h4>
+                    <ul>
+                      <li><strong>Principle:</strong> "Never trust, always verify"</li>
+                      <li><strong>Components:</strong> Identity verification, device security, continuous monitoring</li>
+                      <li><strong>Benefits:</strong> Reduces attack surface, improves visibility</li>
+                      <li><strong>Implementation:</strong> Microsegmentation, least privilege access</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="model-card">
+                    <h4>🔄 Defense in Depth</h4>
+                    <ul>
+                      <li><strong>Concept:</strong> Multiple layers of security controls</li>
+                      <li><strong>Layers:</strong> Physical, network, host, application, data</li>
+                      <li><strong>Redundancy:</strong> If one layer fails, others provide protection</li>
+                      <li><strong>Integration:</strong> Coordinated security strategy</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="network-protocols">
+                <h3>📡 Critical Network Protocols & Security</h3>
+                <div class="protocol-grid">
+                  <div class="protocol-card">
+                    <h4>🔗 TCP/IP Stack Security</h4>
+                    <div class="stack-layers">
+                      <div class="layer">
+                        <strong>Application Layer:</strong> HTTPS, SFTP, SNMP
+                        <br><span class="threats">Threats: Application vulnerabilities, protocol exploits</span>
+                      </div>
+                      <div class="layer">
+                        <strong>Transport Layer:</strong> TCP, UDP, TLS
+                        <br><span class="threats">Threats: Port scanning, session hijacking</span>
+                      </div>
+                      <div class="layer">
+                        <strong>Network Layer:</strong> IP, ICMP, IPSec
+                        <br><span class="threats">Threats: IP spoofing, routing attacks</span>
+                      </div>
+                      <div class="layer">
+                        <strong>Data Link Layer:</strong> Ethernet, WiFi
+                        <br><span class="threats">Threats: MAC flooding, ARP poisoning</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="protocol-card">
+                    <h4>🔐 Secure Communication Protocols</h4>
+                    <ul>
+                      <li><strong>TLS/SSL:</strong> Transport Layer Security for encrypted communications</li>
+                      <li><strong>IPSec:</strong> Network layer security for VPNs</li>
+                      <li><strong>SSH:</strong> Secure Shell for remote administration</li>
+                      <li><strong>HTTPS:</strong> HTTP over TLS for web security</li>
+                      <li><strong>DNSSEC:</strong> DNS Security Extensions</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="protocol-card">
+                    <h4>⚠️ Vulnerable Protocols (Legacy)</h4>
+                    <ul>
+                      <li><strong>Telnet:</strong> Unencrypted remote access</li>
+                      <li><strong>FTP:</strong> File transfer without encryption</li>
+                      <li><strong>HTTP:</strong> Unencrypted web traffic</li>
+                      <li><strong>SNMP v1/v2:</strong> Weak authentication</li>
+                      <li><strong>SMTP:</strong> Unencrypted email transmission</li>
+                    </ul>
+                    <p class="warning">⚠️ These should be replaced with secure alternatives</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="network-topologies">
+                <h3>🏗️ Secure Network Design Principles</h3>
+                <div class="design-principles">
+                  <div class="principle">
+                    <h4>🔗 Network Segmentation</h4>
+                    <p>Divide networks into smaller, isolated segments to limit attack spread.</p>
+                    <ul>
+                      <li><strong>VLANs:</strong> Virtual LANs for logical separation</li>
+                      <li><strong>Subnets:</strong> IP-based network division</li>
+                      <li><strong>DMZ:</strong> Demilitarized zone for public services</li>
+                      <li><strong>Microsegmentation:</strong> Granular access controls</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="principle">
+                    <h4>🎯 Least Privilege Access</h4>
+                    <p>Grant minimum necessary access rights to users and systems.</p>
+                    <ul>
+                      <li><strong>Role-based Access:</strong> Access based on job functions</li>
+                      <li><strong>Time-limited Access:</strong> Temporary permissions</li>
+                      <li><strong>Location-based Access:</strong> Geographic restrictions</li>
+                      <li><strong>Device-based Access:</strong> Trusted device requirements</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="principle">
+                    <h4>👁️ Continuous Monitoring</h4>
+                    <p>Implement comprehensive visibility and threat detection.</p>
+                    <ul>
+                      <li><strong>SIEM:</strong> Security Information and Event Management</li>
+                      <li><strong>Network Analytics:</strong> Traffic pattern analysis</li>
+                      <li><strong>Threat Intelligence:</strong> Real-time threat feeds</li>
+                      <li><strong>Behavioral Analysis:</strong> Anomaly detection</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="wireless-security">
+                <h3>📶 Wireless Network Security</h3>
+                <p>Wireless networks introduce unique security challenges:</p>
+                <div class="wireless-threats">
+                  <h4>⚠️ Common Wireless Threats:</h4>
+                  <ul>
+                    <li><strong>Evil Twin Attacks:</strong> Rogue access points</li>
+                    <li><strong>WPS Attacks:</strong> WiFi Protected Setup vulnerabilities</li>
+                    <li><strong>Deauthentication Attacks:</strong> Forced disconnections</li>
+                    <li><strong>Packet Sniffing:</strong> Intercepting wireless traffic</li>
+                    <li><strong>Man-in-the-Middle:</strong> Intercepting communications</li>
+                  </ul>
+                </div>
+                
+                <div class="wireless-security-measures">
+                  <h4>🔒 Wireless Security Best Practices:</h4>
+                  <ul>
+                    <li><strong>WPA3 Encryption:</strong> Latest security standard</li>
+                    <li><strong>Enterprise Authentication:</strong> 802.1X with RADIUS</li>
+                    <li><strong>Network Isolation:</strong> Guest network separation</li>
+                    <li><strong>MAC Address Filtering:</strong> Device access control</li>
+                    <li><strong>Regular Security Audits:</strong> Vulnerability assessments</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           `,
           type: 'interactive',
           duration: 25
+        },
+        {
+          id: 'firewalls-advanced',
+          title: 'Advanced Firewall Technologies',
+          content: `
+            <div class="learning-content">
+              <h2>🛡️ Advanced Firewall Technologies</h2>
+              <p class="lead-text">Firewalls are the cornerstone of network security, but modern threats require advanced firewall technologies that go beyond traditional packet filtering.</p>
+              
+              <div class="firewall-evolution">
+                <h3>📈 Firewall Technology Evolution</h3>
+                <div class="evolution-timeline">
+                  <div class="timeline-item">
+                    <h4>1st Generation: Packet Filters (1980s)</h4>
+                    <ul>
+                      <li>Examine individual packets</li>
+                      <li>Filter based on IP addresses and ports</li>
+                      <li>No state information maintained</li>
+                      <li>Limited security effectiveness</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="timeline-item">
+                    <h4>2nd Generation: Stateful Inspection (1990s)</h4>
+                    <ul>
+                      <li>Track connection states</li>
+                      <li>Examine packet context</li>
+                      <li>Better security than packet filters</li>
+                      <li>Foundation for modern firewalls</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="timeline-item">
+                    <h4>3rd Generation: Application Layer (2000s)</h4>
+                    <ul>
+                      <li>Deep packet inspection (DPI)</li>
+                      <li>Application-aware filtering</li>
+                      <li>Protocol validation</li>
+                      <li>Advanced threat detection</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="timeline-item highlight">
+                    <h4>4th Generation: Next-Generation Firewalls (2010s+)</h4>
+                    <ul>
+                      <li>Integrated threat intelligence</li>
+                      <li>User and application identification</li>
+                      <li>Advanced malware protection</li>
+                      <li>Cloud integration and management</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="firewall-types">
+                <h3>🔧 Modern Firewall Types</h3>
+                <div class="firewall-grid">
+                  <div class="firewall-type">
+                    <h4>🌐 Next-Generation Firewalls (NGFW)</h4>
+                    <div class="features">
+                      <h5>Key Features:</h5>
+                      <ul>
+                        <li><strong>Application Control:</strong> Identify and control applications regardless of port</li>
+                        <li><strong>User Identification:</strong> Link network activity to specific users</li>
+                        <li><strong>Content Inspection:</strong> Deep packet inspection and analysis</li>
+                        <li><strong>Threat Intelligence:</strong> Real-time threat feeds and signatures</li>
+                        <li><strong>SSL/TLS Inspection:</strong> Decrypt and inspect encrypted traffic</li>
+                      </ul>
+                    </div>
+                    <div class="use-cases">
+                      <h5>Best For:</h5>
+                      <p>Enterprise networks, comprehensive security requirements, compliance needs</p>
+                    </div>
+                  </div>
+                  
+                  <div class="firewall-type">
+                    <h4>☁️ Cloud-Native Firewalls</h4>
+                    <div class="features">
+                      <h5>Key Features:</h5>
+                      <ul>
+                        <li><strong>Elastic Scaling:</strong> Automatic capacity adjustment</li>
+                        <li><strong>API Integration:</strong> Programmatic management</li>
+                        <li><strong>Multi-Cloud Support:</strong> Consistent policies across clouds</li>
+                        <li><strong>DevOps Integration:</strong> Infrastructure as Code support</li>
+                        <li><strong>Centralized Management:</strong> Cloud-based administration</li>
+                      </ul>
+                    </div>
+                    <div class="use-cases">
+                      <h5>Best For:</h5>
+                      <p>Cloud environments, microservices, containerized applications</p>
+                    </div>
+                  </div>
+                  
+                  <div class="firewall-type">
+                    <h4>🔄 Web Application Firewalls (WAF)</h4>
+                    <div class="features">
+                      <h5>Key Features:</h5>
+                      <ul>
+                        <li><strong>HTTP/HTTPS Protection:</strong> Web application specific filtering</li>
+                        <li><strong>OWASP Top 10 Protection:</strong> Common web vulnerabilities</li>
+                        <li><strong>Bot Protection:</strong> Malicious bot detection and blocking</li>
+                        <li><strong>Rate Limiting:</strong> Request throttling and DDoS protection</li>
+                        <li><strong>Custom Rules:</strong> Application-specific security policies</li>
+                      </ul>
+                    </div>
+                    <div class="use-cases">
+                      <h5>Best For:</h5>
+                      <p>Web applications, API protection, e-commerce sites</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="firewall-deployment">
+                <h3>🏗️ Firewall Deployment Strategies</h3>
+                <div class="deployment-models">
+                  <div class="deployment">
+                    <h4>🏢 Traditional Perimeter Deployment</h4>
+                    <div class="diagram-placeholder">[Network Diagram: Internet → Firewall → Internal Network]</div>
+                    <ul>
+                      <li><strong>Pros:</strong> Simple, cost-effective, centralized control</li>
+                      <li><strong>Cons:</strong> Single point of failure, limited internal protection</li>
+                      <li><strong>Use Case:</strong> Small to medium networks with limited complexity</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="deployment">
+                    <h4>🔄 Multi-Layer Deployment</h4>
+                    <div class="diagram-placeholder">[Network Diagram: Internet → Edge FW → DMZ → Internal FW → LAN]</div>
+                    <ul>
+                      <li><strong>Pros:</strong> Defense in depth, better segmentation</li>
+                      <li><strong>Cons:</strong> Higher complexity and cost</li>
+                      <li><strong>Use Case:</strong> Large enterprises with critical assets</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="deployment highlight">
+                    <h4>🌐 Distributed/Zero Trust Deployment</h4>
+                    <div class="diagram-placeholder">[Network Diagram: Micro-segmented network with distributed firewalls]</div>
+                    <ul>
+                      <li><strong>Pros:</strong> Granular control, lateral movement prevention</li>
+                      <li><strong>Cons:</strong> High complexity, requires careful planning</li>
+                      <li><strong>Use Case:</strong> Modern enterprises adopting zero trust</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="firewall-configuration">
+                <h3>⚙️ Firewall Configuration Best Practices</h3>
+                <div class="best-practices">
+                  <div class="practice-category">
+                    <h4>🔒 Security Policies</h4>
+                    <ul>
+                      <li><strong>Default Deny:</strong> Block all traffic by default, allow only necessary</li>
+                      <li><strong>Least Privilege:</strong> Minimum required access for each rule</li>
+                      <li><strong>Specific Rules:</strong> Avoid overly broad allow rules</li>
+                      <li><strong>Regular Review:</strong> Periodic rule cleanup and optimization</li>
+                      <li><strong>Documentation:</strong> Clear business justification for each rule</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="practice-category">
+                    <h4>📊 Monitoring & Logging</h4>
+                    <ul>
+                      <li><strong>Comprehensive Logging:</strong> Log all blocked and allowed traffic</li>
+                      <li><strong>Log Analysis:</strong> Regular review of firewall logs</li>
+                      <li><strong>SIEM Integration:</strong> Forward logs to security monitoring</li>
+                      <li><strong>Alerting:</strong> Automated alerts for suspicious activity</li>
+                      <li><strong>Performance Monitoring:</strong> Track firewall performance metrics</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="practice-category">
+                    <h4>🔄 Maintenance & Updates</h4>
+                    <ul>
+                      <li><strong>Firmware Updates:</strong> Regular security patches</li>
+                      <li><strong>Signature Updates:</strong> Current threat intelligence</li>
+                      <li><strong>Configuration Backup:</strong> Regular backup of configurations</li>
+                      <li><strong>Change Management:</strong> Controlled configuration changes</li>
+                      <li><strong>Testing:</strong> Validate changes in test environment</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="advanced-features">
+                <h3>🚀 Advanced Firewall Features</h3>
+                <div class="advanced-grid">
+                  <div class="feature">
+                    <h4>🔍 Deep Packet Inspection (DPI)</h4>
+                    <p>Examines packet content beyond headers to identify applications, protocols, and threats.</p>
+                    <ul>
+                      <li>Application identification</li>
+                      <li>Content filtering</li>
+                      <li>Malware detection</li>
+                      <li>Data loss prevention</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="feature">
+                    <h4>🤖 Machine Learning Integration</h4>
+                    <p>Uses AI/ML for advanced threat detection and automated response.</p>
+                    <ul>
+                      <li>Behavioral analysis</li>
+                      <li>Anomaly detection</li>
+                      <li>Predictive security</li>
+                      <li>Automated rule optimization</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="feature">
+                    <h4>🔗 API Integration</h4>
+                    <p>Programmatic management and integration with security orchestration.</p>
+                    <ul>
+                      <li>Automated provisioning</li>
+                      <li>Policy synchronization</li>
+                      <li>Threat intelligence feeds</li>
+                      <li>SOAR integration</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="practical-scenario">
+                <h3>🎓 Practical Configuration Scenario</h3>
+                <div class="scenario-box">
+                  <h4>🏢 Enterprise Firewall Implementation</h4>
+                  <p><strong>Scenario:</strong> Configure firewall for a mid-size company with 500 employees</p>
+                  
+                  <div class="requirements">
+                    <h5>Requirements:</h5>
+                    <ul>
+                      <li>Secure internet access for employees</li>
+                      <li>Protected DMZ for web and email servers</li>
+                      <li>Remote access for employees</li>
+                      <li>Guest network isolation</li>
+                      <li>Compliance with industry regulations</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="solution">
+                    <h5>Recommended Configuration:</h5>
+                    <ol>
+                      <li><strong>Zone Configuration:</strong>
+                        <ul>
+                          <li>Internet zone (untrusted)</li>
+                          <li>DMZ zone (limited trust)</li>
+                          <li>LAN zone (trusted)</li>
+                          <li>Guest zone (restricted)</li>
+                        </ul>
+                      </li>
+                      <li><strong>Security Policies:</strong>
+                        <ul>
+                          <li>LAN to Internet: Allow HTTP/HTTPS, block P2P</li>
+                          <li>Internet to DMZ: Allow specific ports to servers</li>
+                          <li>DMZ to LAN: Deny all</li>
+                          <li>Guest to Internet: Allow HTTP/HTTPS only</li>
+                        </ul>
+                      </li>
+                      <li><strong>Advanced Features:</strong>
+                        <ul>
+                          <li>Application control for productivity</li>
+                          <li>URL filtering for malicious sites</li>
+                          <li>IPS for threat prevention</li>
+                          <li>VPN for remote access</li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `,
+          type: 'interactive',
+          duration: 30
         }
       ],
       quiz: {
@@ -425,14 +1277,35 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
             question: 'What security model follows the principle "never trust, always verify"?',
             options: ['Defense in Depth', 'Zero Trust', 'Perimeter Security', 'Network Segmentation'],
             correctAnswer: 1,
-            explanation: 'Zero Trust model follows the principle of never trusting and always verifying, regardless of location.'
+            explanation: 'Zero Trust model follows the principle of never trusting and always verifying, regardless of location within or outside the network perimeter.'
           },
           {
             id: 'q2',
-            question: 'Which type of firewall examines packets at the network layer?',
-            options: ['Application Layer', 'Stateful Inspection', 'Packet-Filtering', 'Next-Generation'],
+            question: 'Which type of firewall examines packet content beyond headers?',
+            options: ['Packet-Filtering', 'Stateful Inspection', 'Next-Generation Firewall', 'Circuit-Level Gateway'],
             correctAnswer: 2,
-            explanation: 'Packet-filtering firewalls examine packets at the network layer, checking headers for source/destination addresses and ports.'
+            explanation: 'Next-Generation Firewalls (NGFW) use Deep Packet Inspection (DPI) to examine packet content beyond just headers, enabling application and content awareness.'
+          },
+          {
+            id: 'q3',
+            question: 'What is the primary security benefit of network segmentation?',
+            options: ['Improved performance', 'Cost reduction', 'Limiting attack spread', 'Easier management'],
+            correctAnswer: 2,
+            explanation: 'Network segmentation limits the spread of attacks by containing threats within isolated network segments, preventing lateral movement.'
+          },
+          {
+            id: 'q4',
+            question: 'Which wireless security standard provides the strongest encryption?',
+            options: ['WEP', 'WPA', 'WPA2', 'WPA3'],
+            correctAnswer: 3,
+            explanation: 'WPA3 is the latest and most secure wireless security standard, providing stronger encryption and protection against various attack methods.'
+          },
+          {
+            id: 'q5',
+            question: 'What does DPI stand for in firewall technology?',
+            options: ['Data Processing Interface', 'Deep Packet Inspection', 'Dynamic Protocol Identification', 'Distributed Processing Intelligence'],
+            correctAnswer: 1,
+            explanation: 'Deep Packet Inspection (DPI) is a technology that examines packet content beyond just headers to identify applications, protocols, and potential threats.'
           }
         ],
         passingScore: 80
@@ -796,16 +1669,72 @@ export function ModuleContentViewer({ moduleId, onBack, onComplete }: ModuleCont
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
+      <div className="min-h-screen bg-gradient-to-br from-background via-card to-background flex items-center justify-center relative overflow-hidden">
+        {/* Cyber grid background */}
+        <div className="cyber-grid absolute inset-0 opacity-20"></div>
+        
+        {/* Floating spark elements */}
+        {[...Array(12)].map((_, i) => (
           <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="mx-auto mb-4"
+            key={i}
+            className={`absolute w-2 h-2 rounded-full spark-float-${(i % 3) + 1}`}
+            style={{
+              background: `var(--spark-${['electric', 'neon', 'plasma', 'energy'][i % 4]})`,
+              left: `${5 + (i * 8)}%`,
+              top: `${10 + (i * 7)}%`,
+              boxShadow: `0 0 10px var(--spark-${['electric', 'neon', 'plasma', 'energy'][i % 4]})`
+            }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 0.6, scale: 1 }}
+            transition={{ delay: i * 0.1, duration: 1 }}
+          />
+        ))}
+
+        <div className="text-center relative z-10">
+          <SparkLoader 
+            size="xl" 
+            variant="neural" 
+            text="Loading advanced cybersecurity content..."
+          />
+          
+          <motion.div
+            className="mt-8 space-y-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
           >
-            <BookOpen size={48} className="text-primary" />
+            <h2 className="text-xl font-semibold gradient-text">
+              AstraForensics Learning Platform
+            </h2>
+            <p className="text-muted-foreground">
+              Preparing your personalized learning experience...
+            </p>
+            
+            {/* Progress indicator */}
+            <motion.div
+              className="flex justify-center gap-2 mt-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              {[...Array(4)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="w-2 h-2 rounded-full"
+                  style={{ background: 'var(--spark-electric)' }}
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.5, 1, 0.5]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    delay: i * 0.2
+                  }}
+                />
+              ))}
+            </motion.div>
           </motion.div>
-          <p className="text-lg text-muted-foreground">Loading module content...</p>
         </div>
       </div>
     )

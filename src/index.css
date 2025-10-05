@@ -854,6 +854,295 @@
   background: oklch(0.96 0.01 240);
 }
 
+/* Enhanced learning content styles */
+.learning-content {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.7;
+}
+
+.learning-content .lead-text {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.learning-content .highlight-box {
+  background: linear-gradient(135deg, var(--primary)/5, var(--accent)/5);
+  border: 1px solid var(--primary)/20;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.learning-content .skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.learning-content .skill-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.learning-content .skill-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px oklch(0.15 0.02 240 / 0.1);
+  border-color: var(--primary)/30;
+}
+
+.learning-content .skill-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.learning-content .career-paths {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.learning-content .career-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.learning-content .career-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 30px oklch(0.15 0.02 240 / 0.12);
+}
+
+.learning-content .interactive-element {
+  background: linear-gradient(135deg, var(--accent)/10, var(--primary)/10);
+  border-left: 4px solid var(--accent);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.learning-content .triad-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.learning-content .triad-element {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.learning-content .triad-element::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+.learning-content .triad-icon {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.learning-content .principle-desc {
+  font-style: italic;
+  color: var(--muted-foreground);
+  margin-bottom: 1.5rem;
+}
+
+.learning-content .real-world-example {
+  background: var(--muted);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.learning-content .threat-timeline {
+  margin: 2rem 0;
+}
+
+.learning-content .timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  background: var(--card);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--primary);
+}
+
+.learning-content .year {
+  font-weight: 600;
+  color: var(--primary);
+  min-width: 80px;
+}
+
+.learning-content .threat {
+  font-weight: 500;
+  min-width: 200px;
+}
+
+.learning-content .impact {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.learning-content .threat-categories {
+  margin: 2rem 0;
+}
+
+.learning-content .threat-category {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.learning-content .threat-types {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.learning-content .threat-type {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+}
+
+.learning-content .prevention-tips {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.learning-content .risk-matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 12px oklch(0.15 0.02 240 / 0.1);
+}
+
+.learning-content .risk-matrix-table th,
+.learning-content .risk-matrix-table td {
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  font-weight: 500;
+}
+
+.learning-content .risk-matrix-table th {
+  background: var(--muted);
+  font-weight: 600;
+}
+
+.learning-content .risk-low {
+  background: oklch(0.7 0.15 145 / 0.2);
+  color: oklch(0.4 0.2 145);
+}
+
+.learning-content .risk-medium {
+  background: oklch(0.75 0.12 85 / 0.2);
+  color: oklch(0.45 0.15 85);
+}
+
+.learning-content .risk-high {
+  background: oklch(0.65 0.18 45 / 0.2);
+  color: oklch(0.4 0.2 45);
+}
+
+.learning-content .risk-critical {
+  background: oklch(0.6 0.24 20 / 0.2);
+  color: oklch(0.4 0.25 20);
+}
+
+.learning-content .mitigation-strategies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.learning-content .strategy {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  position: relative;
+}
+
+.learning-content .strategy.highlight {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, var(--primary)/5, var(--accent)/5);
+}
+
+.learning-content .example {
+  background: var(--muted);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+.learning-content .scenario-box {
+  background: var(--card);
+  border: 2px solid var(--primary)/20;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.learning-content .warning {
+  color: var(--destructive);
+  font-weight: 600;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .learning-content .skills-grid,
+  .learning-content .career-paths,
+  .learning-content .triad-container,
+  .learning-content .mitigation-strategies {
+    grid-template-columns: 1fr;
+  }
+  
+  .learning-content .timeline-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .learning-content .year,
+  .learning-content .threat {
+    min-width: auto;
+  }
+}
+
 /* Enhanced gradient text with Spark colors */
 .gradient-text {
   background: linear-gradient(45deg, 

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
+import { SparkLoader } from './SparkLoader'
 import { toast } from 'sonner'
 import { 
   ArrowLeft, 
@@ -14,7 +15,9 @@ import {
   Brain,
   Target,
   Clock,
-  Question
+  Question,
+  Star,
+  Lightning
 } from '@phosphor-icons/react'
 
 interface QuizQuestion {
@@ -37,6 +40,7 @@ export function ModuleQuiz({ questions, passingScore, onComplete, onBack, module
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([])
   const [showResults, setShowResults] = useState(false)
+  const [calculatingResults, setCalculatingResults] = useState(false)
   const [timeRemaining, setTimeRemaining] = useState(30 * 60) // 30 minutes
   const [quizStarted, setQuizStarted] = useState(false)
 
@@ -75,16 +79,29 @@ export function ModuleQuiz({ questions, passingScore, onComplete, onBack, module
   }
 
   const handleSubmitQuiz = () => {
-    const correctAnswers = selectedAnswers.reduce((count, answer, index) => {
-      return answer === questions[index].correctAnswer ? count + 1 : count
-    }, 0)
-
-    const score = Math.round((correctAnswers / questions.length) * 100)
-    setShowResults(true)
+    setCalculatingResults(true)
     
+    // Simulate processing time for dramatic effect
     setTimeout(() => {
-      onComplete(score)
-    }, 3000)
+      const correctAnswers = selectedAnswers.reduce((count, answer, index) => {
+        return answer === questions[index].correctAnswer ? count + 1 : count
+      }, 0)
+
+      const score = Math.round((correctAnswers / questions.length) * 100)
+      setCalculatingResults(false)
+      setShowResults(true)
+      
+      // Add some celebration effects
+      if (score >= passingScore) {
+        toast.success(`🎉 Congratulations! You scored ${score}%!`)
+      } else {
+        toast.error(`You scored ${score}%. You need ${passingScore}% to pass.`)
+      }
+      
+      setTimeout(() => {
+        onComplete(score)
+      }, 3000)
+    }, 2000)
   }
 
   const formatTime = (seconds: number) => {
@@ -162,6 +179,81 @@ export function ModuleQuiz({ questions, passingScore, onComplete, onBack, module
             </div>
           </CardContent>
         </Card>
+      </div>
+    )
+  }
+
+  if (calculatingResults) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-card to-background flex items-center justify-center relative overflow-hidden">
+        {/* Animated background */}
+        <div className="cyber-grid absolute inset-0 opacity-10"></div>
+        
+        {/* Floating elements */}
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className={`absolute w-2 h-2 rounded-full`}
+            style={{
+              background: `var(--spark-${['electric', 'neon', 'plasma', 'energy'][i % 4]})`,
+              left: `${10 + (i * 10)}%`,
+              top: `${20 + (i * 8)}%`,
+              boxShadow: `0 0 10px var(--spark-${['electric', 'neon', 'plasma', 'energy'][i % 4]})`
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.5, 1, 0.5],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              delay: i * 0.2
+            }}
+          />
+        ))}
+
+        <div className="text-center">
+          <SparkLoader 
+            size="lg" 
+            variant="orbit" 
+            text="Analyzing your answers..."
+          />
+          
+          <motion.div
+            className="mt-8 space-y-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <h2 className="text-2xl font-bold gradient-text">
+              Processing Quiz Results
+            </h2>
+            <div className="space-y-2">
+              {[
+                'Checking your answers...',
+                'Calculating final score...',
+                'Preparing your results...'
+              ].map((step, index) => (
+                <motion.p
+                  key={index}
+                  className="text-muted-foreground"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 + index * 0.5 }}
+                >
+                  <motion.span
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 1, repeat: Infinity, delay: index * 0.3 }}
+                  >
+                    ⚡
+                  </motion.span>
+                  {' '}{step}
+                </motion.p>
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </div>
     )
   }

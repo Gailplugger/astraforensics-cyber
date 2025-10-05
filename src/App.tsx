@@ -18,12 +18,10 @@ import { BackendErrorBoundary } from './components/BackendErrorBoundary'
 import { NotesDashboard } from './components/Notes/NotesDashboard'
 import { TodoDashboard } from './components/Todo/TodoDashboard'
 import { DailyReflection } from './components/DailyReflection'
+import { SparkLoader } from './components/SparkLoader'
 import { Button } from './components/ui/button'
 import { Robot, Download, Trophy, TrendUp, FileText, CheckSquare, Brain } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
-import { initializeBackend, sparkLog, sparkError } from './lib/spark-api'
-import { backendValidator } from './lib/backend-validator'
-import { storageManager } from './lib/storage'
 import { toast } from 'sonner'
 
 // Enhanced viewport height handling for mobile devices with better support
@@ -115,37 +113,10 @@ function App() {
   useEffect(() => {
     const initApp = async () => {
       try {
-        sparkLog('Starting application initialization...')
+        setIsLoading(true)
         
-        // Initialize backend systems
-        const backendReady = await initializeBackend()
-        if (!backendReady) {
-          sparkError('Backend initialization failed, some features may not work correctly')
-          toast.error('Some features may be limited due to backend issues')
-        } else {
-          // Run comprehensive health check in development
-          if (import.meta.env.DEV) {
-            backendValidator.runFullHealthCheck().then(results => {
-              const status = backendValidator.getSystemStatus()
-              sparkLog(`Backend health check completed: ${status}`, results)
-              
-              if (status === 'unhealthy') {
-                toast.error('Backend health check detected issues')
-              } else if (status === 'degraded') {
-                toast.warning('Backend health check detected warnings')
-              }
-            }).catch(error => {
-              sparkError('Health check failed', error)
-            })
-          }
-        }
-
-        // Initialize storage manager for Notes and Todo system
-        await storageManager.init()
-        sparkLog('Storage manager initialized successfully')
-        
-        // Simulate app initialization
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        // Simple initialization without complex backend validation
+        await new Promise(resolve => setTimeout(resolve, 2000))
         
         if (userData && hasSeenWelcome) {
           setCurrentState('dashboard')
@@ -155,9 +126,9 @@ function App() {
           setCurrentState('welcome')
         }
         
-        sparkLog('Application initialization completed')
+        console.log('Application initialization completed')
       } catch (error) {
-        sparkError('Application initialization failed', error)
+        console.error('Application initialization failed', error)
         toast.error('Failed to initialize application')
       } finally {
         setIsLoading(false)
@@ -288,81 +259,151 @@ function App() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-card to-background flex items-center justify-center safe-area-top safe-area-bottom relative overflow-hidden">
-        {/* Animated Background */}
-        <div className="cyber-grid absolute inset-0 opacity-20"></div>
+        {/* Enhanced Cyber Grid Background */}
+        <div className="cyber-grid absolute inset-0 opacity-15"></div>
         
-        {/* Floating Spark Elements */}
-        {[...Array(8)].map((_, i) => (
+        {/* Floating Spark Elements with Enhanced Animation */}
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className={`absolute w-2 h-2 rounded-full spark-float-${(i % 3) + 1}`}
+            className={`absolute w-3 h-3 rounded-full spark-float-${(i % 3) + 1}`}
             style={{
               background: `var(--spark-${['electric', 'neon', 'plasma', 'energy'][i % 4]})`,
-              left: `${10 + (i * 12)}%`,
-              top: `${20 + (i * 8)}%`,
-              boxShadow: `0 0 10px var(--spark-${['electric', 'neon', 'plasma', 'energy'][i % 4]})`
+              left: `${5 + (i * 6)}%`,
+              top: `${10 + (i * 5)}%`,
+              boxShadow: `0 0 15px var(--spark-${['electric', 'neon', 'plasma', 'energy'][i % 4]})`
             }}
             initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 0.6, scale: 1 }}
-            transition={{ delay: i * 0.2, duration: 1 }}
+            animate={{ opacity: 0.8, scale: 1 }}
+            transition={{ delay: i * 0.1, duration: 1.5 }}
           />
         ))}
 
-        <div className="text-center px-4 relative z-10">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="mx-auto mb-6"
-          >
-            <div className="spark-spinner rounded-full h-12 w-12 sm:h-16 sm:w-16 lg:h-20 lg:w-20 border-4 border-transparent"></div>
-          </motion.div>
-          
-          <motion.div
-            className="mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-2">
-              AstraForensics
-            </h1>
-            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground">
-              Loading your cybersecurity learning experience...
-            </p>
-          </motion.div>
-          
-          <motion.div
-            className="flex justify-center gap-2 mb-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
-            {[...Array(3)].map((_, i) => (
-              <motion.div
+        {/* Neural Network Pattern */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <svg width="800" height="600" className="opacity-20">
+            {[...Array(8)].map((_, i) => (
+              <motion.circle
                 key={i}
-                className="w-2 h-2 rounded-full"
-                style={{ background: 'var(--spark-electric)' }}
-                animate={{
-                  scale: [1, 1.5, 1],
-                  opacity: [0.5, 1, 0.5]
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  delay: i * 0.2
-                }}
+                cx={100 + (i % 4) * 200}
+                cy={150 + Math.floor(i / 4) * 300}
+                r="4"
+                fill="var(--spark-electric)"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0.3, 1, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity, delay: i * 0.25 }}
               />
             ))}
-          </motion.div>
+            {[...Array(6)].map((_, i) => (
+              <motion.line
+                key={i}
+                x1={100 + (i % 3) * 200}
+                y1={150}
+                x2={300 + (i % 2) * 200}
+                y2={450}
+                stroke="var(--spark-neon)"
+                strokeWidth="1"
+                opacity="0.4"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: [0, 1, 0] }}
+                transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+              />
+            ))}
+          </svg>
+        </div>
+
+        <div className="text-center px-4 relative z-10 max-w-md">
+          <SparkLoader 
+            size="xl" 
+            variant="neural" 
+            text="Initializing AstraForensics Platform..."
+          />
           
-          <motion.p 
-            className="text-xs sm:text-sm text-muted-foreground opacity-75"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9 }}
+          <motion.div
+            className="mt-8 space-y-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
           >
-            ⚡ Powered by Spark Technology
-          </motion.p>
+            <h1 className="text-3xl sm:text-4xl font-bold gradient-text mb-3">
+              AstraForensics
+            </h1>
+            <p className="text-muted-foreground text-lg">
+              Advanced AI-Powered Cybersecurity Learning
+            </p>
+            
+            {/* Loading Steps */}
+            <motion.div
+              className="space-y-2 mt-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+            >
+              {[
+                'Loading security modules...',
+                'Initializing AI assistant...',
+                'Preparing learning environment...',
+                'Almost ready...'
+              ].map((step, index) => (
+                <motion.div
+                  key={index}
+                  className="flex items-center justify-center gap-2 text-sm text-muted-foreground"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.5 + index * 0.5, duration: 0.5 }}
+                >
+                  <motion.div
+                    className="w-2 h-2 rounded-full"
+                    style={{ background: 'var(--spark-electric)' }}
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.5, 1, 0.5]
+                    }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      delay: index * 0.2
+                    }}
+                  />
+                  {step}
+                </motion.div>
+              ))}
+            </motion.div>
+            
+            {/* Progress Bar */}
+            <motion.div
+              className="w-full bg-muted h-2 rounded-full overflow-hidden mt-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2 }}
+            >
+              <motion.div
+                className="h-full rounded-full"
+                style={{ background: 'var(--gradient-spark)' }}
+                initial={{ width: '0%' }}
+                animate={{ width: '100%' }}
+                transition={{ duration: 2, ease: 'easeOut' }}
+              />
+            </motion.div>
+            
+            {/* Spark Technology Badge */}
+            <motion.div
+              className="flex items-center justify-center gap-2 mt-6 p-3 rounded-full bg-card/50 backdrop-blur-sm border border-primary/20"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 2.5 }}
+            >
+              <motion.span
+                animate={{ rotate: 360 }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+              >
+                ⚡
+              </motion.span>
+              <span className="text-sm font-medium gradient-text">
+                Powered by Spark Technology
+              </span>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     )
