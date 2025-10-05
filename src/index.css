@@ -1,62 +1,75 @@
-/* Enhanced AstraForensics Theme - Production Ready & Mobile Optimized */
+/* Enhanced AstraForensics Theme - Production Ready & Mobile Optimized with Spark Animations */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@400;500;600;700&display=swap');
 
 /* Custom variables for AstraForensics learning platform */
 :root {
-  /* Core theme colors - enhanced cybersecurity palette */
-  --background: oklch(0.99 0.005 240); /* Ultra clean white with subtle cool tone */
-  --foreground: oklch(0.08 0.015 240); /* Rich dark blue-black for maximum contrast */
+  /* Core theme colors - enhanced cybersecurity palette with better contrast */
+  --background: oklch(0.98 0.005 240); /* Softer white with subtle cool tone */
+  --foreground: oklch(0.09 0.015 240); /* Rich dark blue-black for maximum contrast */
 
-  --card: oklch(0.99 0.008 240); /* Subtle off-white for cards */
+  --card: oklch(0.995 0.008 240); /* Crisp white for cards */
   --card-foreground: oklch(0.12 0.02 240); /* Dark blue-gray for card text */
   
-  --popover: oklch(0.98 0.01 240); /* Slightly darker for popovers */
+  --popover: oklch(0.995 0.01 240); /* Crisp white for popovers */
   --popover-foreground: oklch(0.15 0.02 240);
 
   /* Action colors - sophisticated cybersecurity palette */
-  --primary: oklch(0.52 0.22 235); /* Deeper, more saturated cyber blue */
+  --primary: oklch(0.55 0.24 235); /* Deeper, more saturated cyber blue */
   --primary-foreground: oklch(0.98 0.01 235); /* Clean white on primary */
   
-  --secondary: oklch(0.94 0.015 240); /* Refined light blue-gray */
-  --secondary-foreground: oklch(0.22 0.02 240); /* Darker text for better contrast */
+  --secondary: oklch(0.92 0.015 240); /* Refined light blue-gray */
+  --secondary-foreground: oklch(0.25 0.02 240); /* Darker text for better contrast */
   
-  --accent: oklch(0.62 0.18 285); /* Enhanced purple for AI features */
-  --accent-foreground: oklch(0.97 0.01 285); /* Pure white on accent */
+  --accent: oklch(0.65 0.20 285); /* Enhanced purple for AI features */
+  --accent-foreground: oklch(0.98 0.01 285); /* Pure white on accent */
   
-  --destructive: oklch(0.58 0.22 20); /* Enhanced cybersecurity red */
+  --destructive: oklch(0.60 0.24 20); /* Enhanced cybersecurity red */
   --destructive-foreground: oklch(0.98 0.01 20);
 
   /* Supporting UI colors - enhanced contrast */
-  --muted: oklch(0.95 0.008 240); /* Refined muted background */
-  --muted-foreground: oklch(0.42 0.025 240); /* Better contrast for muted text */
+  --muted: oklch(0.94 0.008 240); /* Refined muted background */
+  --muted-foreground: oklch(0.45 0.025 240); /* Better contrast for muted text */
   
-  --border: oklch(0.88 0.015 240); /* More defined borders */
-  --input: oklch(0.86 0.018 240); /* Clearer input borders */
-  --ring: oklch(0.52 0.22 235); /* Focus ring matches primary */
+  --border: oklch(0.85 0.015 240); /* More defined borders */
+  --input: oklch(0.83 0.018 240); /* Clearer input borders */
+  --ring: oklch(0.55 0.24 235); /* Focus ring matches primary */
 
   /* Enhanced status colors */
-  --success: oklch(0.61 0.15 145); /* More vibrant success green */
-  --warning: oklch(0.72 0.12 85); /* Enhanced warning yellow */
-  --info: oklch(0.61 0.12 250); /* Clearer info blue */
+  --success: oklch(0.63 0.17 145); /* More vibrant success green */
+  --warning: oklch(0.74 0.14 85); /* Enhanced warning yellow */
+  --info: oklch(0.63 0.14 250); /* Clearer info blue */
   
-  /* Refined anime-inspired colors */
-  --anime-pink: oklch(0.75 0.18 340); /* More sophisticated pink */
-  --anime-blue: oklch(0.65 0.22 230); /* Enhanced anime blue */
-  --anime-purple: oklch(0.7 0.2 285); /* Richer purple */
+  /* Refined Spark-inspired colors */
+  --spark-electric: oklch(0.68 0.25 190); /* Electric cyan */
+  --spark-neon: oklch(0.72 0.22 340); /* Neon pink */
+  --spark-plasma: oklch(0.70 0.24 285); /* Plasma purple */
+  --spark-energy: oklch(0.75 0.20 85); /* Energy yellow */
 
   /* Professional certificate colors */
-  --cert-gold: oklch(0.72 0.18 65); /* Richer gold */
-  --cert-silver: oklch(0.78 0.015 240); /* Enhanced silver */
-  --cert-bronze: oklch(0.68 0.12 45); /* Bronze accent */
+  --cert-platinum: oklch(0.88 0.005 240); /* Platinum */
+  --cert-gold: oklch(0.74 0.20 65); /* Richer gold */
+  --cert-silver: oklch(0.80 0.015 240); /* Enhanced silver */
+  --cert-bronze: oklch(0.70 0.14 45); /* Bronze accent */
 
   /* Enhanced gradients for modern UI */
-  --gradient-primary: linear-gradient(135deg, var(--primary), oklch(0.58 0.2 250));
-  --gradient-accent: linear-gradient(135deg, var(--accent), oklch(0.68 0.16 310));
-  --gradient-success: linear-gradient(135deg, var(--success), oklch(0.65 0.13 160));
+  --gradient-primary: linear-gradient(135deg, var(--primary), oklch(0.60 0.22 250));
+  --gradient-accent: linear-gradient(135deg, var(--accent), oklch(0.70 0.18 310));
+  --gradient-success: linear-gradient(135deg, var(--success), oklch(0.67 0.15 160));
+  --gradient-spark: linear-gradient(135deg, var(--spark-electric), var(--spark-neon), var(--spark-plasma));
+  --gradient-cert-gold: linear-gradient(135deg, oklch(0.85 0.18 50), oklch(0.78 0.22 65), oklch(0.72 0.18 45));
+  --gradient-cert-platinum: linear-gradient(135deg, oklch(0.92 0.008 240), oklch(0.88 0.012 240), oklch(0.85 0.015 240));
 
   /* Border radius for sophisticated design language */
-  --radius: 0.875rem; /* Optimized for both desktop and mobile */
+  --radius: 1rem; /* Optimized for both desktop and mobile with better proportions */
+
+  /* Enhanced shadow system */
+  --shadow-sm: 0 1px 2px oklch(0.15 0.02 240 / 0.05);
+  --shadow-md: 0 4px 6px oklch(0.15 0.02 240 / 0.07);
+  --shadow-lg: 0 10px 15px oklch(0.15 0.02 240 / 0.1);
+  --shadow-xl: 0 20px 25px oklch(0.15 0.02 240 / 0.12);
+  --shadow-2xl: 0 25px 50px oklch(0.15 0.02 240 / 0.15);
+  --shadow-spark: 0 0 20px var(--spark-electric), 0 0 40px var(--spark-neon);
 }
 
 /* Map the CSS variables to Tailwind's theme system */
@@ -86,12 +99,14 @@
   --color-warning: var(--warning);
   --color-info: var(--info);
 
-  /* Anime colors for special features */
-  --color-anime-pink: var(--anime-pink);
-  --color-anime-blue: var(--anime-blue);
-  --color-anime-purple: var(--anime-purple);
+  /* Spark colors for special effects */
+  --color-spark-electric: var(--spark-electric);
+  --color-spark-neon: var(--spark-neon);
+  --color-spark-plasma: var(--spark-plasma);
+  --color-spark-energy: var(--spark-energy);
 
   /* Certificate colors */
+  --color-cert-platinum: var(--cert-platinum);
   --color-cert-gold: var(--cert-gold);
   --color-cert-silver: var(--cert-silver);
   --color-cert-bronze: var(--cert-bronze);
@@ -120,9 +135,18 @@
   --safe-area-inset-bottom: env(safe-area-inset-bottom);
   --safe-area-inset-left: env(safe-area-inset-left);
 
-  /* Viewport dimensions */
-  --vh: 100vh;
-  --vw: 100vw;
+  /* Enhanced viewport and layout */
+  --container-mobile: 100%;
+  --container-tablet: 768px;
+  --container-desktop: 1024px;
+  --container-wide: 1280px;
+  --container-ultrawide: 1536px;
+
+  /* Dynamic viewport units for better mobile support */
+  --dvh: 100dvh;
+  --dvw: 100dvw;
+  --svh: 100svh;
+  --lvh: 100lvh;
 }
 
 /* Application-specific styles */
@@ -145,16 +169,36 @@
     line-height: 1.2;
   }
 
-  /* Enhanced mobile viewport handling */
+  /* Enhanced mobile viewport handling for better screen size support */
   html {
     height: 100%;
     height: calc(var(--vh, 1vh) * 100);
+    /* Support for new viewport units */
+    height: 100dvh;
   }
 
   body {
     min-height: 100%;
     min-height: calc(var(--vh, 1vh) * 100);
+    min-height: 100dvh;
     overflow-x: hidden;
+    /* Better text rendering on all devices */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Container queries for better responsive design */
+  .container {
+    container-type: inline-size;
+  }
+
+  /* Better mobile touch target sizes */
+  @container (max-width: 768px) {
+    button, a, input, select, textarea, [role="button"] {
+      min-height: 48px;
+      min-width: 48px;
+    }
   }
 
   /* Safe area support for modern mobile devices */
@@ -177,8 +221,8 @@
   /* Ensure touch targets are large enough on mobile */
   @media (max-width: 768px) {
     button, a, input, select, textarea {
-      min-height: 44px;
-      min-width: 44px;
+      min-height: 48px; /* Increased for better accessibility */
+      min-width: 48px;
     }
     
     /* Better spacing for mobile */
@@ -189,10 +233,36 @@
     .mobile-gap {
       gap: var(--space-mobile-sm);
     }
+
+    /* Improved font sizes for mobile readability */
+    h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); }
+    h2 { font-size: clamp(1.5rem, 4vw, 2rem); }
+    h3 { font-size: clamp(1.25rem, 3.5vw, 1.75rem); }
+    h4 { font-size: clamp(1.125rem, 3vw, 1.5rem); }
+
+    /* Better mobile container */
+    .container {
+      max-width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+
+  /* Tablet optimizations */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .tablet-columns {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .container {
+      max-width: var(--container-tablet);
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
   }
 
   /* Desktop optimizations */
-  @media (min-width: 769px) {
+  @media (min-width: 1025px) {
     .desktop-padding {
       padding: var(--space-desktop-lg);
     }
@@ -200,26 +270,41 @@
     .desktop-gap {
       gap: var(--space-desktop-md);
     }
+
+    .container {
+      max-width: var(--container-desktop);
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  /* Wide screen optimizations */
+  @media (min-width: 1280px) {
+    .container {
+      max-width: var(--container-wide);
+    }
+  }
+
+  /* Ultra-wide screen optimizations */
+  @media (min-width: 1536px) {
+    .container {
+      max-width: var(--container-ultrawide);
+    }
   }
 
   /* Improve text rendering on mobile */
   @media (max-width: 768px) {
     body {
       font-size: 16px; /* Prevents zoom on iOS */
-      line-height: 1.5;
+      line-height: 1.6; /* Better readability */
     }
-    
-    /* Improved font scaling for small screens */
-    h1 { font-size: 1.75rem; }
-    h2 { font-size: 1.5rem; }
-    h3 { font-size: 1.25rem; }
-    h4 { font-size: 1.125rem; }
   }
 
   /* Optimized viewport for tablets */
   @media (min-width: 768px) and (max-width: 1024px) {
-    .tablet-columns {
-      grid-template-columns: repeat(2, 1fr);
+    body {
+      font-size: 16px;
+      line-height: 1.5;
     }
   }
 
@@ -227,6 +312,10 @@
   @media (min-width: 1440px) {
     .container-wide {
       max-width: 1400px;
+    }
+    
+    body {
+      font-size: 17px; /* Slightly larger for better reading on large screens */
     }
   }
 
@@ -238,18 +327,276 @@
   }
 }
 
-/* Anime-style glow effect */
-@keyframes anime-glow {
+/* Spark-style electric glow effect */
+@keyframes spark-glow {
   0%, 100% {
-    box-shadow: 0 0 5px var(--anime-pink), 0 0 10px var(--anime-pink), 0 0 15px var(--anime-pink);
+    box-shadow: 
+      0 0 5px var(--spark-electric), 
+      0 0 10px var(--spark-electric), 
+      0 0 15px var(--spark-electric),
+      0 0 20px var(--spark-electric);
+    filter: brightness(1);
   }
   50% {
-    box-shadow: 0 0 10px var(--anime-blue), 0 0 20px var(--anime-blue), 0 0 30px var(--anime-blue);
+    box-shadow: 
+      0 0 10px var(--spark-neon), 
+      0 0 20px var(--spark-neon), 
+      0 0 30px var(--spark-neon),
+      0 0 40px var(--spark-neon);
+    filter: brightness(1.2);
   }
 }
 
-.anime-glow {
-  animation: anime-glow 3s ease-in-out infinite;
+.spark-glow {
+  animation: spark-glow 2s ease-in-out infinite;
+}
+
+/* Electric spark trail effect */
+@keyframes electric-trail {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.8;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.8;
+  }
+}
+
+.electric-trail {
+  background: linear-gradient(45deg, 
+    var(--spark-electric), 
+    var(--spark-neon), 
+    var(--spark-plasma), 
+    var(--spark-energy)
+  );
+  background-size: 400% 400%;
+  animation: electric-trail 3s ease infinite;
+}
+
+/* Plasma pulse effect for special elements */
+@keyframes plasma-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 
+      0 0 0 0 oklch(0.68 0.25 190 / 0.7),
+      0 0 0 5px oklch(0.72 0.22 340 / 0.4),
+      0 0 0 10px oklch(0.70 0.24 285 / 0.2);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 
+      0 0 0 10px oklch(0.68 0.25 190 / 0.4),
+      0 0 0 20px oklch(0.72 0.22 340 / 0.2),
+      0 0 0 30px oklch(0.70 0.24 285 / 0.1);
+  }
+}
+
+.plasma-pulse {
+  animation: plasma-pulse 2.5s ease-in-out infinite;
+}
+
+/* Energy burst animation for achievements */
+@keyframes energy-burst {
+  0% {
+    transform: scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+.energy-burst {
+  animation: energy-burst 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Spark trail effect */
+@keyframes spark-trail {
+  0% {
+    transform: translateX(-100%) scaleX(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(0%) scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) scaleX(0);
+    opacity: 0;
+  }
+}
+
+.spark-trail {
+  position: relative;
+  overflow: hidden;
+}
+
+.spark-trail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--spark-electric), 
+    var(--spark-neon), 
+    transparent
+  );
+  animation: spark-trail 2s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* Holographic shimmer effect */
+@keyframes holographic-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.holographic {
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    var(--spark-electric) 40%,
+    var(--spark-neon) 50%,
+    var(--spark-plasma) 60%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: holographic-shimmer 3s linear infinite;
+}
+
+/* Quantum particle effect */
+@keyframes quantum-particle {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px) scale(1.1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-5px) translateX(-5px) scale(0.9);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(5px) translateX(3px) scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.quantum-particle {
+  animation: quantum-particle 4s ease-in-out infinite;
+}
+
+/* Neural network connection effect */
+@keyframes neural-pulse {
+  0%, 100% {
+    stroke-dashoffset: 100;
+    opacity: 0.3;
+  }
+  50% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.neural-connection {
+  stroke-dasharray: 20 10;
+  animation: neural-pulse 2s ease-in-out infinite;
+}
+
+/* Matrix-style digital rain */
+@keyframes digital-rain {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.digital-rain {
+  animation: digital-rain 5s linear infinite;
+}
+
+/* Cyber grid background animation */
+@keyframes cyber-grid {
+  0%, 100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+}
+
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(104, 204, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(104, 204, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: cyber-grid 10s ease-in-out infinite;
+}
+
+/* Floating animation with spark variations */
+@keyframes spark-float-1 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+}
+
+@keyframes spark-float-2 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(-3deg);
+  }
+}
+
+@keyframes spark-float-3 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(7deg);
+  }
+}
+
+.spark-float-1 {
+  animation: spark-float-1 3s ease-in-out infinite;
+}
+
+.spark-float-2 {
+  animation: spark-float-2 3.5s ease-in-out infinite;
+}
+
+.spark-float-3 {
+  animation: spark-float-3 2.8s ease-in-out infinite;
 }
 
 /* Floating animation for characters */
@@ -317,18 +664,46 @@
   animation: success-pulse 2s infinite;
 }
 
-/* Progress animation for learning modules */
+/* Enhanced progress animation for learning modules */
 @keyframes progress-fill {
   from {
     width: 0%;
+    background: var(--spark-electric);
   }
   to {
     width: var(--progress-width);
+    background: linear-gradient(90deg, var(--spark-electric), var(--spark-neon));
   }
 }
 
 .progress-animate {
   animation: progress-fill 1.5s ease-out forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-animate::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.3), 
+    transparent
+  );
+  animation: progress-shimmer 2s ease-in-out infinite;
+}
+
+@keyframes progress-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* Bounce animation for completed items */
@@ -353,9 +728,9 @@
   animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-/* Hover animations for cards */
+/* Enhanced hover animations for cards with Spark effects */
 .card-hover {
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
 }
@@ -367,8 +742,14 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transition: left 0.5s;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--spark-electric), 
+    var(--spark-neon), 
+    transparent
+  );
+  opacity: 0.3;
+  transition: left 0.6s ease;
   z-index: 1;
 }
 
@@ -377,11 +758,21 @@
 }
 
 .card-hover:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 20px 40px oklch(0.75 0.04 65 / 0.15);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 40px oklch(0.15 0.02 240 / 0.15),
+    0 0 20px var(--spark-electric),
+    0 0 40px var(--spark-neon);
 }
 
-/* Confetti animation */
+/* Spark card glow on hover */
+.spark-card:hover {
+  box-shadow: var(--shadow-spark);
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+}
+
+/* Enhanced confetti animation with Spark colors */
 @keyframes confetti-fall {
   0% {
     transform: translateY(-100vh) rotate(0deg);
@@ -395,6 +786,28 @@
 
 .confetti {
   animation: confetti-fall 3s linear infinite;
+}
+
+.confetti-spark {
+  background: var(--gradient-spark);
+  animation: confetti-fall 3s linear infinite;
+}
+
+/* Enhanced certificate sparkle effect */
+@keyframes certificate-sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+  }
+}
+
+.certificate-sparkle {
+  animation: certificate-sparkle 2s ease-in-out infinite;
+  color: var(--cert-gold);
 }
 
 /* Shake animation for wrong answers */
@@ -441,22 +854,33 @@
   background: oklch(0.96 0.01 240);
 }
 
-/* Gradient text */
+/* Enhanced gradient text with Spark colors */
 .gradient-text {
-  background: linear-gradient(45deg, var(--anime-pink), var(--anime-blue), var(--anime-purple));
-  background-size: 200% 200%;
+  background: linear-gradient(45deg, 
+    var(--spark-electric), 
+    var(--spark-neon), 
+    var(--spark-plasma), 
+    var(--spark-energy)
+  );
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient-shift 3s ease infinite;
+  animation: gradient-shift 4s ease infinite;
 }
 
 @keyframes gradient-shift {
   0% {
     background-position: 0% 50%;
   }
-  50% {
+  25% {
     background-position: 100% 50%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
   }
   100% {
     background-position: 0% 50%;
@@ -493,30 +917,36 @@
   animation: twinkle 2s ease-in-out infinite;
 }
 
-/* Loading spinner with anime colors */
-@keyframes anime-spinner {
+/* Loading spinner with Spark colors */
+@keyframes spark-spinner {
   0% {
     transform: rotate(0deg);
-    border-color: var(--anime-pink) transparent transparent transparent;
+    border-color: var(--spark-electric) transparent transparent transparent;
   }
   25% {
-    border-color: var(--anime-blue) transparent transparent transparent;
+    border-color: var(--spark-neon) transparent transparent transparent;
   }
   50% {
     transform: rotate(180deg);
-    border-color: var(--anime-purple) transparent transparent transparent;
+    border-color: var(--spark-plasma) transparent transparent transparent;
   }
   75% {
-    border-color: var(--anime-pink) transparent transparent transparent;
+    border-color: var(--spark-energy) transparent transparent transparent;
   }
   100% {
     transform: rotate(360deg);
-    border-color: var(--anime-blue) transparent transparent transparent;
+    border-color: var(--spark-electric) transparent transparent transparent;
   }
 }
 
+.spark-spinner {
+  animation: spark-spinner 1.5s linear infinite;
+  border-width: 3px;
+}
+
+/* Legacy anime spinner for compatibility */
 .anime-spinner {
-  animation: anime-spinner 2s linear infinite;
+  animation: spark-spinner 2s linear infinite;
 }
 
 /* Slide in animations */
@@ -633,10 +1063,47 @@
   border-radius: var(--radius-lg);
 }
 
-/* Enhanced button animations */
+/* Enhanced button animations with Spark effects */
 .button-glow:hover {
-  box-shadow: 0 0 20px oklch(0.52 0.22 235 / 0.4);
-  transform: translateY(-2px);
+  box-shadow: 
+    0 0 20px oklch(0.55 0.24 235 / 0.4),
+    0 0 40px var(--spark-electric),
+    0 4px 20px oklch(0.15 0.02 240 / 0.1);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+.spark-button {
+  position: relative;
+  overflow: hidden;
+  background: var(--gradient-spark);
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.spark-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.spark-button:hover::before {
+  left: 100%;
+}
+
+.spark-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-spark);
 }
 
 /* Modern card hover effects */

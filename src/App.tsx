@@ -12,26 +12,44 @@ import { EnhancedAIAssistant } from './components/EnhancedAIAssistant'
 import { AIChatAssistant } from './components/AIChatAssistant'
 import { AISkillAssessment } from './components/AISkillAssessment'
 import { CareerPathRecommendation } from './components/CareerPathRecommendation'
-import { EnhancedCertificate } from './components/EnhancedCertificate'
+import { SparkEnhancedCertificate } from './components/SparkEnhancedCertificate'
 import { OfflineLearning } from './components/OfflineLearning'
 import { Button } from './components/ui/button'
 import { Robot, Download, Trophy, TrendUp } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 
-// Enhanced viewport height handling for mobile devices
+// Enhanced viewport height handling for mobile devices with better support
 const setViewportHeight = () => {
+  // Use new viewport units if available
   const vh = window.innerHeight * 0.01
   document.documentElement.style.setProperty('--vh', `${vh}px`)
+  
+  // Set dynamic viewport height
+  if ('visualViewport' in window) {
+    const handleViewportChange = () => {
+      const vh = window.visualViewport?.height || window.innerHeight
+      document.documentElement.style.setProperty('--dvh', `${vh * 0.01}px`)
+    }
+    window.visualViewport?.addEventListener('resize', handleViewportChange)
+    window.visualViewport?.addEventListener('scroll', handleViewportChange)
+    handleViewportChange()
+  }
 }
 
 // Initialize viewport height
 setViewportHeight()
 
-// Update on resize and orientation change
+// Update on resize and orientation change with improved handling
 window.addEventListener('resize', setViewportHeight)
 window.addEventListener('orientationchange', () => {
-  setTimeout(setViewportHeight, 100)
+  // Delay to ensure new orientation is applied
+  setTimeout(setViewportHeight, 150)
 })
+
+// Handle mobile browser navigation changes
+window.addEventListener('scroll', () => {
+  setViewportHeight()
+}, { passive: true })
 
 interface UserData {
   name: string
@@ -222,30 +240,81 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center safe-area-top safe-area-bottom">
-        <div className="text-center px-4">
+      <div className="min-h-screen bg-gradient-to-br from-background via-card to-background flex items-center justify-center safe-area-top safe-area-bottom relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="cyber-grid absolute inset-0 opacity-20"></div>
+        
+        {/* Floating Spark Elements */}
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className={`absolute w-2 h-2 rounded-full spark-float-${(i % 3) + 1}`}
+            style={{
+              background: `var(--spark-${['electric', 'neon', 'plasma', 'energy'][i % 4]})`,
+              left: `${10 + (i * 12)}%`,
+              top: `${20 + (i * 8)}%`,
+              boxShadow: `0 0 10px var(--spark-${['electric', 'neon', 'plasma', 'energy'][i % 4]})`
+            }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 0.6, scale: 1 }}
+            transition={{ delay: i * 0.2, duration: 1 }}
+          />
+        ))}
+
+        <div className="text-center px-4 relative z-10">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="mx-auto mb-4 sm:mb-6"
+            className="mx-auto mb-6"
           >
-            <div className="anime-spinner rounded-full h-10 w-10 sm:h-12 sm:w-12 lg:h-16 lg:w-16 border-4 border-transparent"></div>
+            <div className="spark-spinner rounded-full h-12 w-12 sm:h-16 sm:w-16 lg:h-20 lg:w-20 border-4 border-transparent"></div>
           </motion.div>
-          <motion.p 
-            className="text-sm sm:text-base lg:text-lg text-muted-foreground gradient-text"
-            initial={{ opacity: 0, y: 10 }}
+          
+          <motion.div
+            className="mb-4"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            Loading AstraForensics...
-          </motion.p>
-          <motion.p 
-            className="text-xs sm:text-sm text-muted-foreground mt-2 opacity-75"
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-2">
+              AstraForensics
+            </h1>
+            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground">
+              Loading your cybersecurity learning experience...
+            </p>
+          </motion.div>
+          
+          <motion.div
+            className="flex justify-center gap-2 mb-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            Preparing your cybersecurity learning experience
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="w-2 h-2 rounded-full"
+                style={{ background: 'var(--spark-electric)' }}
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.5, 1, 0.5]
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  delay: i * 0.2
+                }}
+              />
+            ))}
+          </motion.div>
+          
+          <motion.p 
+            className="text-xs sm:text-sm text-muted-foreground opacity-75"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9 }}
+          >
+            ⚡ Powered by Spark Technology
           </motion.p>
         </div>
       </div>
@@ -253,9 +322,12 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-background relative flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-background via-card to-background relative flex flex-col container">
+      {/* Spark Background Effects */}
+      <div className="cyber-grid absolute inset-0 opacity-10 pointer-events-none"></div>
+      
       {/* Main Content Area */}
-      <div className="flex-1 safe-area-top">
+      <div className="flex-1 safe-area-top relative z-10">
         {currentState === 'welcome' && (
           <WelcomeTour onComplete={handleWelcomeComplete} />
         )}
@@ -303,67 +375,111 @@ function App() {
         )}
       </div>
 
-      {/* Enhanced AI Features - Responsive Floating Buttons */}
+      {/* Enhanced AI Features - Responsive Floating Buttons with Spark Effects */}
       {userData && currentState === 'dashboard' && (
-        <div className="fixed bottom-4 right-4 flex flex-col gap-2 sm:gap-3 z-40 safe-area-bottom safe-area-right">
+        <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-40 safe-area-bottom safe-area-right">
           {/* Main AI Assistant */}
           <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1, type: "spring", stiffness: 300 }}
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ delay: 1.2, type: "spring", stiffness: 300 }}
           >
             <Button
               onClick={() => setShowAIAssistant(true)}
               size="lg"
-              className="rounded-full w-12 h-12 sm:w-16 sm:h-16 shadow-lg anime-glow bg-gradient-to-r from-primary to-accent"
+              className="rounded-full w-14 h-14 sm:w-18 sm:h-18 shadow-xl spark-glow relative overflow-hidden"
+              style={{ background: 'var(--gradient-spark)' }}
               title="AI Learning Assistant"
             >
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="relative z-10"
               >
-                <Robot size={20} className="text-white sm:w-6 sm:h-6" weight="fill" />
+                <Robot size={24} className="text-white sm:w-7 sm:h-7" weight="fill" />
               </motion.div>
+              <div className="absolute inset-0 rounded-full spark-trail"></div>
             </Button>
           </motion.div>
 
-          {/* Additional AI Features - Responsive Grid */}
+          {/* Additional AI Features - Enhanced Grid */}
           <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1.2, type: "spring", stiffness: 300 }}
-            className="flex flex-col gap-2"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 1.5, type: "spring", stiffness: 300 }}
+            className="flex flex-col gap-3"
           >
-            <Button
-              onClick={() => setShowOfflineLearning(true)}
-              size="sm"
-              variant="secondary"
-              className="rounded-full w-10 h-10 sm:w-12 sm:h-12 shadow-lg"
-              title="Offline Learning"
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Download size={14} className="sm:w-4 sm:h-4" />
-            </Button>
+              <Button
+                onClick={() => setShowOfflineLearning(true)}
+                size="sm"
+                variant="secondary"
+                className="rounded-full w-12 h-12 sm:w-14 sm:h-14 shadow-lg hover:shadow-xl transition-all duration-300"
+                title="Offline Learning"
+              >
+                <Download size={16} className="sm:w-5 sm:h-5" />
+              </Button>
+            </motion.div>
             
-            <Button
-              onClick={() => setShowSkillAssessment(true)}
-              size="sm"
-              variant="secondary"
-              className="rounded-full w-10 h-10 sm:w-12 sm:h-12 shadow-lg"
-              title="Skill Assessment"
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: -5 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Trophy size={14} className="sm:w-4 sm:h-4" />
-            </Button>
+              <Button
+                onClick={() => setShowSkillAssessment(true)}
+                size="sm"
+                variant="secondary"
+                className="rounded-full w-12 h-12 sm:w-14 sm:h-14 shadow-lg hover:shadow-xl transition-all duration-300"
+                title="Skill Assessment"
+              >
+                <Trophy size={16} className="sm:w-5 sm:h-5" />
+              </Button>
+            </motion.div>
             
-            <Button
-              onClick={() => setShowCareerRecommendation(true)}
-              size="sm"
-              variant="secondary"
-              className="rounded-full w-10 h-10 sm:w-12 sm:h-12 shadow-lg"
-              title="Career Guidance"
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <TrendUp size={14} className="sm:w-4 sm:h-4" />
-            </Button>
+              <Button
+                onClick={() => setShowCareerRecommendation(true)}
+                size="sm"
+                variant="secondary"
+                className="rounded-full w-12 h-12 sm:w-14 sm:h-14 shadow-lg hover:shadow-xl transition-all duration-300"
+                title="Career Guidance"
+              >
+                <TrendUp size={16} className="sm:w-5 sm:h-5" />
+              </Button>
+            </motion.div>
           </motion.div>
+
+          {/* Spark Particles around buttons */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 rounded-full"
+                style={{
+                  background: `var(--spark-${['electric', 'neon', 'plasma'][i % 3]})`,
+                  boxShadow: `0 0 4px var(--spark-${['electric', 'neon', 'plasma'][i % 3]})`
+                }}
+                animate={{
+                  x: [0, Math.cos(i * 60 * Math.PI / 180) * 30],
+                  y: [0, Math.sin(i * 60 * Math.PI / 180) * 30],
+                  opacity: [0, 1, 0],
+                  scale: [0, 1, 0]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  delay: i * 0.5,
+                  ease: "easeInOut"
+                }}
+              />
+            ))}
+          </div>
         </div>
       )}
 
@@ -399,7 +515,7 @@ function App() {
       />
 
       {certificateData && (
-        <EnhancedCertificate
+        <SparkEnhancedCertificate
           isOpen={showCertificate}
           onClose={() => setShowCertificate(false)}
           certificateData={certificateData}
@@ -413,12 +529,30 @@ function App() {
         userData={userData}
       />
 
-      {/* Enhanced Responsive Footer */}
-      <footer className="safe-area-bottom border-t bg-background/95 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-3">
-          <p className="text-center text-xs sm:text-sm text-muted-foreground">
-            © 2024 AstraForensics - Advanced AI-Powered Cybersecurity Learning Platform | Made by AstraForensics
-          </p>
+      {/* Enhanced Responsive Footer with Spark Effects */}
+      <footer className="safe-area-bottom border-t bg-card/80 backdrop-blur-md relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent"></div>
+        <div className="container mx-auto px-4 py-4 relative z-10">
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="text-xs sm:text-sm text-muted-foreground mb-1">
+              © 2024 AstraForensics - Advanced AI-Powered Cybersecurity Learning Platform
+            </p>
+            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+              <span>⚡ Powered by</span>
+              <span className="gradient-text font-semibold">Spark Technology</span>
+              <motion.span
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                ⚡
+              </motion.span>
+            </div>
+          </motion.div>
         </div>
       </footer>
       
