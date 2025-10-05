@@ -15,12 +15,13 @@ import { CareerPathRecommendation } from './components/CareerPathRecommendation'
 import { SparkEnhancedCertificate } from './components/SparkEnhancedCertificate'
 import { OfflineLearning } from './components/OfflineLearning'
 import { BackendErrorBoundary } from './components/BackendErrorBoundary'
+import { ErrorRecovery } from './components/ErrorRecovery'
 import { NotesDashboard } from './components/Notes/NotesDashboard'
 import { TodoDashboard } from './components/Todo/TodoDashboard'
 import { DailyReflection } from './components/DailyReflection'
 import { SparkLoader } from './components/SparkLoader'
 import { Button } from './components/ui/button'
-import { Robot, Download, Trophy, TrendUp, FileText, CheckSquare, Brain } from '@phosphor-icons/react'
+import { Robot, Download, Trophy, TrendUp, FileText, CheckSquare, Brain, Shield } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 
@@ -106,6 +107,7 @@ function App() {
   const [showNotesDashboard, setShowNotesDashboard] = useState(false)
   const [showTodoDashboard, setShowTodoDashboard] = useState(false)
   const [showDailyReflection, setShowDailyReflection] = useState(false)
+  const [showErrorRecovery, setShowErrorRecovery] = useState(false)
   const [selectedModuleId, setSelectedModuleId] = useState<string | undefined>()
   const [assessmentResult, setAssessmentResult] = useState<any>(null)
   const [certificateData, setCertificateData] = useState<CertificateData | null>(null)
@@ -115,8 +117,21 @@ function App() {
       try {
         setIsLoading(true)
         
-        // Simple initialization without complex backend validation
+        // Simple initialization with better error handling
         await new Promise(resolve => setTimeout(resolve, 2000))
+        
+        // Don't fail if backend services are unavailable
+        try {
+          // Attempt to check backend health without crashing app
+          const { isSparkAvailable } = await import('./lib/spark-api')
+          if (isSparkAvailable()) {
+            console.log('Spark backend is available')
+          } else {
+            console.warn('Spark backend is not available - running in offline mode')
+          }
+        } catch (backendError) {
+          console.warn('Backend check failed, continuing in fallback mode:', backendError)
+        }
         
         if (userData && hasSeenWelcome) {
           setCurrentState('dashboard')
@@ -129,7 +144,8 @@ function App() {
         console.log('Application initialization completed')
       } catch (error) {
         console.error('Application initialization failed', error)
-        toast.error('Failed to initialize application')
+        // Don't show error toast for initialization failures
+        console.warn('Some features may be limited due to initialization issues')
       } finally {
         setIsLoading(false)
       }
@@ -613,6 +629,22 @@ function App() {
                 <Brain size={16} className="sm:w-5 sm:h-5" />
               </Button>
             </motion.div>
+            
+            {/* System Health Check Button */}
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 3 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                onClick={() => setShowErrorRecovery(true)}
+                size="sm"
+                variant="secondary"
+                className="rounded-full w-12 h-12 sm:w-14 sm:h-14 shadow-lg hover:shadow-xl transition-all duration-300"
+                title="System Health Check"
+              >
+                <Shield size={16} className="sm:w-5 sm:h-5" />
+              </Button>
+            </motion.div>
           </motion.div>
 
           {/* Spark Particles around buttons */}
@@ -703,6 +735,16 @@ function App() {
       <DailyReflection
         isOpen={showDailyReflection}
         onClose={() => setShowDailyReflection(false)}
+      />
+
+      {/* System Health and Error Recovery */}
+      <ErrorRecovery
+        isOpen={showErrorRecovery}
+        onClose={() => setShowErrorRecovery(false)}
+        onRetry={() => {
+          // Refresh the application state
+          window.location.reload()
+        }}
       />
 
       {/* Enhanced Responsive Footer with Spark Effects */}

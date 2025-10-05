@@ -28,9 +28,14 @@ export interface SparkAPI {
 
 // Safe wrapper for accessing the Spark API
 export function getSparkAPI(): SparkAPI {
-  if (typeof window === 'undefined' || !window.spark) {
+  if (typeof window === 'undefined') {
+    throw new Error('Window is not available (server-side rendering)')
+  }
+  
+  if (!window.spark) {
     throw new Error('Spark API is not available. Make sure you are running in a Spark environment.')
   }
+  
   return (window as any).spark
 }
 
@@ -59,39 +64,45 @@ export async function callLLM(
   jsonMode: boolean = false,
   retries: number = 3
 ): Promise<string> {
-  const spark = getSparkAPI()
-  
-  for (let attempt = 1; attempt <= retries; attempt++) {
-    try {
-      const response = await spark.llm(prompt, modelName, jsonMode)
-      
-      if (!response || response.trim().length === 0) {
-        throw new Error('Empty response from LLM')
-      }
-      
-      // Validate JSON response if jsonMode is enabled
-      if (jsonMode) {
-        try {
-          JSON.parse(response)
-        } catch (jsonError) {
-          throw new Error(`Invalid JSON response: ${jsonError}`)
+  try {
+    const spark = getSparkAPI()
+    
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      try {
+        const response = await spark.llm(prompt, modelName, jsonMode)
+        
+        if (!response || response.trim().length === 0) {
+          throw new Error('Empty response from LLM')
         }
+        
+        // Validate JSON response if jsonMode is enabled
+        if (jsonMode) {
+          try {
+            JSON.parse(response)
+          } catch (jsonError) {
+            throw new Error(`Invalid JSON response: ${jsonError}`)
+          }
+        }
+        
+        return response
+      } catch (error) {
+        sparkError(`LLM call attempt ${attempt} failed`, error)
+        
+        if (attempt === retries) {
+          throw new Error(`LLM call failed after ${retries} attempts: ${error}`)
+        }
+        
+        // Wait before retrying (exponential backoff)
+        await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000))
       }
-      
-      return response
-    } catch (error) {
-      console.warn(`LLM call attempt ${attempt} failed:`, error)
-      
-      if (attempt === retries) {
-        throw new Error(`LLM call failed after ${retries} attempts: ${error}`)
-      }
-      
-      // Wait before retrying (exponential backoff)
-      await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000))
     }
+    
+    throw new Error('Maximum retries exceeded')
+  } catch (error) {
+    sparkError('LLM call failed completely', error)
+    // Return a fallback response instead of throwing
+    return jsonMode ? '{"error": "LLM service unavailable"}' : 'I apologize, but I am currently unable to process your request. Please try again later.'
   }
-  
-  throw new Error('Maximum retries exceeded')
 }
 
 // Enhanced error handling for KV operations
@@ -142,10 +153,19 @@ export async function getCurrentUser(): Promise<SparkUser | null> {
 // Helper for creating LLM prompts with proper template literal handling
 export function createPrompt(template: TemplateStringsArray, ...values: any[]): string {
   try {
+    if (!isSparkAvailable()) {
+      // Fallback: manually construct the prompt
+      let result = template[0]
+      for (let i = 0; i < values.length; i++) {
+        result += String(values[i]) + template[i + 1]
+      }
+      return result
+    }
+    
     const spark = getSparkAPI()
     return spark.llmPrompt(template, ...values)
   } catch (error) {
-    console.error('Failed to create LLM prompt:', error)
+    sparkError('Failed to create LLM prompt', error)
     // Fallback: manually construct the prompt
     let result = template[0]
     for (let i = 0; i < values.length; i++) {
@@ -185,18 +205,20 @@ export async function initializeBackend(): Promise<boolean> {
     sparkLog('Initializing backend systems...')
     
     if (!isSparkAvailable()) {
-      throw new Error('Spark API not available')
+      sparkError('Spark API not available - running in fallback mode')
+      return false // Allow app to continue in fallback mode
     }
     
     const healthCheck = await checkSparkHealth()
     if (!healthCheck) {
-      throw new Error('Backend health check failed')
+      sparkError('Backend health check failed - some features may be limited')
+      return false // Allow app to continue with limited functionality
     }
     
     sparkLog('Backend initialization successful')
     return true
   } catch (error) {
     sparkError('Backend initialization failed', error)
-    return false
+    return false // Allow app to continue in fallback mode
   }
 }

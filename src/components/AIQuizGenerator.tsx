@@ -6,7 +6,8 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
-import { createPrompt, callLLM, sparkLog, sparkError } from '@/lib/spark-api'
+import { createPrompt, callLLM, sparkLog, sparkError, isSparkAvailable } from '@/lib/spark-api'
+import { offlineService } from '@/lib/offline-service'
 import { 
   Brain, 
   CheckCircle, 
@@ -18,7 +19,8 @@ import {
   Lightbulb,
   Sparkle,
   Warning,
-  ArrowClockwise
+  ArrowClockwise,
+  WifiX
 } from '@phosphor-icons/react'
 
 interface QuizQuestion {
@@ -84,6 +86,20 @@ export function AIQuizGenerator({
   const generateQuiz = async () => {
     setIsGenerating(true)
     try {
+      // Check if we should use offline mode
+      if (!isSparkAvailable()) {
+        sparkLog('Using offline quiz generation')
+        toast.info('🔄 Generating quiz in offline mode...')
+        
+        const offlineQuestions = offlineService.generateOfflineQuiz(topic, difficulty, questionCount)
+        if (offlineQuestions.length > 0) {
+          setQuestions(offlineQuestions)
+          sparkLog('Offline quiz generated successfully', { questionCount: offlineQuestions.length })
+          toast.success('✨ Quiz generated successfully!')
+          return
+        }
+      }
+
       sparkLog('Generating AI quiz', { topic, difficulty, questionCount })
       
       const prompt = createPrompt`Generate a cybersecurity quiz with exactly ${questionCount} questions about ${topic} with ${difficulty} difficulty level.
@@ -156,13 +172,24 @@ export function AIQuizGenerator({
       if (quizData.questions && Array.isArray(quizData.questions)) {
         setQuestions(quizData.questions)
         sparkLog('Quiz generated successfully', { questionCount: quizData.questions.length })
+        toast.success('✨ Quiz generated successfully!')
       } else {
         throw new Error('Invalid quiz format: missing questions array')
       }
     } catch (error) {
       sparkError('Failed to generate quiz', error)
-      toast.error('Failed to generate quiz. Using fallback questions.')
-      generateFallbackQuiz()
+      
+      // Try offline fallback
+      const offlineQuestions = offlineService.generateOfflineQuiz(topic, difficulty, questionCount)
+      if (offlineQuestions.length > 0) {
+        setQuestions(offlineQuestions)
+        toast.info('📱 Using offline quiz questions')
+        sparkLog('Using offline fallback quiz')
+      } else {
+        // Last resort: use basic fallback
+        generateFallbackQuiz()
+        toast.error('⚠️ Using basic fallback questions')
+      }
     } finally {
       setIsGenerating(false)
     }

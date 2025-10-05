@@ -242,6 +242,12 @@ export class AstraForensicsBackend {
 
   async generateAIQuiz(topic: string, difficulty: string, questionCount: number): Promise<QuizQuestion[]> {
     try {
+      // Check if Spark is available before attempting AI generation
+      if (typeof window === 'undefined' || !window.spark) {
+        console.warn('Spark API not available, using fallback questions')
+        return this.getFallbackQuestions(topic, difficulty, questionCount)
+      }
+
       const prompt = (window as any).spark.llmPrompt`Generate ${questionCount} cybersecurity quiz questions about ${topic} with ${difficulty} difficulty.
 
       Return a JSON object with a "questions" array. Each question should have:
@@ -260,7 +266,7 @@ export class AstraForensicsBackend {
       const response = await (window as any).spark.llm(prompt, 'gpt-4o', true)
       const quizData = JSON.parse(response)
       
-      return quizData.questions || []
+      return quizData.questions || this.getFallbackQuestions(topic, difficulty, questionCount)
     } catch (error) {
       console.error('Failed to generate AI quiz:', error)
       return this.getFallbackQuestions(topic, difficulty, questionCount)
@@ -397,11 +403,28 @@ export class AstraForensicsBackend {
   }
 
   private async getValue<T>(key: string): Promise<T | undefined> {
-    return await ((window as any).spark.kv.get as <T>(key: string) => Promise<T | undefined>)(key)
+    try {
+      if (typeof window === 'undefined' || !window.spark) {
+        console.warn(`Cannot access KV store: Spark API not available for key ${key}`)
+        return undefined
+      }
+      return await ((window as any).spark.kv.get as <T>(key: string) => Promise<T | undefined>)(key)
+    } catch (error) {
+      console.error(`Failed to get value for key ${key}:`, error)
+      return undefined
+    }
   }
 
   private async setValue<T>(key: string, value: T): Promise<void> {
-    await ((window as any).spark.kv.set as <T>(key: string, value: T) => Promise<void>)(key, value)
+    try {
+      if (typeof window === 'undefined' || !window.spark) {
+        console.warn(`Cannot save to KV store: Spark API not available for key ${key}`)
+        return
+      }
+      await ((window as any).spark.kv.set as <T>(key: string, value: T) => Promise<void>)(key, value)
+    } catch (error) {
+      console.error(`Failed to set value for key ${key}:`, error)
+    }
   }
 
   private async updateUserPoints(userId: string, points: number): Promise<void> {
@@ -498,7 +521,7 @@ export class AstraForensicsBackend {
   }
 
   private getFallbackQuestions(topic: string, difficulty: string, count: number): QuizQuestion[] {
-    // Fallback questions in case AI generation fails
+    // Expanded fallback questions in case AI generation fails
     const baseQuestions: QuizQuestion[] = [
       {
         id: 'fallback1',
@@ -510,15 +533,90 @@ export class AstraForensicsBackend {
           'Cryptography, Identity, Authorization'
         ],
         correctAnswer: 0,
-        explanation: 'The CIA triad represents the three fundamental principles of information security.',
+        explanation: 'The CIA triad represents the three fundamental principles of information security: Confidentiality (protecting information from unauthorized access), Integrity (ensuring data accuracy and trustworthiness), and Availability (ensuring information is accessible when needed).',
         difficulty: 'medium',
         topic: 'cybersecurity',
         points: 10,
         tags: ['basics', 'fundamentals', 'cia-triad']
+      },
+      {
+        id: 'fallback2',
+        question: 'Which of the following is NOT a common type of malware?',
+        options: [
+          'Virus',
+          'Trojan',
+          'Firewall',
+          'Ransomware'
+        ],
+        correctAnswer: 2,
+        explanation: 'A firewall is a security device that monitors and controls network traffic, not a type of malware. Viruses, Trojans, and Ransomware are all types of malicious software.',
+        difficulty: 'easy',
+        topic: 'malware',
+        points: 5,
+        tags: ['malware', 'security-tools', 'basics']
+      },
+      {
+        id: 'fallback3',
+        question: 'What is the primary purpose of encryption?',
+        options: [
+          'To speed up data transmission',
+          'To compress files',
+          'To protect data confidentiality',
+          'To detect viruses'
+        ],
+        correctAnswer: 2,
+        explanation: 'Encryption transforms readable data into an encoded format to protect its confidentiality, ensuring that only authorized parties with the correct decryption key can access the original information.',
+        difficulty: 'medium',
+        topic: 'cryptography',
+        points: 10,
+        tags: ['encryption', 'cryptography', 'data-protection']
+      },
+      {
+        id: 'fallback4',
+        question: 'Which authentication factor represents "something you know"?',
+        options: [
+          'Fingerprint',
+          'Password',
+          'Smart card',
+          'Voice recognition'
+        ],
+        correctAnswer: 1,
+        explanation: 'In multi-factor authentication, "something you know" refers to knowledge factors like passwords, PINs, or security questions. Fingerprints and voice recognition are "something you are" (biometric), while smart cards are "something you have".',
+        difficulty: 'medium',
+        topic: 'authentication',
+        points: 10,
+        tags: ['authentication', 'multi-factor', 'identity']
+      },
+      {
+        id: 'fallback5',
+        question: 'What does HTTPS provide that HTTP does not?',
+        options: [
+          'Faster loading times',
+          'Better SEO ranking',
+          'Encrypted communication',
+          'Unlimited bandwidth'
+        ],
+        correctAnswer: 2,
+        explanation: 'HTTPS (HTTP Secure) provides encrypted communication between a web browser and server using SSL/TLS protocols, protecting data from eavesdropping and tampering during transmission.',
+        difficulty: 'easy',
+        topic: 'network-security',
+        points: 5,
+        tags: ['https', 'ssl', 'tls', 'web-security']
       }
     ]
 
-    return baseQuestions.slice(0, count)
+    // Filter by difficulty if specified
+    let filteredQuestions = baseQuestions
+    if (difficulty !== 'mixed') {
+      filteredQuestions = baseQuestions.filter(q => q.difficulty === difficulty)
+    }
+
+    // If we don't have enough questions of the specified difficulty, include all
+    if (filteredQuestions.length < count) {
+      filteredQuestions = baseQuestions
+    }
+
+    return filteredQuestions.slice(0, count)
   }
 }
 

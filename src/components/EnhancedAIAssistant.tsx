@@ -7,7 +7,8 @@ import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useKV } from '@github/spark/hooks'
 import { formatDate, formatTime } from '@/lib/utils'
-import { createPrompt, callLLM, sparkError } from '@/lib/spark-api'
+import { createPrompt, callLLM, sparkError, isSparkAvailable } from '@/lib/spark-api'
+import { offlineService } from '@/lib/offline-service'
 import { 
   Robot, 
   X, 
@@ -21,7 +22,8 @@ import {
   Shield,
   List,
   Play,
-  PaperPlaneTilt
+  PaperPlaneTilt,
+  WifiX
 } from '@phosphor-icons/react'
 
 interface UserData {
@@ -148,7 +150,13 @@ Context: ${context || 'General assistance'}
 Chat History: ${(messages || []).slice(-3).map(m => `${m.role}: ${m.content}`).join('\n')}
 ` : ''
 
-      const prompt = createPrompt`You are an advanced AI cybersecurity learning assistant for AstraForensics platform. You are helpful, knowledgeable, and encouraging.
+      let response: string
+
+      // Check if we should use offline mode
+      if (!isSparkAvailable()) {
+        response = offlineService.generateOfflineAIResponse(messageToSend)
+      } else {
+        const prompt = createPrompt`You are an advanced AI cybersecurity learning assistant for AstraForensics platform. You are helpful, knowledgeable, and encouraging.
 
 Context:
 ${contextInfo}
@@ -157,7 +165,8 @@ User Question: ${messageToSend}
 
 Please provide a helpful, accurate, and encouraging response about cybersecurity. Keep responses concise but informative. Use emojis sparingly but appropriately. If the user asks for quizzes, create relevant cybersecurity questions. If they need explanations, break down complex concepts into digestible parts.`
 
-      const response = await callLLM(prompt)
+        response = await callLLM(prompt)
+      }
 
       // Add AI response
       const aiMessage: Message = {
@@ -170,10 +179,19 @@ Please provide a helpful, accurate, and encouraging response about cybersecurity
       setMessages(currentMessages => [...(currentMessages || []), aiMessage])
     } catch (error) {
       sparkError('AI response error', error)
+      
+      // Try offline fallback if online attempt failed
+      let fallbackResponse: string
+      try {
+        fallbackResponse = offlineService.generateOfflineAIResponse(messageToSend)
+      } catch (offlineError) {
+        fallbackResponse = "I apologize, but I'm having trouble processing your request right now. Please try again in a moment! 🤖"
+      }
+      
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "I apologize, but I'm having trouble processing your request right now. Please try again in a moment! 🤖",
+        content: fallbackResponse,
         timestamp: new Date()
       }
       setMessages(currentMessages => [...(currentMessages || []), errorMessage])
@@ -226,6 +244,12 @@ Please provide a helpful, accurate, and encouraging response about cybersecurity
                 <div>
                   <CardTitle className="text-lg sm:text-xl flex items-center space-x-2">
                     <span>AI Learning Assistant</span>
+                    {!isSparkAvailable() && (
+                      <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                        <WifiX size={12} />
+                        Offline Mode
+                      </Badge>
+                    )}
                     <motion.div
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ duration: 2, repeat: Infinity }}
