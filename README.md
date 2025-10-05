@@ -1,488 +1,739 @@
 # 🚀 GitHub Spark Template
 
-> **A powerful, modern web development environment for building beautiful, AI-powered applications with React, TypeScript, and Tailwind CSS.**
+**A powerful, modern web development environment for building beautiful, interactive applications with React, TypeScript, and AI integration.**
+
+![GitHub Spark Template](https://img.shields.io/badge/Spark-Template-blue?style=for-the-badge&logo=github)
+![React](https://img.shields.io/badge/React-19.0.0-61DAFB?style=for-the-badge&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7.2-3178C6?style=for-the-badge&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1.11-38B2AC?style=for-the-badge&logo=tailwind-css)
 
 ---
 
 ## 📋 Table of Contents
 
-- [What is GitHub Spark Template?](#what-is-github-spark-template)
-- [🛠 Tech Stack](#-tech-stack)
-- [📁 Project Structure](#-project-structure)
-- [🏗 Building Your Own Project](#-building-your-own-project)
-- [📱 Mobile & Desktop Packaging](#-mobile--desktop-packaging)
-- [🌐 Deployment Options](#-deployment-options)
-- [📖 Development Guide](#-development-guide)
-- [🎯 Example Projects](#-example-projects)
-- [⚡ Quick Start](#-quick-start)
-- [🤝 Contributing](#-contributing)
+1. [What is Spark Template?](#what-is-spark-template)
+2. [How Spark Template Works](#how-spark-template-works)
+3. [Building Your Own Project](#building-your-own-project)
+4. [File & Folder Structure](#file--folder-structure)
+5. [Adding Frontend Files](#adding-frontend-files)
+6. [Export & Packaging](#export--packaging)
+7. [Example Project Structure](#example-project-structure)
+8. [Deployment Guide](#deployment-guide)
+9. [Tech Stack](#tech-stack)
+10. [Getting Started](#getting-started)
+11. [AI Features](#ai-features)
+12. [Best Practices](#best-practices)
 
 ---
 
-## What is GitHub Spark Template?
+## 🎯 What is Spark Template?
 
-GitHub Spark Template is a cutting-edge development environment that provides a complete foundation for building modern web applications. It combines the power of **React 19**, **TypeScript**, **Tailwind CSS**, and **GitHub Spark's AI capabilities** to create a seamless development experience.
+**GitHub Spark Template** is a comprehensive, production-ready development environment that combines the power of modern web technologies with AI-driven features. It's designed to help developers quickly build, prototype, and deploy sophisticated web applications without the complexity of setting up build tools and configurations.
 
-### ✨ Key Features
-
-- **🤖 AI-Powered Development**: Built-in AI assistance with LLM integration
-- **⚡ Lightning Fast**: Vite-powered development with hot reload
-- **📱 Mobile-First**: Responsive design with PWA capabilities
-- **🎨 Beautiful UI**: shadcn/ui components with Tailwind CSS
-- **🔒 Type-Safe**: Full TypeScript support with strict typing
-- **💾 Persistent Storage**: Key-value storage with React hooks
-- **🌍 Ready for Production**: Built-in deployment configurations
-
----
-
-## 🛠 Tech Stack
-
-### Frontend Framework
-- **React 19** - Latest React with concurrent features
-- **TypeScript** - Type-safe JavaScript development
-- **Vite** - Next-generation frontend tooling
-
-### Styling & UI
-- **Tailwind CSS 4** - Utility-first CSS framework
-- **shadcn/ui** - Pre-built accessible components
-- **Framer Motion** - Smooth animations and transitions
-- **Phosphor Icons** - Beautiful icon library
-
-### AI & Data
-- **GitHub Spark AI** - Built-in LLM integration
-- **Key-Value Storage** - Persistent data with `useKV` hook
-- **Real-time Updates** - Reactive state management
-
-### Build & Deployment
-- **Vite** - Fast bundling and development server
-- **ESLint** - Code linting and formatting
-- **PWA Support** - Progressive web app capabilities
+### Key Features:
+- 🤖 **AI Integration**: Built-in AI assistant with LLM capabilities
+- 📱 **Mobile-First**: Responsive design with PWA support
+- 🎨 **Modern UI**: Shadcn/ui components with Tailwind CSS
+- 🔒 **Type Safety**: Full TypeScript support
+- 🚀 **Fast Development**: Hot reload with Vite
+- 📊 **Data Persistence**: Key-value storage system
+- 🎭 **Animation**: Framer Motion integration
+- 🔧 **Developer Tools**: ESLint, TypeScript checking
 
 ---
 
-## 📁 Project Structure
+## ⚡ How Spark Template Works
 
+Spark Template operates as a **micro-app environment** where you build complete applications within the `src` directory. The system provides:
+
+### 🏗️ Core Architecture
 ```
-spark-template/
-├── 📄 index.html                 # Main HTML entry point
-├── 📦 package.json              # Dependencies and scripts
-├── ⚙️ vite.config.ts            # Vite configuration
-├── 🎨 tailwind.config.js        # Tailwind CSS configuration
-├── 📝 tsconfig.json             # TypeScript configuration
-├── 🔧 components.json           # shadcn/ui configuration
-│
-├── 📂 src/                      # Source code directory
-│   ├── 🚀 main.tsx             # Application entry point (DO NOT EDIT)
-│   ├── 🎨 main.css             # Core styles (DO NOT EDIT)
-│   ├── 📱 App.tsx              # Main application component
-│   ├── 🎨 index.css            # Custom theme and styles
-│   │
-│   ├── 📂 components/          # React components
-│   │   ├── 📂 ui/              # shadcn/ui components (pre-installed)
-│   │   ├── 🤖 AIAssistant.tsx  # AI-powered features
-│   │   ├── 📊 Dashboard.tsx    # Main dashboard
-│   │   └── ...                 # Other custom components
-│   │
-│   ├── 📂 lib/                 # Utility functions
-│   │   └── 🔧 utils.ts         # Helper functions and class utilities
-│   │
-│   ├── 📂 hooks/               # Custom React hooks
-│   ├── 📂 assets/              # Static assets
-│   │   ├── 📷 images/          # Image files
-│   │   ├── 🎵 audio/           # Audio files
-│   │   ├── 📹 video/           # Video files
-│   │   └── 📄 documents/       # Document files
-│   │
-│   └── 📂 styles/              # Additional stylesheets
-│
-├── 📂 packages/                # Workspace packages
-├── 📂 .devcontainer/           # Development container config
-├── 📂 .github/                 # GitHub workflows and templates
-└── 📋 README.md                # This file
+┌─────────────────────────────────┐
+│         GitHub Spark            │
+├─────────────────────────────────┤
+│    Your Application (src/)      │
+│  ┌─────────────────────────────┐ │
+│  │        App.tsx              │ │
+│  │    (Your Main Component)    │ │
+│  └─────────────────────────────┘ │
+├─────────────────────────────────┤
+│    Runtime Environment          │
+│  • AI Services                  │
+│  • Storage (useKV)              │
+│  • User Management              │
+│  • Build System (Vite)          │
+└─────────────────────────────────┘
 ```
 
-### 🔍 Key Files Explained
-
-| File/Folder | Purpose | Can Edit? |
-|-------------|---------|-----------|
-| `index.html` | Main HTML template with meta tags and imports | ✅ Yes |
-| `src/App.tsx` | Main React component - your app starts here | ✅ Yes |
-| `src/index.css` | Custom theme, colors, and animations | ✅ Yes |
-| `src/main.tsx` | Application entry point and Spark integration | ❌ **NO** |
-| `src/main.css` | Core structural styles | ❌ **NO** |
-| `src/components/ui/` | Pre-installed shadcn/ui components | ✅ Limited |
-| `src/lib/utils.ts` | Utility functions and helpers | ✅ Yes |
-| `package.json` | Dependencies and build scripts | ✅ Limited |
-| `vite.config.ts` | Vite build configuration | ✅ Limited |
+### 🔄 Development Flow
+1. **Write Code**: Create components in `src/`
+2. **Hot Reload**: Changes appear instantly
+3. **AI Assistance**: Use built-in AI features
+4. **Data Storage**: Persist data with `useKV`
+5. **Build & Deploy**: Export as web app or mobile app
 
 ---
 
-## 🏗 Building Your Own Project
+## 🛠️ Building Your Own Project
 
-### 1. **Getting Started**
+### Option 1: React/TypeScript Application (Recommended)
+This is the current setup - perfect for modern web applications.
 
-The Spark Template provides a complete React application foundation. Your main development happens in:
-
-- **`src/App.tsx`** - Your main application logic
-- **`src/index.css`** - Custom styling and themes  
-- **`src/components/`** - Your custom components
-
-### 2. **Adding New Components**
-
-Create new React components in the `src/components/` directory:
-
-```tsx
-// src/components/MyComponent.tsx
-import { Button } from '@/components/ui/button'
+```typescript
+// src/App.tsx - Your main component
 import { useState } from 'react'
+import { useKV } from '@github/spark/hooks'
+import { Button } from '@/components/ui/button'
 
-export function MyComponent() {
-  const [count, setCount] = useState(0)
+function App() {
+  const [count, setCount] = useKV('counter', 0)
   
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold">Count: {count}</h1>
+      <h1>My Spark App</h1>
       <Button onClick={() => setCount(count + 1)}>
-        Increment
+        Count: {count}
       </Button>
     </div>
   )
 }
+
+export default App
 ```
 
-### 3. **Using AI Features**
+### Option 2: Vanilla HTML/CSS/JS
+For simpler projects, you can create a basic HTML structure:
 
-Leverage built-in AI capabilities with the Spark API:
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My App</title>
+    <link href="/src/styles/custom.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <h1>Hello World</h1>
+    </div>
+    <script src="/src/scripts/main.js"></script>
+</body>
+</html>
+```
 
-```tsx
-// Example: AI-powered content generation
-const generateContent = async () => {
-  const prompt = spark.llmPrompt`Generate a tutorial about ${topic}`
-  const result = await spark.llm(prompt)
-  setContent(result)
+### Option 3: Hybrid Approach
+Combine React components with traditional web technologies:
+
+```typescript
+// src/components/MyWidget.tsx
+export function MyWidget() {
+  return <div className="widget">Custom React Widget</div>
 }
+
+// Then use in HTML or other React components
 ```
 
-### 4. **Persistent Data Storage**
+> **Note**: Python-based projects are not directly supported in this environment. Spark Template is designed for frontend web applications using JavaScript/TypeScript.
 
-Use the `useKV` hook for data that should persist between sessions:
+---
 
-```tsx
-import { useKV } from '@github/spark/hooks'
+## 📁 File & Folder Structure
 
-function MyApp() {
-  // ✅ For persistent data (survives page refresh)
-  const [userData, setUserData] = useKV('user-data', null)
-  const [settings, setSettings] = useKV('app-settings', {})
-  
-  // ✅ For temporary state (doesn't persist)
-  const [loading, setLoading] = useState(false)
-  const [currentTab, setCurrentTab] = useState('home')
-}
+### 🗂️ Current Project Structure
+```
+spark-template/
+├── 📄 index.html              # Main HTML entry point
+├── 📄 package.json            # Dependencies and scripts
+├── 📄 vite.config.ts          # Vite build configuration
+├── 📄 tailwind.config.js      # Tailwind CSS configuration
+├── 📄 components.json         # Shadcn/ui configuration
+├── 📄 tsconfig.json          # TypeScript configuration
+│
+├── 📁 src/                    # 🎯 YOUR MAIN WORKSPACE
+│   ├── 📄 App.tsx            # Main React component (EDIT THIS)
+│   ├── 📄 main.tsx           # App bootstrap (DO NOT EDIT)
+│   ├── 📄 main.css           # Core styles (DO NOT EDIT)
+│   ├── 📄 index.css          # Custom theme & styles (EDIT THIS)
+│   │
+│   ├── 📁 components/        # React components
+│   │   ├── 📁 ui/           # Shadcn/ui components (pre-built)
+│   │   └── 📄 *.tsx         # Your custom components
+│   │
+│   ├── 📁 lib/              # Utility functions
+│   │   └── 📄 utils.ts      # Helper functions
+│   │
+│   ├── 📁 hooks/            # Custom React hooks
+│   ├── 📁 assets/           # Static files
+│   │   ├── 📁 images/       # Images
+│   │   ├── 📁 video/        # Videos
+│   │   ├── 📁 audio/        # Audio files
+│   │   └── 📁 documents/    # Documents
+│   │
+│   └── 📁 styles/           # Additional CSS files
+│
+├── 📁 .github/              # GitHub workflows
+├── 📁 .devcontainer/        # Development container config
+└── 📁 node_modules/         # Dependencies (auto-generated)
 ```
 
-### 5. **Styling Your App**
+### 🎯 Key Files Explained
 
-#### **Using Tailwind CSS**
-```tsx
-<div className="bg-primary text-primary-foreground p-4 rounded-lg shadow-lg">
-  <h1 className="text-xl font-semibold">Beautiful Card</h1>
-</div>
-```
+| File | Purpose | Can Edit? |
+|------|---------|-----------|
+| `src/App.tsx` | **Your main application component** | ✅ YES |
+| `src/index.css` | **Custom styles and theme** | ✅ YES |
+| `src/components/` | **Your custom components** | ✅ YES |
+| `src/assets/` | **Images, videos, documents** | ✅ YES |
+| `index.html` | **HTML entry point** | ✅ YES |
+| `src/main.tsx` | Runtime bootstrap | ❌ NO |
+| `src/main.css` | Core system styles | ❌ NO |
 
-#### **Custom CSS Variables**
-Edit `src/index.css` to customize your theme:
+---
 
+## 🔗 Adding Frontend Files
+
+### 1. CSS Files
 ```css
-:root {
-  --primary: oklch(0.52 0.22 235);     /* Your brand color */
-  --background: oklch(0.99 0.005 240);  /* Page background */
-  --foreground: oklch(0.08 0.015 240);  /* Text color */
-  /* ... other theme variables */
+/* src/styles/custom.css */
+.my-custom-class {
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  padding: 1rem;
+  border-radius: 8px;
 }
 ```
 
-### 6. **Adding Assets**
+```typescript
+// Import in App.tsx or component
+import './styles/custom.css'
+```
 
-Store all assets in the `src/assets/` directory and import them:
+### 2. JavaScript/TypeScript Files
+```typescript
+// src/lib/helpers.ts
+export function formatDate(date: Date): string {
+  return date.toLocaleDateString()
+}
 
-```tsx
-// ✅ Correct way to use assets
-import myImage from '@/assets/images/logo.png'
+// src/components/DateDisplay.tsx
+import { formatDate } from '@/lib/helpers'
+
+export function DateDisplay() {
+  return <div>{formatDate(new Date())}</div>
+}
+```
+
+### 3. Images and Assets
+```typescript
+// Always import assets explicitly
+import logoImg from '@/assets/images/logo.png'
 import heroVideo from '@/assets/video/hero.mp4'
 
 function Header() {
   return (
-    <div>
-      <img src={myImage} alt="Logo" />
+    <header>
+      <img src={logoImg} alt="Logo" />
       <video src={heroVideo} autoPlay muted />
+    </header>
+  )
+}
+```
+
+### 4. External Libraries
+```bash
+# Use npm to add libraries
+npm install axios
+npm install chart.js
+npm install date-fns
+```
+
+```typescript
+// Then import and use
+import axios from 'axios'
+import { format } from 'date-fns'
+```
+
+### 5. Google Fonts
+```html
+<!-- Add to index.html -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+```
+
+```css
+/* Use in index.css */
+:root {
+  --font-primary: 'Roboto', sans-serif;
+}
+
+body {
+  font-family: var(--font-primary);
+}
+```
+
+---
+
+## 📦 Export & Packaging
+
+### 🌐 Web Application
+```bash
+# Build for web deployment
+npm run build
+
+# Creates 'dist/' folder with:
+# ├── index.html
+# ├── assets/
+# │   ├── app-[hash].js
+# │   └── app-[hash].css
+# └── manifest.json (if PWA enabled)
+```
+
+### 📱 Mobile App (PWA)
+The template includes PWA support. To enhance mobile capabilities:
+
+```json
+// Add to package.json
+{
+  "scripts": {
+    "build:mobile": "npm run build && npm run generate-icons"
+  }
+}
+```
+
+```html
+<!-- Already included in index.html -->
+<link rel="manifest" href="/manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+```
+
+### 🖥️ Desktop App (Electron - Optional)
+```bash
+# Install Electron wrapper
+npm install --save-dev electron electron-builder
+
+# Add to package.json scripts
+{
+  "electron": "electron .",
+  "build:electron": "npm run build && electron-builder"
+}
+```
+
+### 📲 Android APK (Capacitor - Advanced)
+```bash
+# Install Capacitor
+npm install @capacitor/core @capacitor/cli
+npm install @capacitor/android
+
+# Initialize
+npx cap init
+npx cap add android
+npx cap run android
+```
+
+### 💻 Windows EXE (Tauri - Advanced)
+```bash
+# Install Tauri CLI
+npm install --save-dev @tauri-apps/cli
+
+# Add to package.json
+{
+  "scripts": {
+    "tauri": "tauri",
+    "build:desktop": "tauri build"
+  }
+}
+```
+
+> **Note**: Mobile and desktop packaging requires additional setup and dependencies. The built-in PWA support provides the easiest path to mobile deployment.
+
+---
+
+## 📋 Example Project Structure
+
+### 🎮 Example: Todo App
+```
+src/
+├── App.tsx                 # Main app component
+├── components/
+│   ├── TodoList.tsx        # List of todos
+│   ├── TodoItem.tsx        # Individual todo
+│   ├── AddTodoForm.tsx     # Add new todo
+│   └── ui/                 # Shadcn components
+├── lib/
+│   ├── todo-utils.ts       # Todo helper functions
+│   └── validation.ts       # Form validation
+├── hooks/
+│   └── useTodos.ts         # Custom todo hook
+├── styles/
+│   └── todo.css           # Todo-specific styles
+└── assets/
+    └── images/
+        └── todo-icon.svg
+```
+
+### 🛒 Example: E-commerce Store
+```
+src/
+├── App.tsx                 # Main app with routing
+├── components/
+│   ├── layout/
+│   │   ├── Header.tsx
+│   │   ├── Footer.tsx
+│   │   └── Navigation.tsx
+│   ├── product/
+│   │   ├── ProductCard.tsx
+│   │   ├── ProductList.tsx
+│   │   └── ProductDetail.tsx
+│   ├── cart/
+│   │   ├── CartItem.tsx
+│   │   └── CartSummary.tsx
+│   └── ui/                 # Shadcn components
+├── lib/
+│   ├── api.ts             # API functions
+│   ├── cart-utils.ts      # Cart logic
+│   └── currency.ts        # Price formatting
+├── hooks/
+│   ├── useCart.ts         # Cart state management
+│   └── useProducts.ts     # Product data
+└── assets/
+    ├── images/
+    │   ├── products/
+    │   └── icons/
+    └── styles/
+        └── ecommerce.css
+```
+
+### 🎨 Example: Portfolio Website
+```
+src/
+├── App.tsx                 # Main portfolio app
+├── components/
+│   ├── sections/
+│   │   ├── Hero.tsx
+│   │   ├── About.tsx
+│   │   ├── Projects.tsx
+│   │   ├── Skills.tsx
+│   │   └── Contact.tsx
+│   ├── ui/                 # Shadcn components
+│   └── animations/
+│       └── ScrollReveal.tsx
+├── lib/
+│   ├── projects-data.ts   # Project information
+│   └── animations.ts      # Animation utilities
+├── hooks/
+│   └── useScrollAnimation.ts
+└── assets/
+    ├── images/
+    │   ├── projects/
+    │   ├── profile/
+    │   └── icons/
+    ├── documents/
+    │   └── resume.pdf
+    └── video/
+        └── demo-reel.mp4
+```
+
+---
+
+## 🚀 Deployment Guide
+
+### 1. 🌍 Cloud Deployment (Vercel - Recommended)
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+
+# Or connect GitHub repository for auto-deploy
+```
+
+**Steps:**
+1. Push code to GitHub repository
+2. Connect repository to Vercel
+3. Automatic deployments on every push
+4. Custom domain support available
+
+### 2. 🏠 Local Development
+```bash
+# Development server
+npm run dev
+# Runs on http://localhost:5173
+
+# Production preview
+npm run build
+npm run preview
+# Runs on http://localhost:4173
+```
+
+### 3. 📡 Other Deployment Options
+
+#### Netlify
+```bash
+# Build and deploy
+npm run build
+# Upload 'dist' folder to Netlify
+```
+
+#### GitHub Pages
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: npm run build
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+```
+
+#### Firebase Hosting
+```bash
+# Install Firebase CLI
+npm install -g firebase-tools
+
+# Initialize Firebase
+firebase init hosting
+
+# Deploy
+npm run build
+firebase deploy
+```
+
+#### AWS S3 + CloudFront
+```bash
+# Build project
+npm run build
+
+# Upload to S3 bucket
+aws s3 sync dist/ s3://your-bucket-name --delete
+
+# Invalidate CloudFront cache
+aws cloudfront create-invalidation --distribution-id YOUR_ID --paths "/*"
+```
+
+---
+
+## 🧰 Tech Stack
+
+### 🎯 Core Technologies
+- **⚛️ React 19.0.0** - Modern UI library with latest features
+- **🔷 TypeScript 5.7.2** - Type-safe JavaScript
+- **⚡ Vite 6.3.5** - Fast build tool and dev server
+- **🎨 Tailwind CSS 4.1.11** - Utility-first CSS framework
+
+### 🎨 UI & Design
+- **🧩 Shadcn/ui** - Pre-built accessible components
+- **📐 Radix UI** - Primitive components
+- **🎭 Framer Motion 12.6.2** - Animation library
+- **🎨 Phosphor Icons** - Icon library
+- **🎯 Lucide React** - Additional icons
+
+### 🤖 AI & Advanced Features
+- **🧠 @github/spark** - AI integration and runtime
+- **💾 useKV Hook** - Persistent key-value storage
+- **👤 User Management** - GitHub user integration
+- **🔍 LLM Integration** - GPT-4 and GPT-4o-mini support
+
+### 🔧 Development Tools
+- **📋 ESLint** - Code linting
+- **🏗️ TypeScript** - Type checking
+- **📦 npm/yarn** - Package management
+- **🔄 Hot Reload** - Instant updates
+
+### 📊 Data & State
+- **🗃️ Spark KV** - Built-in storage system
+- **⚛️ React State** - Component state management
+- **🔄 React Query** - Server state management
+- **📝 React Hook Form** - Form handling
+
+### 🎛️ Additional Libraries
+- **📈 Recharts** - Chart components
+- **📅 date-fns** - Date utilities
+- **🎨 D3.js** - Data visualization
+- **🎮 Three.js** - 3D graphics
+- **🔊 Web Audio API** - Audio processing
+
+---
+
+## 🏁 Getting Started
+
+### 1. 🔧 Prerequisites
+- **Node.js 18+** (included in environment)
+- **npm or yarn** (included)
+- **Git** (included)
+
+### 2. 🚀 Quick Start
+```bash
+# Install dependencies (if needed)
+npm install
+
+# Start development server
+npm run dev
+
+# Open http://localhost:5173
+```
+
+### 3. 🎯 Create Your First Component
+```typescript
+// src/components/Welcome.tsx
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+
+export function Welcome() {
+  const [count, setCount] = useState(0)
+  
+  return (
+    <div className="p-6 text-center">
+      <h1 className="text-3xl font-bold mb-4">
+        Welcome to Spark! 🚀
+      </h1>
+      <Button 
+        onClick={() => setCount(count + 1)}
+        className="mb-4"
+      >
+        Clicked {count} times
+      </Button>
+      <p className="text-muted-foreground">
+        Start building something amazing!
+      </p>
     </div>
   )
 }
 ```
 
----
+```typescript
+// src/App.tsx
+import { Welcome } from '@/components/Welcome'
 
-## 📱 Mobile & Desktop Packaging
-
-### Android APK (Using Capacitor)
-
-1. **Install Capacitor**
-```bash
-npm install @capacitor/core @capacitor/cli @capacitor/android
-```
-
-2. **Initialize Capacitor**
-```bash
-npx cap init YourAppName com.yourcompany.yourapp
-```
-
-3. **Build and Add Android Platform**
-```bash
-npm run build
-npx cap add android
-npx cap copy
-npx cap open android
-```
-
-4. **Build APK in Android Studio**
-- Open the project in Android Studio
-- Build → Generate Signed Bundle/APK
-- Follow the signing process
-
-### Windows EXE (Using Tauri)
-
-1. **Install Tauri**
-```bash
-npm install @tauri-apps/cli @tauri-apps/api
-```
-
-2. **Initialize Tauri**
-```bash
-npx tauri init
-```
-
-3. **Configure tauri.conf.json**
-```json
-{
-  "build": {
-    "beforeBuildCommand": "npm run build",
-    "beforeDevCommand": "npm run dev",
-    "devPath": "http://localhost:5173",
-    "distDir": "../dist"
-  }
+function App() {
+  return (
+    <div className="min-h-screen bg-background">
+      <Welcome />
+    </div>
+  )
 }
+
+export default App
 ```
 
-4. **Build EXE**
-```bash
-npx tauri build
-```
-
-### macOS App (Using Tauri)
-
-Follow the same Tauri setup as Windows, but build on macOS:
-```bash
-npx tauri build --target aarch64-apple-darwin  # For Apple Silicon
-npx tauri build --target x86_64-apple-darwin   # For Intel Macs
-```
-
----
-
-## 🌐 Deployment Options
-
-### 1. **Vercel (Recommended)**
-```bash
-npm install -g vercel
-vercel --prod
-```
-
-### 2. **Netlify**
-```bash
-npm run build
-# Upload dist/ folder to Netlify
-```
-
-### 3. **GitHub Pages**
-```bash
-npm install --save-dev gh-pages
-npm run build
-npx gh-pages -d dist
-```
-
-### 4. **Self-Hosted**
-```bash
-npm run build
-# Upload dist/ folder to your web server
-```
-
-### 5. **Docker**
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "run", "preview"]
-```
-
----
-
-## 📖 Development Guide
-
-### Local Development
-
-1. **Install Dependencies**
-```bash
-npm install
-```
-
-2. **Start Development Server**
-```bash
-npm run dev
-```
-
-3. **Build for Production**
-```bash
-npm run build
-```
-
-4. **Preview Production Build**
-```bash
-npm run preview
-```
-
-### Available Scripts
-
-| Script | Purpose |
-|--------|---------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
-| `npm run optimize` | Optimize dependencies |
-
-### Environment Variables
-
-Create a `.env` file in the root directory:
-```env
-VITE_APP_NAME=Your App Name
-VITE_API_URL=https://your-api.com
-VITE_ANALYTICS_ID=your-analytics-id
-```
-
-Access in your code:
-```tsx
-const appName = import.meta.env.VITE_APP_NAME
-```
-
----
-
-## 🎯 Example Projects
-
-### Simple Todo App
-```tsx
-// src/components/TodoApp.tsx
+### 4. 💾 Add Persistent Data
+```typescript
+// src/components/Counter.tsx
 import { useKV } from '@github/spark/hooks'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 
-export function TodoApp() {
-  const [todos, setTodos] = useKV('todos', [])
-  const [input, setInput] = useState('')
-  
-  const addTodo = () => {
-    setTodos(prev => [...prev, { id: Date.now(), text: input, done: false }])
-    setInput('')
-  }
+export function Counter() {
+  const [count, setCount] = useKV('my-counter', 0)
   
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <div className="flex gap-2 mb-4">
-        <Input 
-          value={input} 
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Add a todo..."
-        />
-        <Button onClick={addTodo}>Add</Button>
-      </div>
-      
-      {todos.map(todo => (
-        <div key={todo.id} className="flex items-center gap-2 p-2">
-          <input 
-            type="checkbox" 
-            checked={todo.done}
-            onChange={(e) => setTodos(prev => 
-              prev.map(t => t.id === todo.id ? {...t, done: e.target.checked} : t)
-            )}
-          />
-          <span className={todo.done ? 'line-through' : ''}>{todo.text}</span>
-        </div>
-      ))}
+    <div className="flex items-center gap-4">
+      <Button onClick={() => setCount(count - 1)}>-</Button>
+      <span className="text-2xl font-bold">{count}</span>
+      <Button onClick={() => setCount(count + 1)}>+</Button>
     </div>
   )
 }
 ```
 
-### AI Chat Component
-```tsx
-// src/components/AIChat.tsx
+### 5. 🎨 Customize Theme
+```css
+/* src/index.css */
+:root {
+  --primary: oklch(0.62 0.18 250);      /* Blue */
+  --secondary: oklch(0.95 0.01 250);    /* Light gray */
+  --accent: oklch(0.68 0.16 310);       /* Purple */
+  --background: oklch(0.99 0.005 240);  /* White */
+  --foreground: oklch(0.08 0.015 240);  /* Dark */
+}
+```
+
+---
+
+## 🤖 AI Features
+
+### 💬 LLM Integration
+```typescript
+// Use AI in your components
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
 
-export function AIChat() {
-  const [messages, setMessages] = useState([])
-  const [input, setInput] = useState('')
-  const [loading, setLoading] = useState(false)
+function AIChat() {
+  const [response, setResponse] = useState('')
   
-  const sendMessage = async () => {
-    if (!input.trim()) return
-    
-    const userMessage = { role: 'user', content: input }
-    setMessages(prev => [...prev, userMessage])
-    setInput('')
-    setLoading(true)
-    
-    try {
-      const prompt = spark.llmPrompt`Respond to this message: ${input}`
-      const response = await spark.llm(prompt)
-      setMessages(prev => [...prev, { role: 'assistant', content: response }])
-    } catch (error) {
-      console.error('AI response failed:', error)
-    } finally {
-      setLoading(false)
-    }
+  const askAI = async () => {
+    const prompt = spark.llmPrompt`What is React?`
+    const answer = await spark.llm(prompt)
+    setResponse(answer)
   }
   
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <div className="space-y-4 mb-4 h-96 overflow-y-auto">
-        {messages.map((msg, idx) => (
-          <div key={idx} className={`p-3 rounded-lg ${
-            msg.role === 'user' 
-              ? 'bg-primary text-primary-foreground ml-8' 
-              : 'bg-muted mr-8'
-          }`}>
-            {msg.content}
-          </div>
-        ))}
-        {loading && <div className="text-center">AI is thinking...</div>}
-      </div>
+    <div>
+      <button onClick={askAI}>Ask AI</button>
+      <p>{response}</p>
+    </div>
+  )
+}
+```
+
+### 👤 User Context
+```typescript
+// Access current user
+import { useEffect, useState } from 'react'
+
+function UserProfile() {
+  const [user, setUser] = useState(null)
+  
+  useEffect(() => {
+    spark.user().then(setUser)
+  }, [])
+  
+  return (
+    <div>
+      {user && (
+        <div>
+          <img src={user.avatarUrl} alt="Avatar" />
+          <p>Hello, {user.login}!</p>
+        </div>
+      )}
+    </div>
+  )
+}
+```
+
+### 💾 Persistent Storage
+```typescript
+// Store data that persists between sessions
+import { useKV } from '@github/spark/hooks'
+
+function Settings() {
+  const [theme, setTheme] = useKV('user-theme', 'light')
+  const [notifications, setNotifications] = useKV('notifications', true)
+  
+  return (
+    <div>
+      <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
       
-      <div className="flex gap-2">
-        <Textarea 
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask anything..."
-          className="resize-none"
+      <label>
+        <input 
+          type="checkbox" 
+          checked={notifications}
+          onChange={(e) => setNotifications(e.target.checked)}
         />
-        <Button onClick={sendMessage} disabled={loading}>
-          Send
-        </Button>
-      </div>
+        Enable notifications
+      </label>
     </div>
   )
 }
@@ -490,68 +741,172 @@ export function AIChat() {
 
 ---
 
-## ⚡ Quick Start
+## 💡 Best Practices
 
-### 1. Clone & Setup
-```bash
-git clone https://github.com/your-username/spark-template.git
-cd spark-template
-npm install
+### 🏗️ Component Organization
+```typescript
+// ✅ Good: Small, focused components
+function Button({ children, onClick, variant = 'primary' }) {
+  return (
+    <button 
+      className={`btn btn-${variant}`}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  )
+}
+
+// ✅ Good: Separate concerns
+function UserCard({ user }) {
+  return (
+    <div className="user-card">
+      <Avatar src={user.avatar} />
+      <UserInfo name={user.name} email={user.email} />
+      <UserActions userId={user.id} />
+    </div>
+  )
+}
 ```
 
-### 2. Start Development
-```bash
-npm run dev
+### 💾 Data Management
+```typescript
+// ✅ Use useKV for persistent data
+const [userPreferences, setUserPreferences] = useKV('preferences', {})
+
+// ✅ Use useState for temporary UI state
+const [isLoading, setIsLoading] = useState(false)
+const [currentTab, setCurrentTab] = useState('overview')
+
+// ✅ Use functional updates to avoid stale closures
+setTodos(currentTodos => [...currentTodos, newTodo])
 ```
 
-### 3. Open Browser
-Navigate to `http://localhost:5173`
+### 🎨 Styling Guidelines
+```css
+/* ✅ Use CSS custom properties for theme values */
+:root {
+  --primary-color: oklch(0.62 0.18 250);
+  --border-radius: 0.5rem;
+}
 
-### 4. Start Building
-- Edit `src/App.tsx` for your main app logic
-- Customize `src/index.css` for styling
-- Add components in `src/components/`
+/* ✅ Use Tailwind utility classes */
+.card {
+  @apply bg-card border rounded-lg p-6 shadow-sm;
+}
 
-### 5. Deploy
-```bash
-npm run build
-# Deploy dist/ folder to your hosting platform
+/* ✅ Responsive design with mobile-first approach */
+.grid {
+  @apply grid grid-cols-1 gap-4;
+  @apply md:grid-cols-2 lg:grid-cols-3;
+}
+```
+
+### 🚀 Performance Tips
+```typescript
+// ✅ Lazy load components
+const LazyChart = lazy(() => import('./Chart'))
+
+// ✅ Memoize expensive calculations
+const expensiveValue = useMemo(() => {
+  return processLargeDataset(data)
+}, [data])
+
+// ✅ Use proper asset imports
+import heroImage from '@/assets/images/hero.jpg'
+// ❌ Don't use string paths
+// <img src="/src/assets/images/hero.jpg" />
+```
+
+### 🔒 Security Best Practices
+```typescript
+// ✅ Validate user input
+const schema = z.object({
+  email: z.string().email(),
+  age: z.number().min(0).max(120)
+})
+
+// ✅ Sanitize data before storage
+const sanitizedData = sanitize(userInput)
+await spark.kv.set('user-data', sanitizedData)
+
+// ✅ Use environment variables for sensitive data
+// (Note: Be careful with client-side code)
 ```
 
 ---
 
-## 🤝 Contributing
+## 🔧 Troubleshooting
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit changes: `git commit -m 'Add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
+### Common Issues
+
+#### Build Errors
+```bash
+# Clear cache and reinstall
+rm -rf node_modules package-lock.json
+npm install
+
+# Check TypeScript errors
+npm run lint
+```
+
+#### Import Issues
+```typescript
+// ✅ Use alias imports
+import { Button } from '@/components/ui/button'
+
+// ❌ Avoid relative imports from deep paths
+// import { Button } from '../../../components/ui/button'
+```
+
+#### Asset Loading
+```typescript
+// ✅ Import assets explicitly
+import image from '@/assets/images/logo.png'
+<img src={image} alt="Logo" />
+
+// ❌ Don't use string paths
+// <img src="/src/assets/images/logo.png" alt="Logo" />
+```
+
+---
+
+## 📞 Support & Resources
+
+### 📚 Documentation
+- [React Documentation](https://react.dev)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs)
+- [Tailwind CSS Docs](https://tailwindcss.com/docs)
+- [Shadcn/ui Components](https://ui.shadcn.com)
+- [Vite Guide](https://vitejs.dev/guide)
+
+### 💬 Community
+- [GitHub Discussions](https://github.com/github/spark-template/discussions)
+- [Discord Community](https://discord.gg/github)
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/github-spark)
+
+### 🐛 Issues & Bugs
+- [Report Issues](https://github.com/github/spark-template/issues)
+- [Feature Requests](https://github.com/github/spark-template/issues/new?template=feature_request.md)
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🔗 Resources
+## 🙏 Acknowledgments
 
-- [GitHub Spark Documentation](https://github.com/github/spark)
-- [React Documentation](https://react.dev)
-- [Tailwind CSS Documentation](https://tailwindcss.com)
-- [shadcn/ui Documentation](https://ui.shadcn.com)
-- [Vite Documentation](https://vitejs.dev)
+Built with ❤️ by the GitHub team and the open-source community.
+
+- **React Team** - For the amazing React library
+- **Vercel** - For Vite and amazing dev tools
+- **Tailwind Labs** - For Tailwind CSS
+- **Radix UI** - For accessible UI primitives
+- **Shadcn** - For beautiful component designs
 
 ---
 
-<div align="center">
-
-**Made with ❤️ using GitHub Spark Template**
-
-*Build beautiful, AI-powered applications with ease*
-
-[⭐ Star on GitHub](https://github.com/your-username/spark-template) | [📖 Documentation](https://github.com/your-username/spark-template/wiki) | [🐛 Report Bug](https://github.com/your-username/spark-template/issues)
-
-</div>
+**Ready to build something amazing? Start coding in `src/App.tsx`! 🚀**
