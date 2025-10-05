@@ -3,7 +3,7 @@
 
 ### Core Purpose & Success
 
-**Mission Statement**: AstraForensics is an AI-powered cybersecurity education platform that transforms complex security concepts into engaging, interactive learning experiences while providing professional-grade certifications and real-world skill development.
+**Mission Statement**: AstraForensics is an AI-powered cybersecurity education platform that transforms complex security concepts into engaging, interactive learning experiences while providing professional-grade certifications, comprehensive note-taking capabilities, and intelligent task management for complete learning journey support.
 
 **Success Indicators**:
 - 90%+ module completion rates among active users
@@ -11,11 +11,13 @@
 - Professional certificate recognition by industry employers
 - Positive user satisfaction scores (4.5+ stars)
 - Measurable skill improvement through adaptive assessments
+- High engagement with AI-powered note-taking and task management features
+- Consistent use of daily reflection system for learning reinforcement
 
 **Experience Qualities**: 
-1. **Intelligent** - AI-driven personalization and dynamic content generation
-2. **Professional** - Industry-standard curriculum with legitimate certifications
-3. **Engaging** - Gamified learning with anime aesthetics and delightful interactions
+1. **Intelligent** - AI-driven personalization, dynamic content generation, smart note creation, and automated task planning
+2. **Professional** - Industry-standard curriculum with legitimate certifications and comprehensive knowledge management
+3. **Engaging** - Gamified learning with modern aesthetics, delightful interactions, and personalized learning experiences
 
 ### Project Classification & Approach
 
@@ -25,8 +27,11 @@
 - Professional certificate generation and verification systems
 - Multi-modal learning content delivery
 - Real-time AI tutoring assistance
+- AI-powered note-taking and knowledge management system
+- Intelligent task generation and productivity tools
+- Daily reflection system with AI-generated prompts
 
-**Primary User Activity**: Interactive Learning & Skill Development
+**Primary User Activity**: Interactive Learning & Comprehensive Skill Development
 - Users primarily engage in structured learning modules
 - Take AI-generated quizzes for knowledge validation
 - Interact with AI tutoring assistant for personalized help
@@ -82,6 +87,26 @@
 **Functionality**: AI recommends next modules and content based on performance and goals
 **Purpose**: Optimizes learning efficiency and maintains appropriate challenge levels
 **Success Criteria**: Users consistently progress without overwhelming difficulty spikes
+
+#### 7. AI-Powered Notes & Knowledge Base
+**Functionality**: Intelligent note-taking system with AI content generation, folder organization, and advanced search
+**Purpose**: Helps users create, organize, and retrieve comprehensive study materials and personal knowledge
+**Success Criteria**: Users actively create and reference notes, leading to improved retention and understanding
+
+#### 8. Intelligent Task Management
+**Functionality**: AI-generated task lists and study plans based on learning goals and certification requirements
+**Purpose**: Provides structured approach to learning with actionable steps and deadlines
+**Success Criteria**: Users complete tasks consistently and achieve their learning objectives on schedule
+
+#### 9. Daily Reflection System
+**Functionality**: AI-generated daily questions to encourage reflection on learning progress and insights
+**Purpose**: Reinforces learning through metacognitive practice and builds consistent study habits
+**Success Criteria**: Users engage regularly with reflections and demonstrate deeper understanding of concepts
+
+#### 10. Voice Input & Accessibility
+**Functionality**: Voice-to-text capabilities for note-taking and task creation
+**Purpose**: Provides accessibility options and hands-free learning support
+**Success Criteria**: Voice features are accurate and enhance the learning experience for all users
 
 ### Design Direction
 

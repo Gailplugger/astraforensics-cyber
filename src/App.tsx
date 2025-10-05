@@ -15,11 +15,15 @@ import { CareerPathRecommendation } from './components/CareerPathRecommendation'
 import { SparkEnhancedCertificate } from './components/SparkEnhancedCertificate'
 import { OfflineLearning } from './components/OfflineLearning'
 import { BackendErrorBoundary } from './components/BackendErrorBoundary'
+import { NotesDashboard } from './components/Notes/NotesDashboard'
+import { TodoDashboard } from './components/Todo/TodoDashboard'
+import { DailyReflection } from './components/DailyReflection'
 import { Button } from './components/ui/button'
-import { Robot, Download, Trophy, TrendUp } from '@phosphor-icons/react'
+import { Robot, Download, Trophy, TrendUp, FileText, CheckSquare, Brain } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { initializeBackend, sparkLog, sparkError } from './lib/spark-api'
 import { backendValidator } from './lib/backend-validator'
+import { storageManager } from './lib/storage'
 import { toast } from 'sonner'
 
 // Enhanced viewport height handling for mobile devices with better support
@@ -101,6 +105,9 @@ function App() {
   const [showCareerRecommendation, setShowCareerRecommendation] = useState(false)
   const [showCertificate, setShowCertificate] = useState(false)
   const [showOfflineLearning, setShowOfflineLearning] = useState(false)
+  const [showNotesDashboard, setShowNotesDashboard] = useState(false)
+  const [showTodoDashboard, setShowTodoDashboard] = useState(false)
+  const [showDailyReflection, setShowDailyReflection] = useState(false)
   const [selectedModuleId, setSelectedModuleId] = useState<string | undefined>()
   const [assessmentResult, setAssessmentResult] = useState<any>(null)
   const [certificateData, setCertificateData] = useState<CertificateData | null>(null)
@@ -132,6 +139,10 @@ function App() {
             })
           }
         }
+
+        // Initialize storage manager for Notes and Todo system
+        await storageManager.init()
+        sparkLog('Storage manager initialized successfully')
         
         // Simulate app initialization
         await new Promise(resolve => setTimeout(resolve, 1500))
@@ -490,6 +501,52 @@ function App() {
                 <TrendUp size={16} className="sm:w-5 sm:h-5" />
               </Button>
             </motion.div>
+
+            {/* New AI Features - Notes, Todo, Reflection */}
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: -3 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                onClick={() => setShowNotesDashboard(true)}
+                size="sm"
+                variant="secondary"
+                className="rounded-full w-12 h-12 sm:w-14 sm:h-14 shadow-lg hover:shadow-xl transition-all duration-300"
+                title="AI Notes & Knowledge Base"
+              >
+                <FileText size={16} className="sm:w-5 sm:h-5" />
+              </Button>
+            </motion.div>
+            
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 4 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                onClick={() => setShowTodoDashboard(true)}
+                size="sm"
+                variant="secondary"
+                className="rounded-full w-12 h-12 sm:w-14 sm:h-14 shadow-lg hover:shadow-xl transition-all duration-300"
+                title="AI Task Manager"
+              >
+                <CheckSquare size={16} className="sm:w-5 sm:h-5" />
+              </Button>
+            </motion.div>
+            
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                onClick={() => setShowDailyReflection(true)}
+                size="sm"
+                variant="secondary"
+                className="rounded-full w-12 h-12 sm:w-14 sm:h-14 shadow-lg hover:shadow-xl transition-all duration-300"
+                title="Daily Reflection"
+              >
+                <Brain size={16} className="sm:w-5 sm:h-5" />
+              </Button>
+            </motion.div>
           </motion.div>
 
           {/* Spark Particles around buttons */}
@@ -564,6 +621,22 @@ function App() {
         isOpen={showOfflineLearning}
         onClose={() => setShowOfflineLearning(false)}
         userData={userData}
+      />
+
+      {/* New AI Features */}
+      <NotesDashboard
+        isOpen={showNotesDashboard}
+        onClose={() => setShowNotesDashboard(false)}
+      />
+
+      <TodoDashboard
+        isOpen={showTodoDashboard}
+        onClose={() => setShowTodoDashboard(false)}
+      />
+
+      <DailyReflection
+        isOpen={showDailyReflection}
+        onClose={() => setShowDailyReflection(false)}
       />
 
       {/* Enhanced Responsive Footer with Spark Effects */}
